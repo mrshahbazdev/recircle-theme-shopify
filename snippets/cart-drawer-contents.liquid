@@ -1,0 +1,60 @@
+{%- comment -%}
+  Rendered on initial page load AND re-rendered via fetch('/?section_id=cart-drawer').
+{%- endcomment -%}
+
+<header class="cart-drawer__head">
+  <h2 id="CartDrawer-title-{{ section.id }}">{{ 'general.cart.title' | t }}
+    <span class="cart-drawer__count" data-cart-count>{{ cart.item_count }}</span>
+  </h2>
+  <button type="button"
+          class="cart-drawer__close"
+          data-close-drawer
+          aria-label="{{ 'accessibility.close' | t }}">
+    <svg width="20" height="20" aria-hidden="true"><use href="#icon-close"/></svg>
+  </button>
+</header>
+
+<div class="cart-drawer__body" data-cart-drawer-body>
+  {%- if cart.item_count > 0 -%}
+    <ul class="cart-drawer__list" role="list">
+      {%- for item in cart.items -%}
+        {% render 'cart-drawer-item', item: item %}
+      {%- endfor -%}
+    </ul>
+
+    {%- assign total_co2 = 0 -%}
+    {%- for item in cart.items -%}
+      {%- assign pco2 = item.product.metafields.recircle.co2_saved_kg | default: 0 -%}
+      {%- assign lineco2 = pco2 | times: item.quantity -%}
+      {%- assign total_co2 = total_co2 | plus: lineco2 -%}
+    {%- endfor -%}
+    {%- if total_co2 > 0 -%}
+      <div class="cart-drawer__impact">
+        <svg width="18" height="18" aria-hidden="true"><use href="#icon-leaf"/></svg>
+        <span>{{ 'general.cart.co2_savings_html' | t: kg: total_co2 | default: 'You will save <strong>' | append: total_co2 | append: ' kg CO₂e</strong> with this basket.' }}</span>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="cart-drawer__empty">
+      <p>{{ 'general.cart.empty' | t }}</p>
+      <a href="{{ routes.root_url }}" class="btn btn--secondary" data-close-drawer>{{ 'general.cart.continue_shopping' | t }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if cart.item_count > 0 -%}
+  <footer class="cart-drawer__foot">
+    <div class="cart-drawer__totals">
+      <span>{{ 'general.cart.subtotal' | t }}</span>
+      <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+    </div>
+    <p class="cart-drawer__taxnote">{{ 'general.cart.tax_and_shipping' | t }}</p>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn--primary cart-drawer__checkout">
+        {{ 'general.cart.checkout' | t }}
+        <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+      </button>
+    </form>
+    <a href="{{ routes.cart_url }}" class="btn btn--link cart-drawer__viewcart">{{ 'general.cart.view_cart' | t | default: 'View cart' }}</a>
+  </footer>
+{%- endif -%}

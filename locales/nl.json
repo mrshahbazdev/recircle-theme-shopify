@@ -1,20 +1,36 @@
 {
   "general": {
-    "accessibility": { "skip_to_text": "Ga naar inhoud", "close": "Sluiten", "previous": "Vorige", "next": "Volgende", "loading": "Laden" },
-    "search": { "placeholder": "Zoek refurbished producten", "submit": "Zoeken" },
-    "cart": { "title": "Winkelwagen", "empty": "Je winkelwagen is leeg", "continue_shopping": "Verder winkelen", "subtotal": "Subtotaal", "checkout": "Afrekenen", "tax_and_shipping": "Belasting en verzending berekend bij het afrekenen", "remove": "Verwijderen" },
+    "accessibility": { "skip_to_text": "Ga naar inhoud", "close": "Sluiten", "previous": "Vorige", "next": "Volgende", "loading": "Laden", "menu": "Menu" },
+    "search": { "placeholder": "Zoek refurbished producten", "submit": "Zoeken", "products": "Producten", "collections": "Categorieën", "articles": "Artikelen", "suggestions": "Suggesties" },
+    "cart": { "title": "Je winkelwagen", "empty": "Je winkelwagen is leeg", "continue_shopping": "Verder winkelen", "subtotal": "Subtotaal", "checkout": "Afrekenen", "tax_and_shipping": "BTW en verzending bij afrekenen", "remove": "Verwijderen", "view_cart": "Winkelwagen bekijken", "added_to_cart": "Toegevoegd aan winkelwagen", "co2_savings_html": "Met deze winkelwagen bespaar je <strong>{{ kg }} kg CO\u2082e</strong>." },
     "404": { "title": "Pagina niet gevonden", "subtext": "De pagina die je zoekt bestaat niet.", "link": "Verder winkelen" }
   },
+  "sections": {
+    "trade_in": {
+      "step_device": "1. Welk apparaat heb je?",
+      "step_age": "2. Hoe oud is het? (jaren)",
+      "step_condition": "3. Algemene staat",
+      "condition_a": "Als nieuw \u2014 geen sporen",
+      "condition_b": "Zeer goed \u2014 lichte gebruikssporen",
+      "condition_c": "Goed \u2014 zichtbare sporen, volledig werkend",
+      "condition_d": "Redelijk \u2014 duidelijke sporen",
+      "quote_label": "Geschatte inruilwaarde",
+      "quote_note": "Directe schatting \u2014 definitief aanbod na inspectie.",
+      "pricing_table": "Volledige prijstabel",
+      "device": "Apparaat",
+      "base_price": "Basisprijs (als nieuw, 0 jaar)"
+    }
+  },
   "products": {
-    "product": { "add_to_cart": "Toevoegen aan winkelwagen", "sold_out": "Uitverkocht", "quantity": "Aantal", "description_title": "Beschrijving" },
+    "product": { "add_to_cart": "In winkelwagen", "sold_out": "Uitverkocht", "quantity": "Aantal", "description_title": "Omschrijving" },
     "refurbished": {
       "condition_title": "Staat",
       "grade_a_label": "Als nieuw", "grade_b_label": "Zeer goed", "grade_c_label": "Goed", "grade_d_label": "Redelijk",
       "warranty_months": "{{ count }} maanden garantie",
-      "returns_days_eu": "{{ count }} dagen retourtermijn (EU)",
-      "dpp_title": "Digitaal productpaspoort",
-      "price_30day_low": "Laagste prijs in de afgelopen 30 dagen: {{ price }}",
-      "msrp_new": "Nieuwprijs: {{ price }}",
+      "returns_days_eu": "{{ count }} dagen retour",
+      "dpp_title": "Digitaal Productpaspoort",
+      "price_30day_low": "Laagste prijs afgelopen 30 dagen: {{ price }}",
+      "msrp_new": "Nieuwprijs (MSRP): {{ price }}",
       "repairability": "Repareerbaarheid",
       "co2_saved": "{{ value }} {{ unit }}"
     }

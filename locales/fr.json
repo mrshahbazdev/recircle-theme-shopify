@@ -1,21 +1,37 @@
 {
   "general": {
-    "accessibility": { "skip_to_text": "Aller au contenu", "close": "Fermer", "previous": "Précédent", "next": "Suivant", "loading": "Chargement" },
-    "search": { "placeholder": "Rechercher des produits reconditionnés", "submit": "Rechercher" },
-    "cart": { "title": "Votre panier", "empty": "Votre panier est vide", "continue_shopping": "Continuer mes achats", "subtotal": "Sous-total", "checkout": "Passer à la caisse", "tax_and_shipping": "Taxes et livraison calculées à la caisse", "remove": "Supprimer" },
+    "accessibility": { "skip_to_text": "Aller au contenu", "close": "Fermer", "previous": "Précédent", "next": "Suivant", "loading": "Chargement", "menu": "Menu" },
+    "search": { "placeholder": "Rechercher des produits reconditionnés", "submit": "Rechercher", "products": "Produits", "collections": "Collections", "articles": "Articles", "suggestions": "Suggestions" },
+    "cart": { "title": "Votre panier", "empty": "Votre panier est vide", "continue_shopping": "Continuer mes achats", "subtotal": "Sous-total", "checkout": "Payer", "tax_and_shipping": "Taxes et livraison calculées au paiement", "remove": "Retirer", "view_cart": "Voir le panier", "added_to_cart": "Ajouté au panier", "co2_savings_html": "Vous économisez <strong>{{ kg }} kg CO\u2082e</strong> avec ce panier." },
     "404": { "title": "Page introuvable", "subtext": "La page que vous cherchez n'existe pas.", "link": "Continuer mes achats" }
   },
+  "sections": {
+    "trade_in": {
+      "step_device": "1. Quel appareil poss\u00e9dez-vous ?",
+      "step_age": "2. Quel \u00e2ge a-t-il ? (ann\u00e9es)",
+      "step_condition": "3. \u00c9tat g\u00e9n\u00e9ral",
+      "condition_a": "Comme neuf \u2014 aucune marque",
+      "condition_b": "Tr\u00e8s bon \u2014 l\u00e9g\u00e8res traces d'usage",
+      "condition_c": "Bon \u2014 traces visibles, enti\u00e8rement fonctionnel",
+      "condition_d": "Correct \u2014 traces notables",
+      "quote_label": "Estimation de reprise",
+      "quote_note": "Estimation instantan\u00e9e \u2014 offre d\u00e9finitive apr\u00e8s inspection.",
+      "pricing_table": "Voir le tableau complet",
+      "device": "Appareil",
+      "base_price": "Prix de base (neuf, 0 an)"
+    }
+  },
   "products": {
-    "product": { "add_to_cart": "Ajouter au panier", "sold_out": "Épuisé", "quantity": "Quantité", "description_title": "Description" },
+    "product": { "add_to_cart": "Ajouter au panier", "sold_out": "\u00c9puis\u00e9", "quantity": "Quantit\u00e9", "description_title": "Description" },
     "refurbished": {
-      "condition_title": "État",
-      "grade_a_label": "Comme neuf", "grade_b_label": "Très bon", "grade_c_label": "Bon", "grade_d_label": "Correct",
-      "warranty_months": "Garantie de {{ count }} mois",
-      "returns_days_eu": "Retours {{ count }} jours (UE)",
-      "dpp_title": "Passeport numérique produit",
+      "condition_title": "\u00c9tat",
+      "grade_a_label": "Comme neuf", "grade_b_label": "Tr\u00e8s bon", "grade_c_label": "Bon", "grade_d_label": "Correct",
+      "warranty_months": "{{ count }} mois de garantie",
+      "returns_days_eu": "Retours {{ count }} jours",
+      "dpp_title": "Passeport Num\u00e9rique de Produit",
       "price_30day_low": "Prix le plus bas des 30 derniers jours : {{ price }}",
-      "msrp_new": "Prix neuf : {{ price }}",
-      "repairability": "Indice de réparabilité",
+      "msrp_new": "Prix neuf conseill\u00e9 : {{ price }}",
+      "repairability": "R\u00e9parabilit\u00e9",
       "co2_saved": "{{ value }} {{ unit }}"
     }
   }

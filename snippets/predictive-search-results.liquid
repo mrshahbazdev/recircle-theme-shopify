@@ -1,0 +1,81 @@
+{%- comment -%}
+  Rendered on initial load AND re-rendered via fetch('/search/suggest?section_id=predictive-search&q=...').
+{%- endcomment -%}
+
+{%- if predictive_search.performed -%}
+  <div class="predictive-search__results" id="PredictiveSearchResults" role="listbox" aria-label="Search results">
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <section>
+        <p class="predictive-search__heading">{{ 'general.search.products' | t | default: 'Products' }}</p>
+        <ul role="presentation">
+          {%- for product in predictive_search.resources.products limit: 6 -%}
+            <li role="option" tabindex="-1">
+              <a href="{{ product.url }}" class="predictive-search__item">
+                <span class="predictive-search__media">
+                  {%- if product.featured_image -%}
+                    <img src="{{ product.featured_image | image_url: width: 120 }}" alt="" loading="lazy" width="48" height="48">
+                  {%- endif -%}
+                </span>
+                <span class="predictive-search__body">
+                  <span class="predictive-search__title">{{ product.title }}</span>
+                  <span class="predictive-search__meta">
+                    {% render 'dual-price', product: product %}
+                  </span>
+                </span>
+                {%- assign grade = product.metafields.recircle.condition_grade %}
+                {%- if grade -%}
+                  {% render 'condition-badge', grade: grade %}
+                {%- endif -%}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <section>
+        <p class="predictive-search__heading">{{ 'general.search.collections' | t | default: 'Collections' }}</p>
+        <ul role="presentation">
+          {%- for collection in predictive_search.resources.collections limit: 3 -%}
+            <li role="option" tabindex="-1">
+              <a href="{{ collection.url }}" class="predictive-search__item predictive-search__item--simple">{{ collection.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.articles.size > 0 -%}
+      <section>
+        <p class="predictive-search__heading">{{ 'general.search.articles' | t | default: 'Articles' }}</p>
+        <ul role="presentation">
+          {%- for article in predictive_search.resources.articles limit: 3 -%}
+            <li role="option" tabindex="-1">
+              <a href="{{ article.url }}" class="predictive-search__item predictive-search__item--simple">{{ article.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.queries.size > 0 -%}
+      <section>
+        <p class="predictive-search__heading">{{ 'general.search.suggestions' | t | default: 'Suggestions' }}</p>
+        <ul role="presentation">
+          {%- for query in predictive_search.resources.queries limit: 4 -%}
+            <li role="option" tabindex="-1">
+              <a href="{{ routes.search_url }}?q={{ query.text | url_encode }}" class="predictive-search__item predictive-search__item--simple">{{ query.styled_text }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.products.size == 0 and predictive_search.resources.collections.size == 0 and predictive_search.resources.articles.size == 0 -%}
+      <p class="predictive-search__empty">{{ 'general.search.no_results_html' | t: terms: predictive_search.terms }}</p>
+    {%- endif -%}
+  </div>
+{%- else -%}
+  <div class="predictive-search__results" hidden></div>
+{%- endif -%}

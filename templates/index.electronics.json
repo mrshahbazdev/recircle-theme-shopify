@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "hero": {
+      "type": "refurbished-hero",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "-60%", "label": "vs buying new" } },
+        "s2": { "type": "stat", "settings": { "value": "12m", "label": "Warranty" } },
+        "s3": { "type": "stat", "settings": { "value": "14d", "label": "EU returns" } },
+        "s4": { "type": "stat", "settings": { "value": "70%", "label": "Less CO₂" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Certified refurbished electronics",
+        "heading": "Premium phones and laptops — refurbished to near-new.",
+        "text": "Every device tested against 50+ functional checkpoints. 12-month warranty, battery ≥85% on every unit. Carbon-neutral shipping across the EU.",
+        "cta_primary_label": "Shop iPhones",
+        "cta_primary_link": "/collections/iphone",
+        "cta_secondary_label": "Shop MacBooks",
+        "cta_secondary_link": "/collections/macbook"
+      }
+    },
+    "grades": {
+      "type": "condition-grade-explainer",
+      "blocks": {
+        "a": { "type": "grade", "settings": { "grade": "a", "title": "A · Like new", "description": "No visible wear. Battery ≥90%. Indistinguishable from new." } },
+        "b": { "type": "grade", "settings": { "grade": "b", "title": "B · Very good", "description": "Only faint marks under direct light. Battery ≥85%." } },
+        "c": { "type": "grade", "settings": { "grade": "c", "title": "C · Good", "description": "Visible scratches, case wear. All features fully working." } },
+        "d": { "type": "grade", "settings": { "grade": "d", "title": "D · Fair", "description": "Noticeable wear, dents possible. Best price, tested + warrantied." } }
+      },
+      "block_order": ["a", "b", "c", "d"],
+      "settings": { "eyebrow": "How we grade", "heading": "Transparent grading for electronics", "text": "" }
+    },
+    "process": {
+      "type": "how-refurbishment-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Source", "description": "From corporate trade-ins, insurance returns, and end-of-lease fleets." } },
+        "s2": { "type": "step", "settings": { "title": "Data-wipe", "description": "Certified DoD 5220.22-M wipe. Certificate of erasure stored in Passport." } },
+        "s3": { "type": "step", "settings": { "title": "Diagnose", "description": "50-point functional test: display, speakers, cameras, batteries, radios." } },
+        "s4": { "type": "step", "settings": { "title": "Repair", "description": "Genuine parts only. Batteries replaced below 85% capacity." } },
+        "s5": { "type": "step", "settings": { "title": "Ship", "description": "12-month warranty. 30-day money-back. 1 free repair included." } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": { "eyebrow": "Our process", "heading": "Every device. 50 checks. Zero shortcuts.", "text": "" }
+    },
+    "trade_in": {
+      "type": "trade-in-calculator",
+      "settings": {
+        "eyebrow": "Trade-in",
+        "heading": "Turn your old phone into instant credit",
+        "text": "Tell us what you have. We'll give you a price in seconds.",
+        "cta_label": "Start full trade-in",
+        "cta_link": "/pages/trade-in",
+        "show_pricing_table": true
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": { "eyebrow": "Top picks", "heading": "Best-selling refurbished phones", "product_limit": 4, "show_vendor": true }
+    },
+    "co2": {
+      "type": "co2-impact-counter",
+      "settings": { "eyebrow": "Collective impact", "heading": "kg of CO₂ saved by choosing refurbished over new", "target": 482000, "duration": 1800, "unit": "kg CO₂e saved this year", "caption": "A refurbished smartphone emits ~77 kg less CO₂e than a new one (IFIXIT 2024)." }
+    },
+    "stats": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "50,000+", "label": "Devices refurbished" } },
+        "s2": { "type": "stat", "settings": { "value": "482 t", "label": "CO₂e saved" } },
+        "s3": { "type": "stat", "settings": { "value": "99.2%", "label": "Working after 1 year" } },
+        "s4": { "type": "stat", "settings": { "value": "4.8/5", "label": "Trustpilot rating" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "eyebrow": "Our impact", "heading": "Numbers that matter" }
+    }
+  },
+  "order": ["hero", "grades", "process", "trade_in", "featured", "co2", "stats"]
+}

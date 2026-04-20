@@ -1,3 +1,39 @@
+{%- liquid
+  assign pricing_from_blocks = section.blocks | where: 'type', 'brand'
+  assign has_blocks = pricing_from_blocks.size
+-%}
+
+{%- capture pricing_json -%}
+{
+  "currency": "{{ section.settings.currency_code | default: 'EUR' }}",
+  "currency_symbol": "{{ section.settings.currency_symbol | default: '€' }}",
+  "age_decay_per_year": {{ section.settings.age_decay_per_year | default: 0.12 }},
+  "min_age_factor": {{ section.settings.min_age_factor | default: 0.40 }},
+  "brands": {
+    {%- if has_blocks > 0 -%}
+      {%- for block in pricing_from_blocks -%}
+        "{{ block.settings.key | default: block.id | downcase | strip }}": { "base": {{ block.settings.base_price | default: 0 }}, "label": {{ block.settings.label | default: block.settings.key | json }} }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- else -%}
+      "iphone":  { "base": 600, "label": "iPhone" },
+      "samsung": { "base": 450, "label": "Samsung Galaxy" },
+      "macbook": { "base": 900, "label": "MacBook" },
+      "ipad":    { "base": 350, "label": "iPad" },
+      "pixel":   { "base": 350, "label": "Google Pixel" },
+      "default": { "base": 200, "label": "Other" }
+    {%- endif -%}
+  },
+  "condition_multipliers": {
+    "a": {{ section.settings.multiplier_a | default: 0.85 }},
+    "b": {{ section.settings.multiplier_b | default: 0.65 }},
+    "c": {{ section.settings.multiplier_c | default: 0.45 }},
+    "d": {{ section.settings.multiplier_d | default: 0.25 }}
+  }
+}
+{%- endcapture -%}
+
+<script id="TradeInPricing" type="application/json">{{ pricing_json }}</script>
+
 <section class="section" aria-labelledby="ti-heading-{{ section.id }}">
   <div class="page-width">
     <header class="section-heading">
@@ -10,40 +46,69 @@
       <form data-trade-in-form novalidate>
         <ol class="trade-in__steps">
           <li class="field">
-            <label class="field__label" for="ti-brand">1. What device do you have?</label>
-            <select id="ti-brand" name="brand">
-              <option value="iphone">iPhone</option>
-              <option value="samsung">Samsung Galaxy</option>
-              <option value="macbook">MacBook</option>
-              <option value="ipad">iPad</option>
-              <option value="default">Other</option>
+            <label class="field__label" for="ti-brand-{{ section.id }}">{{ 'sections.trade_in.step_device' | t | default: '1. What device do you have?' }}</label>
+            <select id="ti-brand-{{ section.id }}" name="brand">
+              {%- if has_blocks > 0 -%}
+                {%- for block in pricing_from_blocks -%}
+                  <option value="{{ block.settings.key | default: block.id | downcase | strip }}">{{ block.settings.label | default: block.settings.key }}</option>
+                {%- endfor -%}
+              {%- else -%}
+                <option value="iphone">iPhone</option>
+                <option value="samsung">Samsung Galaxy</option>
+                <option value="macbook">MacBook</option>
+                <option value="ipad">iPad</option>
+                <option value="pixel">Google Pixel</option>
+                <option value="default">Other</option>
+              {%- endif -%}
             </select>
           </li>
           <li class="field">
-            <label class="field__label" for="ti-age">2. How old is it? (years)</label>
-            <input id="ti-age" name="age" type="number" min="0" max="10" value="2">
+            <label class="field__label" for="ti-age-{{ section.id }}">{{ 'sections.trade_in.step_age' | t | default: '2. How old is it? (years)' }}</label>
+            <input id="ti-age-{{ section.id }}" name="age" type="number" min="0" max="10" value="2">
           </li>
           <li class="field">
-            <label class="field__label" for="ti-condition">3. Overall condition</label>
-            <select id="ti-condition" name="condition">
-              <option value="a">Like new — no marks</option>
-              <option value="b" selected>Very good — light wear</option>
-              <option value="c">Good — visible wear, all working</option>
-              <option value="d">Fair — noticeable wear</option>
+            <label class="field__label" for="ti-condition-{{ section.id }}">{{ 'sections.trade_in.step_condition' | t | default: '3. Overall condition' }}</label>
+            <select id="ti-condition-{{ section.id }}" name="condition">
+              <option value="a">{{ 'sections.trade_in.condition_a' | t | default: 'Like new — no marks' }}</option>
+              <option value="b" selected>{{ 'sections.trade_in.condition_b' | t | default: 'Very good — light wear' }}</option>
+              <option value="c">{{ 'sections.trade_in.condition_c' | t | default: 'Good — visible wear, all working' }}</option>
+              <option value="d">{{ 'sections.trade_in.condition_d' | t | default: 'Fair — noticeable wear' }}</option>
             </select>
           </li>
         </ol>
       </form>
 
       <div class="trade-in__result" role="status" aria-live="polite">
-        <p style="margin:0;color:var(--color-text-muted);font-size:0.85rem">Estimated trade-in quote</p>
-        <p class="trade-in__quote" data-trade-in-quote>€0</p>
-        <p style="margin:0;color:var(--color-text-muted);font-size:0.85rem" data-trade-in-note>Instant estimate — final offer confirmed after device inspection.</p>
+        <p style="margin:0;color:var(--color-text-muted);font-size:0.85rem">{{ 'sections.trade_in.quote_label' | t | default: 'Estimated trade-in quote' }}</p>
+        <p class="trade-in__quote" data-trade-in-quote>{{ section.settings.currency_symbol | default: '€' }}0</p>
+        <p style="margin:0;color:var(--color-text-muted);font-size:0.85rem" data-trade-in-note>{{ 'sections.trade_in.quote_note' | t | default: 'Instant estimate — final offer confirmed after device inspection.' }}</p>
         {%- if section.settings.cta_label != blank -%}
           <a href="{{ section.settings.cta_link }}" class="btn btn--primary" style="margin-top:1rem">{{ section.settings.cta_label }}</a>
         {%- endif -%}
       </div>
     </div>
+
+    {%- if section.settings.show_pricing_table and has_blocks > 0 -%}
+      <details class="trade-in-pricing">
+        <summary>{{ 'sections.trade_in.pricing_table' | t | default: 'See full pricing table' }}</summary>
+        <table>
+          <thead>
+            <tr>
+              <th>{{ 'sections.trade_in.device' | t | default: 'Device' }}</th>
+              <th>{{ 'sections.trade_in.base_price' | t | default: 'Base (new-like, 0 yr)' }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in pricing_from_blocks -%}
+              <tr>
+                <td>{{ block.settings.label | default: block.settings.key }}</td>
+                <td>{{ section.settings.currency_symbol | default: '€' }}{{ block.settings.base_price }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </details>
+    {%- endif -%}
   </div>
 </section>
 
@@ -56,7 +121,29 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Get instant cash for your old device" },
     { "type": "textarea", "id": "text", "label": "Text", "default": "Select your device and see an estimated trade-in quote in seconds. Your old device helps us keep more electronics in circulation." },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Start full trade-in" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" }
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "header", "content": "Pricing configuration" },
+    { "type": "paragraph", "content": "Add device blocks to override default prices. Leave blank to use the built-in demo table." },
+    { "type": "text", "id": "currency_code", "label": "Currency code", "default": "EUR" },
+    { "type": "text", "id": "currency_symbol", "label": "Currency symbol", "default": "€" },
+    { "type": "range", "id": "multiplier_a", "label": "Grade A multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.85 },
+    { "type": "range", "id": "multiplier_b", "label": "Grade B multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.65 },
+    { "type": "range", "id": "multiplier_c", "label": "Grade C multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.45 },
+    { "type": "range", "id": "multiplier_d", "label": "Grade D multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.25 },
+    { "type": "range", "id": "age_decay_per_year", "label": "Age decay per year", "min": 0, "max": 0.5, "step": 0.02, "default": 0.12 },
+    { "type": "range", "id": "min_age_factor", "label": "Minimum age factor", "min": 0.1, "max": 1, "step": 0.05, "default": 0.4 },
+    { "type": "checkbox", "id": "show_pricing_table", "label": "Show full pricing table", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Device",
+      "settings": [
+        { "type": "text", "id": "key", "label": "Slug (lowercase, no spaces)", "default": "iphone" },
+        { "type": "text", "id": "label", "label": "Label", "default": "iPhone" },
+        { "type": "number", "id": "base_price", "label": "Base price (grade A, 0 years old)", "default": 600 }
+      ]
+    }
   ],
   "presets": [ { "name": "Trade-in calculator" } ]
 }

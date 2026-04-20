@@ -1,21 +1,37 @@
 {
   "general": {
-    "accessibility": { "skip_to_text": "Vai al contenuto", "close": "Chiudi", "previous": "Precedente", "next": "Successivo", "loading": "Caricamento" },
-    "search": { "placeholder": "Cerca prodotti ricondizionati", "submit": "Cerca" },
-    "cart": { "title": "Il tuo carrello", "empty": "Il tuo carrello è vuoto", "continue_shopping": "Continua lo shopping", "subtotal": "Subtotale", "checkout": "Check-out", "tax_and_shipping": "Tasse e spedizione calcolate al check-out", "remove": "Rimuovi" },
-    "404": { "title": "Pagina non trovata", "subtext": "La pagina che cerchi non esiste.", "link": "Continua lo shopping" }
+    "accessibility": { "skip_to_text": "Vai al contenuto", "close": "Chiudi", "previous": "Precedente", "next": "Successivo", "loading": "Caricamento", "menu": "Menu" },
+    "search": { "placeholder": "Cerca prodotti ricondizionati", "submit": "Cerca", "products": "Prodotti", "collections": "Categorie", "articles": "Articoli", "suggestions": "Suggerimenti" },
+    "cart": { "title": "Il tuo carrello", "empty": "Il tuo carrello è vuoto", "continue_shopping": "Continua lo shopping", "subtotal": "Subtotale", "checkout": "Pagamento", "tax_and_shipping": "Tasse e spedizione calcolate al checkout", "remove": "Rimuovi", "view_cart": "Visualizza carrello", "added_to_cart": "Aggiunto al carrello", "co2_savings_html": "Con questo carrello risparmi <strong>{{ kg }} kg CO\u2082e</strong>." },
+    "404": { "title": "Pagina non trovata", "subtext": "La pagina che stai cercando non esiste.", "link": "Continua lo shopping" }
+  },
+  "sections": {
+    "trade_in": {
+      "step_device": "1. Che dispositivo hai?",
+      "step_age": "2. Quanti anni ha? (anni)",
+      "step_condition": "3. Condizione generale",
+      "condition_a": "Come nuovo \u2014 nessun segno",
+      "condition_b": "Ottimo \u2014 segni d'uso lievi",
+      "condition_c": "Buono \u2014 segni visibili, perfettamente funzionante",
+      "condition_d": "Discreto \u2014 segni evidenti",
+      "quote_label": "Stima di permuta",
+      "quote_note": "Stima immediata \u2014 offerta finale dopo ispezione.",
+      "pricing_table": "Vedi tabella prezzi completa",
+      "device": "Dispositivo",
+      "base_price": "Prezzo base (nuovo, 0 anni)"
+    }
   },
   "products": {
-    "product": { "add_to_cart": "Aggiungi al carrello", "sold_out": "Esaurito", "quantity": "Quantità", "description_title": "Descrizione" },
+    "product": { "add_to_cart": "Aggiungi al carrello", "sold_out": "Esaurito", "quantity": "Quantit\u00e0", "description_title": "Descrizione" },
     "refurbished": {
       "condition_title": "Condizione",
       "grade_a_label": "Come nuovo", "grade_b_label": "Ottimo", "grade_c_label": "Buono", "grade_d_label": "Discreto",
       "warranty_months": "Garanzia {{ count }} mesi",
-      "returns_days_eu": "Reso {{ count }} giorni (UE)",
-      "dpp_title": "Passaporto digitale prodotto",
-      "price_30day_low": "Prezzo più basso negli ultimi 30 giorni: {{ price }}",
-      "msrp_new": "Prezzo nuovo: {{ price }}",
-      "repairability": "Riparabilità",
+      "returns_days_eu": "Resi entro {{ count }} giorni",
+      "dpp_title": "Passaporto Digitale di Prodotto",
+      "price_30day_low": "Prezzo pi\u00f9 basso negli ultimi 30 giorni: {{ price }}",
+      "msrp_new": "Prezzo nuovo (MSRP): {{ price }}",
+      "repairability": "Riparabilit\u00e0",
       "co2_saved": "{{ value }} {{ unit }}"
     }
   }
