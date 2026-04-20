@@ -1,0 +1,19 @@
+{
+  "name": "recircle-seed",
+  "version": "1.0.0",
+  "description": "ReCircle theme demo-store seed kit. Creates metafield definitions, collections, pages, blog and articles via the Shopify Admin GraphQL API.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "recircle-seed": "./seed.mjs"
+  },
+  "scripts": {
+    "seed": "node seed.mjs",
+    "seed:metafields": "node seed.mjs --only=metafields",
+    "seed:collections": "node seed.mjs --only=collections",
+    "seed:pages": "node seed.mjs --only=pages",
+    "seed:articles": "node seed.mjs --only=articles"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {}
+}

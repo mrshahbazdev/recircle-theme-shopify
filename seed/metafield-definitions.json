@@ -1,0 +1,149 @@
+[
+  {
+    "namespace": "recircle",
+    "key": "condition_grade",
+    "name": "Condition grade",
+    "description": "Overall condition: A (like new), B (excellent), C (very good), D (good/project).",
+    "type": "single_line_text_field",
+    "ownerType": "PRODUCT",
+    "validations": [{ "name": "choices", "value": "[\"A\",\"B\",\"C\",\"D\"]" }]
+  },
+  {
+    "namespace": "recircle",
+    "key": "condition_notes",
+    "name": "Condition notes",
+    "description": "Free-text description of cosmetic and functional condition.",
+    "type": "multi_line_text_field",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "co2_saved_kg",
+    "name": "CO\u2082 saved (kg)",
+    "description": "Estimated CO\u2082e saved vs buying new.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "msrp_new",
+    "name": "MSRP when new",
+    "description": "Retail price of the equivalent new product at time of original sale.",
+    "type": "money",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "repair_score",
+    "name": "Repairability score",
+    "description": "0\u201310 score for spare parts availability and ease of self-repair.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT",
+    "validations": [
+      { "name": "min", "value": "0" },
+      { "name": "max", "value": "10" }
+    ]
+  },
+  {
+    "namespace": "recircle",
+    "key": "warranty_months",
+    "name": "Warranty (months)",
+    "description": "Length of the refurbisher-provided warranty.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "warranty_text",
+    "name": "Warranty text",
+    "description": "Short description shown on the warranty bar.",
+    "type": "single_line_text_field",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "battery_health_pct",
+    "name": "Battery health (%)",
+    "description": "Electronics: remaining battery capacity as a percentage.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT",
+    "validations": [
+      { "name": "min", "value": "0" },
+      { "name": "max", "value": "100" }
+    ]
+  },
+  {
+    "namespace": "recircle",
+    "key": "cycle_count",
+    "name": "Battery cycle count",
+    "description": "Electronics: number of recorded charge cycles.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "refurbished_year",
+    "name": "Refurbished year",
+    "description": "Year the current refurbishment was completed.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "dpp_id",
+    "name": "Digital Product Passport ID",
+    "description": "Unique identifier for the DPP record (EU ESPR).",
+    "type": "single_line_text_field",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "dpp_url",
+    "name": "Digital Product Passport URL",
+    "description": "Public URL of the DPP page / QR target.",
+    "type": "url",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "origin_country",
+    "name": "Country of origin",
+    "description": "ESPR country-of-origin declaration.",
+    "type": "single_line_text_field",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "materials",
+    "name": "Materials",
+    "description": "Dominant material composition (DPP).",
+    "type": "multi_line_text_field",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "before_image",
+    "name": "Before image",
+    "description": "Photo before refurbishment (before/after slider).",
+    "type": "file_reference",
+    "ownerType": "PRODUCT",
+    "validations": [{ "name": "file_type_options", "value": "[\"Image\"]" }]
+  },
+  {
+    "namespace": "recircle",
+    "key": "after_image",
+    "name": "After image",
+    "description": "Photo after refurbishment (before/after slider).",
+    "type": "file_reference",
+    "ownerType": "PRODUCT",
+    "validations": [{ "name": "file_type_options", "value": "[\"Image\"]" }]
+  },
+  {
+    "namespace": "recircle",
+    "key": "serial_hash",
+    "name": "Serial hash",
+    "description": "SHA-256 of the device serial (traceability).",
+    "type": "single_line_text_field",
+    "ownerType": "PRODUCT"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "blog_handle": "news",
+    "blog_title": "Circular news",
+    "title": "Why we grade every product A to D \u2014 and what it means for your wallet",
+    "handle": "condition-grading-explained",
+    "author": "ReCircle team",
+    "tags": ["guide", "condition", "grading"],
+    "summary_html": "<p>Our four-tier grading system takes the guesswork out of buying second-hand. Here\u2019s exactly what each letter means.</p>",
+    "body_html": "<p>Buying a refurbished product should feel just as safe as buying new \u2014 which is why every item we list carries a condition grade from A to D.</p><h2>Grade A \u2014 like new</h2><p>Indistinguishable from new on handling. Zero functional issues. If there are any cosmetic marks at all, they\u2019re only visible under close inspection.</p><h2>Grade B \u2014 excellent</h2><p>Light signs of previous use: maybe a hairline scratch, a small scuff on a corner. Fully functional, often with original packaging.</p><h2>Grade C \u2014 very good</h2><p>Visible but minor cosmetic wear. Perfect for buyers who care about price and performance over pristine looks.</p><h2>Grade D \u2014 good / project</h2><p>Character pieces. May have notable cosmetic flaws. Ideal for buyers who plan to personalise or use hard.</p><p>All grades come with the same ReCircle warranty. We don\u2019t sell anything that doesn\u2019t work.</p>"
+  },
+  {
+    "blog_handle": "news",
+    "blog_title": "Circular news",
+    "title": "The EU Digital Product Passport, explained \u2014 what merchants need to know before 2027",
+    "handle": "eu-dpp-explained",
+    "author": "ReCircle team",
+    "tags": ["policy", "dpp", "espr", "eu"],
+    "summary_html": "<p>By 2027 every product sold in the EU will need a Digital Product Passport. Here\u2019s how ReCircle has it covered on day one.</p>",
+    "body_html": "<p>Under the EU\u2019s Ecodesign for Sustainable Products Regulation (ESPR), most non-food goods sold in the EU will need a <strong>Digital Product Passport</strong> (DPP) by the end of 2027. Phones and consumer electronics are among the first-wave categories.</p><h2>What a DPP contains</h2><ul><li>Materials and origin</li><li>Repair and refurbishment history</li><li>Warranty and end-of-life routing</li><li>Unique ID accessible via QR code</li></ul><h2>Why refurbished merchants are affected sooner</h2><p>The Right-to-Repair and Circular Economy packages already impose traceability requirements. Adding a DPP to your refurbished listings today is a one-off effort that future-proofs you against 2026 and 2027 deadlines.</p><h2>How ReCircle handles it</h2><p>Every product in ReCircle has a <code>recircle.dpp_id</code> and <code>recircle.dpp_url</code> metafield. The product page renders a compact DPP block linking to the public record. Merchants keep using whatever DPP registry they prefer \u2014 ReCircle just displays it.</p>"
+  },
+  {
+    "blog_handle": "news",
+    "blog_title": "Circular news",
+    "title": "We saved 482 tonnes of CO\u2082e in 2024 \u2014 here\u2019s the maths",
+    "handle": "co2-savings-2024",
+    "author": "ReCircle team",
+    "tags": ["impact", "sustainability", "co2"],
+    "summary_html": "<p>Transparent methodology: how we estimate CO\u2082 avoided per product, and why the numbers are conservative on purpose.</p>",
+    "body_html": "<p>Every product page carries a CO\u2082 savings figure. Here\u2019s how we calculate it.</p><h2>Method</h2><p>We use lifecycle assessments (LCAs) published by manufacturers and independent bodies (ADEME, Ellen MacArthur Foundation, <em>Nature</em> studies). For each category we take the <strong>lower-bound</strong> published estimate of cradle-to-gate CO\u2082e for a new unit, then subtract the refurbishment footprint (energy, replacement parts, shipping).</p><h2>2024 totals</h2><ul><li>Electronics: 287 tCO\u2082e saved</li><li>Fashion: 142 tCO\u2082e saved</li><li>Furniture & appliances: 53 tCO\u2082e saved</li><li><strong>Total: 482 tCO\u2082e</strong></li></ul><p>Full methodology and source list: <a href=\"/pages/sustainability\">Sustainability report</a>.</p>"
+  }
+]
