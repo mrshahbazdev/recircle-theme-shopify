@@ -44,6 +44,8 @@ if (!store || !token) {
 
 const endpoint = `https://${store}/admin/api/${API_VERSION}/graphql.json`;
 
+let SHOP_CURRENCY = "EUR";
+
 async function gql(query, variables = {}) {
   const res = await fetch(endpoint, {
     method: "POST",
@@ -170,9 +172,14 @@ async function seedPages() {
 // ---------- Articles ----------
 
 async function findOrCreateBlog(handle, title) {
-  const q = /* GraphQL */ `query ($handle: String!) { blogByHandle(handle: $handle) { id } }`;
-  const existing = await gql(q, { handle });
-  if (existing.blogByHandle) return existing.blogByHandle.id;
+  const q = /* GraphQL */ `
+    query ($q: String!) {
+      blogs(first: 10, query: $q) { edges { node { id handle } } }
+    }
+  `;
+  const existing = await gql(q, { q: `handle:${handle}` });
+  const hit = existing.blogs.edges.find((e) => e.node.handle === handle);
+  if (hit) return hit.node.id;
   const mutation = /* GraphQL */ `
     mutation ($blog: BlogCreateInput!) {
       blogCreate(blog: $blog) { blog { id } userErrors { field message } }
@@ -219,19 +226,133 @@ async function seedArticles() {
   }
 }
 
+// ---------- Products ----------
+
+function metafieldsFor(p) {
+  const m = (namespace, key, type, value) =>
+    value === null || value === undefined || value === "" ? null : { namespace, key, type, value: String(value) };
+  return [
+    m("recircle", "condition_grade", "single_line_text_field", p.grade),
+    m("recircle", "condition_notes", "multi_line_text_field", p.notes),
+    m("recircle", "co2_saved_kg", "number_integer", p.co2),
+    p.msrp ? { namespace: "recircle", key: "msrp_new", type: "money", value: JSON.stringify({ amount: p.msrp, currency_code: SHOP_CURRENCY }) } : null,
+    m("recircle", "repair_score", "number_integer", p.repair),
+    m("recircle", "warranty_months", "number_integer", p.warranty_m),
+    m("recircle", "warranty_text", "single_line_text_field", p.warranty_t),
+    m("recircle", "refurbished_year", "number_integer", p.year),
+    m("recircle", "origin_country", "single_line_text_field", p.origin),
+    m("recircle", "dpp_id", "single_line_text_field", p.dpp_id),
+    m("recircle", "dpp_url", "url", p.dpp_url),
+    m("recircle", "battery_health_pct", "number_integer", p.battery),
+    m("recircle", "cycle_count", "number_integer", p.cycles),
+  ].filter(Boolean);
+}
+
+async function getOnlineStorePublicationId() {
+  const { publications } = await gql(`{ publications(first: 20) { edges { node { id name } } } }`);
+  const onlineStore = publications.edges.find((e) => e.node.name === "Online Store");
+  return onlineStore?.node?.id || null;
+}
+
+async function publishResource(id, publicationId) {
+  const m = /* GraphQL */ `
+    mutation ($id: ID!, $input: [PublicationInput!]!) {
+      publishablePublish(id: $id, input: $input) {
+        userErrors { field message }
+      }
+    }
+  `;
+  const { publishablePublish: r } = await gql(m, { id, input: [{ publicationId }] });
+  return r.userErrors;
+}
+
+async function seedProducts() {
+  const list = await readJSON("products.json");
+  console.log(`\u2192 creating ${list.length} products\u2026`);
+  const onlineStoreId = await getOnlineStorePublicationId();
+  const createMutation = /* GraphQL */ `
+    mutation ProductCreate($input: ProductInput!, $media: [CreateMediaInput!]) {
+      productCreate(input: $input, media: $media) {
+        product { id handle variants(first: 1) { edges { node { id } } } }
+        userErrors { field message }
+      }
+    }
+  `;
+  const variantUpdate = /* GraphQL */ `
+    mutation VariantsUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+      productVariantsBulkUpdate(productId: $productId, variants: $variants) {
+        userErrors { field message }
+      }
+    }
+  `;
+  for (const p of list) {
+    const input = {
+      title: p.title,
+      handle: p.handle,
+      descriptionHtml: p.body,
+      vendor: p.vendor,
+      productType: p.type,
+      tags: p.tags,
+      status: "ACTIVE",
+      metafields: metafieldsFor(p),
+    };
+    const media = p.img ? [{ originalSource: p.img, mediaContentType: "IMAGE", alt: p.alt }] : [];
+    const { productCreate: r } = await gql(createMutation, { input, media });
+    if (r.userErrors.length) {
+      console.warn(`  \u203c ${p.handle}:`, r.userErrors.map((e) => e.message).join("; "));
+      continue;
+    }
+    const variantId = r.product?.variants?.edges?.[0]?.node?.id;
+    if (variantId) {
+      const variants = [{
+        id: variantId,
+        price: p.price,
+        compareAtPrice: p.compare_at || null,
+        inventoryItem: { sku: p.sku, tracked: false },
+      }];
+      const { productVariantsBulkUpdate: vu } = await gql(variantUpdate, { productId: r.product.id, variants });
+      if (vu.userErrors.length) {
+        console.warn(`  \u203c ${p.handle} variant:`, vu.userErrors.map((e) => e.message).join("; "));
+      }
+    }
+    if (onlineStoreId) {
+      const errs = await publishResource(r.product.id, onlineStoreId);
+      if (errs.length) console.warn(`  \u203c ${p.handle} publish:`, errs.map((e) => e.message).join("; "));
+    }
+    console.log(`  \u2714 ${p.handle}`);
+  }
+}
+
+async function publishAllExistingProducts() {
+  const onlineStoreId = await getOnlineStorePublicationId();
+  if (!onlineStoreId) return;
+  const { products } = await gql(`{ products(first: 100) { edges { node { id handle } } } }`);
+  console.log(`\u2192 publishing ${products.edges.length} products to Online Store\u2026`);
+  for (const { node } of products.edges) {
+    const errs = await publishResource(node.id, onlineStoreId);
+    if (errs.length) {
+      console.warn(`  \u203c ${node.handle}:`, errs.map((e) => e.message).join("; "));
+    } else {
+      console.log(`  \u2714 ${node.handle}`);
+    }
+  }
+}
+
 // ---------- Runner ----------
 
 async function main() {
   console.log(`\u2192 seeding ${store}`);
+  const shopInfo = await gql(`{ shop { currencyCode } }`);
+  SHOP_CURRENCY = shopInfo.shop.currencyCode;
+  console.log(`  shop currency: ${SHOP_CURRENCY}`);
   const all = !only;
   if (all || only === "metafields") await seedMetafields();
   if (all || only === "collections") await seedCollections();
   if (all || only === "pages") await seedPages();
   if (all || only === "articles") await seedArticles();
+  if (all || only === "products") await seedProducts();
+  if (only === "publish") await publishAllExistingProducts();
   console.log("\u2714 done.");
-  console.log("");
-  console.log("Next step: import seed/products.csv via Shopify admin \u2192");
-  console.log("  Products \u2192 Import \u2192 seed/products.csv");
 }
 
 main().catch((err) => {
