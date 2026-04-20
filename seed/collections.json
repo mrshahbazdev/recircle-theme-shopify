@@ -1,0 +1,63 @@
+[
+  {
+    "title": "Refurbished electronics",
+    "handle": "refurbished-electronics",
+    "description_html": "<p>Phones, laptops and tablets \u2014 tested, data-wiped, restored.</p>",
+    "rules": [
+      { "column": "TAG", "relation": "EQUALS", "condition": "electronics" }
+    ],
+    "disjunctive": false,
+    "sort_order": "BEST_SELLING"
+  },
+  {
+    "title": "Pre-loved fashion",
+    "handle": "preloved-fashion",
+    "description_html": "<p>Authenticated designer and high-street pieces \u2014 a second life, beautifully.</p>",
+    "rules": [
+      { "column": "TAG", "relation": "EQUALS", "condition": "fashion" }
+    ],
+    "disjunctive": false,
+    "sort_order": "MANUAL"
+  },
+  {
+    "title": "Restored furniture",
+    "handle": "restored-furniture",
+    "description_html": "<p>Mid-century, designer and everyday pieces \u2014 brought back to life by our workshop.</p>",
+    "rules": [
+      { "column": "TAG", "relation": "EQUALS", "condition": "furniture" }
+    ],
+    "disjunctive": false,
+    "sort_order": "MANUAL"
+  },
+  {
+    "title": "Grade A \u2014 like new",
+    "handle": "grade-a",
+    "description_html": "<p>Our top condition tier. Only the slightest signs of previous use, if any.</p>",
+    "rules": [
+      { "column": "TAG", "relation": "EQUALS", "condition": "grade-a" }
+    ],
+    "disjunctive": false,
+    "sort_order": "BEST_SELLING"
+  },
+  {
+    "title": "Grade B \u2014 excellent",
+    "handle": "grade-b",
+    "description_html": "<p>Minor, barely-noticeable cosmetic wear. Fully functional.</p>",
+    "rules": [
+      { "column": "TAG", "relation": "EQUALS", "condition": "grade-b" }
+    ],
+    "disjunctive": false,
+    "sort_order": "BEST_SELLING"
+  },
+  {
+    "title": "CO\u2082 champions",
+    "handle": "co2-champions",
+    "description_html": "<p>Products that save the most CO\u2082e vs buying new.</p>",
+    "rules": [
+      { "column": "TYPE", "relation": "NOT_EQUALS", "condition": "none-existent" }
+    ],
+    "disjunctive": false,
+    "sort_order": "BEST_SELLING",
+    "note": "Manual curation recommended \u2014 sort by recircle.co2_saved_kg once indexed."
+  }
+]
