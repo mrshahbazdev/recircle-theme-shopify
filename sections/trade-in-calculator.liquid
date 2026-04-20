@@ -24,10 +24,10 @@
     {%- endif -%}
   },
   "condition_multipliers": {
-    "a": {{ section.settings.multiplier_a | default: 0.85 }},
-    "b": {{ section.settings.multiplier_b | default: 0.65 }},
-    "c": {{ section.settings.multiplier_c | default: 0.45 }},
-    "d": {{ section.settings.multiplier_d | default: 0.25 }}
+    "a": {{ section.settings.multiplier_a | default: 0.8 }},
+    "b": {{ section.settings.multiplier_b | default: 0.6 }},
+    "c": {{ section.settings.multiplier_c | default: 0.4 }},
+    "d": {{ section.settings.multiplier_d | default: 0.2 }}
   }
 }
 {%- endcapture -%}
@@ -126,12 +126,12 @@
     { "type": "paragraph", "content": "Add device blocks to override default prices. Leave blank to use the built-in demo table." },
     { "type": "text", "id": "currency_code", "label": "Currency code", "default": "EUR" },
     { "type": "text", "id": "currency_symbol", "label": "Currency symbol", "default": "€" },
-    { "type": "range", "id": "multiplier_a", "label": "Grade A multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.85 },
-    { "type": "range", "id": "multiplier_b", "label": "Grade B multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.65 },
-    { "type": "range", "id": "multiplier_c", "label": "Grade C multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.45 },
-    { "type": "range", "id": "multiplier_d", "label": "Grade D multiplier", "min": 0, "max": 1, "step": 0.05, "default": 0.25 },
-    { "type": "range", "id": "age_decay_per_year", "label": "Age decay per year", "min": 0, "max": 0.5, "step": 0.02, "default": 0.12 },
-    { "type": "range", "id": "min_age_factor", "label": "Minimum age factor", "min": 0.1, "max": 1, "step": 0.05, "default": 0.4 },
+    { "type": "range", "id": "multiplier_a", "label": "Grade A multiplier", "min": 0, "max": 1, "step": 0.1, "default": 0.8 },
+    { "type": "range", "id": "multiplier_b", "label": "Grade B multiplier", "min": 0, "max": 1, "step": 0.1, "default": 0.6 },
+    { "type": "range", "id": "multiplier_c", "label": "Grade C multiplier", "min": 0, "max": 1, "step": 0.1, "default": 0.4 },
+    { "type": "range", "id": "multiplier_d", "label": "Grade D multiplier", "min": 0, "max": 1, "step": 0.1, "default": 0.2 },
+    { "type": "range", "id": "age_decay_per_year", "label": "Age decay per year", "min": 0, "max": 0.5, "step": 0.1, "default": 0.1 },
+    { "type": "range", "id": "min_age_factor", "label": "Minimum age factor", "min": 0.1, "max": 1, "step": 0.1, "default": 0.4 },
     { "type": "checkbox", "id": "show_pricing_table", "label": "Show full pricing table", "default": true }
   ],
   "blocks": [
