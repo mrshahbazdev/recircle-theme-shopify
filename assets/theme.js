@@ -542,10 +542,12 @@
     const actions = root.querySelector('[data-wishlist-actions]');
     if (!grid || !empty) return;
     const handles = readList(WL_KEY);
+    const countEarly = root.querySelector('[data-wishlist-count-label]');
     if (!handles.length) {
       grid.hidden = true;
       empty.hidden = false;
       if (actions) actions.hidden = true;
+      if (countEarly) countEarly.textContent = '';
       return;
     }
     empty.hidden = true;
