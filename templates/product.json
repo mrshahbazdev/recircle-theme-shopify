@@ -30,7 +30,14 @@
         "product_limit": 4,
         "show_vendor": true
       }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "Recently viewed",
+        "max_items": 8
+      }
     }
   },
-  "order": ["main", "related"]
+  "order": ["main", "related", "recently-viewed"]
 }

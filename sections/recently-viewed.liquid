@@ -3,10 +3,16 @@
   The section itself renders an empty scaffold; cards are injected client-side.
 {%- endcomment -%}
 
+{%- liquid
+  assign rv_exclude = ''
+  if template contains 'product' and product and product.handle
+    assign rv_exclude = product.handle
+  endif
+-%}
 <section class="section recently-viewed"
          data-recently-viewed
          data-max="{{ section.settings.max_items | default: 8 }}"
-         {% if hide_current_product %}data-exclude-handle="{{ product.handle }}"{% endif %}
+         {% if rv_exclude != blank %}data-exclude-handle="{{ rv_exclude }}"{% endif %}
          hidden>
   <div class="page-width">
     <header class="section__header">

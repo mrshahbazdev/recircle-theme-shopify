@@ -1,0 +1,15 @@
+{%- layout none -%}
+{%- liquid
+  assign grade = product.metafields.recircle.condition_grade | default: ''
+  assign co2 = product.metafields.recircle.co2_saved_kg | default: ''
+  assign repair = product.metafields.recircle.repair_score | default: ''
+  assign warranty = product.metafields.recircle.warranty_months | default: settings.warranty_months
+-%}
+<!doctype html><html><head><meta charset="utf-8"><title>meta</title></head><body>
+<script id="compare-meta" type="application/json">{
+  "grade": {{ grade | json }},
+  "co2":   {{ co2 | json }},
+  "repair":{{ repair | json }},
+  "warranty": {{ warranty | json }}
+}</script>
+</body></html>

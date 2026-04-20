@@ -18,13 +18,13 @@
         "type": "color",
         "id": "color_brand",
         "label": "t:settings_schema.colors.labels.brand",
-        "default": "#0F4D3A"
+        "default": "#0E3B2C"
       },
       {
         "type": "color",
         "id": "color_brand_hover",
         "label": "Brand hover",
-        "default": "#1E6B46"
+        "default": "#1B5B40"
       },
       {
         "type": "color",
@@ -36,7 +36,7 @@
         "type": "color",
         "id": "color_amber",
         "label": "Highlight (warranty / badges)",
-        "default": "#F5A623"
+        "default": "#C8661B"
       },
       {
         "type": "header",
@@ -46,31 +46,31 @@
         "type": "color",
         "id": "color_text",
         "label": "Text",
-        "default": "#07261D"
+        "default": "#0D211A"
       },
       {
         "type": "color",
         "id": "color_text_muted",
         "label": "Muted text",
-        "default": "#6B7280"
+        "default": "#6B7461"
       },
       {
         "type": "color",
         "id": "color_bg",
         "label": "Page background",
-        "default": "#FFFFFF"
+        "default": "#FBF8F3"
       },
       {
         "type": "color",
         "id": "color_bg_subtle",
         "label": "Subtle background",
-        "default": "#F6FAF7"
+        "default": "#F3EFE6"
       },
       {
         "type": "color",
         "id": "color_border",
         "label": "Border",
-        "default": "#D6ECDF"
+        "default": "#E4DED1"
       },
       {
         "type": "header",
@@ -109,7 +109,7 @@
         "type": "font_picker",
         "id": "type_header_font",
         "label": "Heading font",
-        "default": "assistant_n7"
+        "default": "playfair_display_n7"
       },
       {
         "type": "range",
@@ -125,7 +125,7 @@
         "type": "font_picker",
         "id": "type_body_font",
         "label": "Body font",
-        "default": "assistant_n4"
+        "default": "inter_n4"
       },
       {
         "type": "range",
