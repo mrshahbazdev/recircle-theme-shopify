@@ -12,7 +12,8 @@
         {%- if section.settings.show_condition_filter -%}
           <h3>Condition</h3>
           <ul>
-            {%- for grade in 'a,b,c,d' | split: ',' -%}
+            {%- assign grade_list = 'a,b,c,d' | split: ',' -%}
+            {%- for grade in grade_list -%}
               <li>
                 <label>
                   <input type="checkbox" name="filter.p.m.recircle.condition_grade" value="{{ grade }}"
