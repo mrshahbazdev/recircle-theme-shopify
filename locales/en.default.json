@@ -112,8 +112,10 @@
       "title": "Wishlist",
       "add": "Save",
       "remove": "Saved",
+      "empty_title": "Nothing saved yet",
       "empty_body": "Your wishlist is empty. Browse refurbished products and tap the heart to save them for later.",
       "empty_cta": "Browse products",
+      "continue": "Continue shopping",
       "clear": "Clear wishlist"
     },
     "quick_view": {

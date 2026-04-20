@@ -2113,6 +2113,8 @@ h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: 0; }
   justify-content: flex-end;
 }
 .wishlist-page__header-actions[hidden] { display: none; }
+.wishlist-page .wishlist-empty[hidden],
+.wishlist-grid[hidden] { display: none; }
 .wishlist-page__clear {
   padding: 0.55em 1em;
   font-size: 0.85rem;

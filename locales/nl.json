@@ -77,6 +77,8 @@
       "title": "Verlanglijst",
       "add": "Bewaren",
       "remove": "Bewaard",
+      "empty_title": "Nog niets bewaard",
+      "continue": "Verder winkelen",
       "empty_body": "Je verlanglijst is leeg. Tik op het hartje om producten te bewaren voor later.",
       "empty_cta": "Producten bekijken",
       "clear": "Verlanglijst legen"
