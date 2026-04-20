@@ -1,0 +1,168 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next",
+      "loading": "Loading"
+    },
+    "password_page": {
+      "opening_soon": "Opening Soon",
+      "login_form_heading": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\">Log in here</a>"
+    },
+    "search": {
+      "placeholder": "Search refurbished products",
+      "submit": "Search",
+      "no_results_html": "No results found for \"{{ terms }}\". Check your spelling or use a different word or phrase."
+    },
+    "cart": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Check out",
+      "tax_and_shipping": "Taxes and shipping calculated at checkout",
+      "remove": "Remove"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "social": {
+      "share_on_facebook": "Share on Facebook",
+      "share_on_twitter": "Share on Twitter",
+      "share_on_pinterest": "Pin on Pinterest"
+    },
+    "newsletter": {
+      "label": "Email",
+      "placeholder": "Email address",
+      "submit": "Subscribe",
+      "confirmation": "Thanks for subscribing"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you're looking for doesn't exist.",
+      "link": "Continue shopping"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "increase_quantity": "Increase quantity",
+      "decrease_quantity": "Decrease quantity",
+      "include_taxes": "Tax included.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+      "vendor": "Vendor",
+      "sku": "SKU",
+      "view_full_details": "View full details",
+      "save": "Save",
+      "description_title": "Description",
+      "low_stock": "Only {{ count }} left in stock"
+    },
+    "refurbished": {
+      "condition_title": "Condition",
+      "grade_a_label": "Like new",
+      "grade_b_label": "Very good",
+      "grade_c_label": "Good",
+      "grade_d_label": "Fair",
+      "grade_a_desc": "No visible signs of use. Cosmetically pristine.",
+      "grade_b_desc": "Light wear; no dents or deep scratches.",
+      "grade_c_desc": "Visible wear; fully functional.",
+      "grade_d_desc": "Noticeable wear; lower price to match.",
+      "co2_saved": "{{ value }} {{ unit }}",
+      "price_30day_low": "Lowest price in last 30 days: {{ price }}",
+      "msrp_new": "MSRP new: {{ price }}",
+      "repairability": "Repairability",
+      "repair_score_caption": "Based on spare-parts availability, disassembly, and repair documentation.",
+      "dpp_title": "Digital Product Passport",
+      "dpp_materials": "Materials",
+      "dpp_origin": "Assembled in",
+      "dpp_recycled": "Recycled content",
+      "dpp_weight": "Weight",
+      "dpp_battery_health": "Battery health",
+      "dpp_serial": "Serial",
+      "dpp_passport_id": "Passport ID",
+      "dpp_view_full": "View full passport",
+      "warranty_months": "{{ count }}-month warranty",
+      "returns_days_eu": "{{ count }}-day EU returns",
+      "free_repair": "1 free repair included",
+      "before_after_before": "Before",
+      "before_after_after": "After",
+      "before_after_heading": "Before &amp; after refurbishment"
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all": "View all",
+      "sort_by": "Sort by",
+      "filter": "Filter",
+      "clear_all": "Clear all",
+      "showing_count": "Showing {{ count }} of {{ total }}",
+      "no_products": "No products match your filters yet."
+    }
+  },
+  "blogs": {
+    "article": {
+      "posted_in": "Posted in",
+      "comments_count": "{{ count }} comments",
+      "by": "by",
+      "read_more": "Read more"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "sign_in": "Sign in",
+      "create_account": "Create account"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "submit": "Create"
+    },
+    "account": {
+      "title": "My account",
+      "details": "Account details",
+      "logout": "Log out",
+      "orders_title": "Order history",
+      "no_orders": "You have no orders yet"
+    },
+    "orders": {
+      "order_number": "Order {{ number }}",
+      "date": "Date",
+      "payment_status": "Payment status",
+      "fulfillment_status": "Fulfillment status",
+      "total": "Total"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "add_new": "Add new address",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "subtext": "We'll send you an email to reset your password.",
+      "submit": "Submit"
+    }
+  }
+}

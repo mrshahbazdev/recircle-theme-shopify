@@ -1,0 +1,40 @@
+{
+  "current": {
+    "color_brand": "#0F4D3A",
+    "color_brand_hover": "#1E6B46",
+    "color_accent": "#2E8659",
+    "color_amber": "#F5A623",
+    "color_text": "#07261D",
+    "color_text_muted": "#6B7280",
+    "color_bg": "#FFFFFF",
+    "color_bg_subtle": "#F6FAF7",
+    "color_border": "#D6ECDF",
+    "color_grade_a": "#0F4D3A",
+    "color_grade_b": "#2E8659",
+    "color_grade_c": "#F5A623",
+    "color_grade_d": "#B45309",
+    "type_header_font": "assistant_n7",
+    "type_header_scale": 110,
+    "type_body_font": "assistant_n4",
+    "type_body_scale": 100,
+    "page_width": 1280,
+    "spacing_sections": 40,
+    "corner_radius": "12",
+    "grading_enabled": true,
+    "grading_label_a": "Like new",
+    "grading_label_b": "Very good",
+    "grading_label_c": "Good",
+    "grading_label_d": "Fair",
+    "co2_badge_enabled": true,
+    "co2_unit": "kg CO₂e saved vs buying new",
+    "dpp_enabled": true,
+    "repairability_enabled": true,
+    "price_indication_enabled": true,
+    "warranty_months": "12",
+    "returns_days_eu": "14",
+    "logo_width": 130
+  },
+  "presets": {
+    "Default": {}
+  }
+}

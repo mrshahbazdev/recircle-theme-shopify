@@ -1,0 +1,99 @@
+<section class="section hero" role="region" aria-label="{{ section.settings.heading | default: 'Hero' }}">
+  <div class="page-width">
+    <div class="hero__grid">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="hero__eyebrow">
+            <svg width="14" height="14" aria-hidden="true"><use href="#icon-recycle"/></svg>
+            {{ section.settings.eyebrow }}
+          </span>
+        {%- endif -%}
+        <h1 class="hero__title">{{ section.settings.heading }}</h1>
+        {%- if section.settings.text != blank -%}
+          <p class="hero__text">{{ section.settings.text }}</p>
+        {%- endif -%}
+        <div class="hero__actions">
+          {%- if section.settings.cta_primary_label != blank -%}
+            <a href="{{ section.settings.cta_primary_link }}" class="btn btn--primary">
+              {{ section.settings.cta_primary_label }}
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.cta_secondary_label != blank -%}
+            <a href="{{ section.settings.cta_secondary_link }}" class="btn btn--secondary">
+              {{ section.settings.cta_secondary_label }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="stats-strip" style="margin-top:2.5rem">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'stat' -%}
+                <div {{ block.shopify_attributes }}>
+                  <span class="stats-strip__value">{{ block.settings.value }}</span>
+                  <span class="stats-strip__label">{{ block.settings.label }}</span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="hero__image">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 1200 }}"
+               alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+               width="{{ section.settings.image.width }}"
+               height="{{ section.settings.image.height }}"
+               loading="eager"
+               fetchpriority="high">
+        {%- else -%}
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);font-size:0.9rem">
+            [ Replace with lifestyle image ]
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero (refurbished)",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Certified refurbished" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium electronics, refurbished to near-new — for up to 60% less." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Independently tested. 12-month warranty. CO₂ footprint slashed. Shipped across the EU." },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary CTA text", "default": "Shop refurbished" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary CTA text", "default": "Start a trade-in" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary CTA link" },
+    { "type": "image_picker", "id": "image", "label": "Image" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "12m" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Warranty" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Hero (refurbished)",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "-60%", "label": "vs buying new" } },
+        { "type": "stat", "settings": { "value": "12m", "label": "Warranty" } },
+        { "type": "stat", "settings": { "value": "14d", "label": "EU returns" } },
+        { "type": "stat", "settings": { "value": "70%", "label": "Less CO₂" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": { "skip_to_text": "Ga naar inhoud", "close": "Sluiten", "previous": "Vorige", "next": "Volgende", "loading": "Laden" },
+    "search": { "placeholder": "Zoek refurbished producten", "submit": "Zoeken" },
+    "cart": { "title": "Winkelwagen", "empty": "Je winkelwagen is leeg", "continue_shopping": "Verder winkelen", "subtotal": "Subtotaal", "checkout": "Afrekenen", "tax_and_shipping": "Belasting en verzending berekend bij het afrekenen", "remove": "Verwijderen" },
+    "404": { "title": "Pagina niet gevonden", "subtext": "De pagina die je zoekt bestaat niet.", "link": "Verder winkelen" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Toevoegen aan winkelwagen", "sold_out": "Uitverkocht", "quantity": "Aantal", "description_title": "Beschrijving" },
+    "refurbished": {
+      "condition_title": "Staat",
+      "grade_a_label": "Als nieuw", "grade_b_label": "Zeer goed", "grade_c_label": "Goed", "grade_d_label": "Redelijk",
+      "warranty_months": "{{ count }} maanden garantie",
+      "returns_days_eu": "{{ count }} dagen retourtermijn (EU)",
+      "dpp_title": "Digitaal productpaspoort",
+      "price_30day_low": "Laagste prijs in de afgelopen 30 dagen: {{ price }}",
+      "msrp_new": "Nieuwprijs: {{ price }}",
+      "repairability": "Repareerbaarheid",
+      "co2_saved": "{{ value }} {{ unit }}"
+    }
+  }
+}

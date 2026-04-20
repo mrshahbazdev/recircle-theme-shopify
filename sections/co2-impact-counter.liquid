@@ -1,0 +1,40 @@
+<section class="section" aria-labelledby="co2-heading-{{ section.id }}">
+  <div class="page-width">
+    <div class="impact-counter">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pill">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-leaf"/></svg>
+          {{ section.settings.eyebrow }}
+        </span>
+      {%- endif -%}
+      <h2 id="co2-heading-{{ section.id }}" class="visually-hidden">{{ section.settings.heading }}</h2>
+      <span class="impact-counter__value"
+            data-counter-target="{{ section.settings.target | default: 0 }}"
+            data-counter-duration="{{ section.settings.duration | default: 1400 }}">
+        0
+      </span>
+      <span class="impact-counter__unit">{{ section.settings.unit }}</span>
+      {%- if section.settings.caption != blank -%}
+        <p class="impact-counter__caption">{{ section.settings.caption }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CO₂ impact counter",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collective impact" },
+    { "type": "text", "id": "heading", "label": "Accessibility heading", "default": "CO₂ saved by our customers" },
+    { "type": "number", "id": "target", "label": "Target value", "default": 482000 },
+    { "type": "number", "id": "duration", "label": "Animation duration (ms)", "default": 1800 },
+    { "type": "text", "id": "unit", "label": "Unit", "default": "kg CO₂e saved by ReCircle customers this year" },
+    { "type": "textarea", "id": "caption", "label": "Caption", "default": "Every refurbished device keeps material out of landfill and saves roughly 70% of the manufacturing emissions of a new one." }
+  ],
+  "presets": [
+    { "name": "CO₂ impact counter" }
+  ]
+}
+{% endschema %}

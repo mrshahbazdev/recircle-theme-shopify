@@ -1,0 +1,55 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
+             alt="{{ shop.name }}"
+             width="{{ settings.logo_width }}"
+             height="auto">
+      {%- else -%}
+        <span class="site-header__logo-mark" aria-hidden="true">R</span>
+        <span>{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="site-header__actions">
+      {%- if section.settings.show_search -%}
+        <a href="{{ routes.search_url }}" class="site-header__icon-btn" aria-label="{{ 'general.search.submit' | t }}">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-search"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_account -%}
+        <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="Account">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-user"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_cart -%}
+        <a href="{{ routes.cart_url }}" class="site-header__icon-btn" aria-label="Cart">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-cart"/></svg>
+          {%- if cart.item_count > 0 -%}
+            <span class="cart-count-bubble">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "Show account icon", "default": true },
+    { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

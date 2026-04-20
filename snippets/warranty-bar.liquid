@@ -1,0 +1,23 @@
+{%- liquid
+  assign warranty = product.metafields.recircle.warranty_months | default: settings.warranty_months
+  assign returns = product.metafields.recircle.returns_days | default: settings.returns_days_eu
+-%}
+
+<div class="warranty-bar" role="group" aria-label="Warranty and returns">
+  <div class="warranty-bar__item">
+    <svg class="warranty-bar__icon" aria-hidden="true"><use href="#icon-shield"/></svg>
+    <span><strong>{{ warranty }}</strong>-{{ 'products.refurbished.warranty_months' | t: count: warranty | remove: '12-month warranty' | remove: warranty | strip | default: 'month warranty' }}</span>
+  </div>
+  <div class="warranty-bar__item">
+    <svg class="warranty-bar__icon" aria-hidden="true"><use href="#icon-return"/></svg>
+    <span><strong>{{ returns }}</strong>-day EU returns</span>
+  </div>
+  <div class="warranty-bar__item">
+    <svg class="warranty-bar__icon" aria-hidden="true"><use href="#icon-tool"/></svg>
+    <span>1 free repair included</span>
+  </div>
+  <div class="warranty-bar__item">
+    <svg class="warranty-bar__icon" aria-hidden="true"><use href="#icon-recycle"/></svg>
+    <span>Certified refurbishment</span>
+  </div>
+</div>

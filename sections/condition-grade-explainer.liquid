@@ -1,0 +1,70 @@
+<section class="section" aria-labelledby="grade-heading-{{ section.id }}">
+  <div class="page-width">
+    <header class="section-heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-heading__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="section-heading__title" id="grade-heading-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-heading__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="grade-explainer">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'grade' -%}
+          <article class="grade-card" {{ block.shopify_attributes }}>
+            <div class="grade-card__top">
+              {% render 'condition-badge', grade: block.settings.grade %}
+            </div>
+            <h3 class="grade-card__title">{{ block.settings.title }}</h3>
+            <p class="grade-card__desc">{{ block.settings.description }}</p>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Condition grade explainer",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How we grade" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Four clear condition grades" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Every device is inspected by our certified technicians and graded on a transparent scale. The price you pay matches the condition — no surprises." }
+  ],
+  "blocks": [
+    {
+      "type": "grade",
+      "name": "Grade",
+      "settings": [
+        {
+          "type": "select", "id": "grade", "label": "Grade", "default": "a",
+          "options": [
+            { "value": "a", "label": "A — Like new" },
+            { "value": "b", "label": "B — Very good" },
+            { "value": "c", "label": "C — Good" },
+            { "value": "d", "label": "D — Fair" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Like new" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "No visible signs of use. Cosmetically pristine; fully tested; 100% functional." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Condition grades (4-up)",
+      "blocks": [
+        { "type": "grade", "settings": { "grade": "a", "title": "A · Like new", "description": "No visible wear. Cosmetically pristine." } },
+        { "type": "grade", "settings": { "grade": "b", "title": "B · Very good", "description": "Light signs of use under close inspection." } },
+        { "type": "grade", "settings": { "grade": "c", "title": "C · Good", "description": "Visible scratches, all functional." } },
+        { "type": "grade", "settings": { "grade": "d", "title": "D · Fair", "description": "Noticeable wear, best price." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

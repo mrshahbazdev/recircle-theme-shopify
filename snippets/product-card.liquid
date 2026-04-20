@@ -1,0 +1,64 @@
+{%- comment -%}
+  Renders a refurbished-friendly product card.
+  Accepts: product, show_vendor (bool)
+{%- endcomment -%}
+
+{%- liquid
+  assign grade = product.metafields.recircle.condition_grade | default: ''
+  assign co2 = product.metafields.recircle.co2_saved_kg | default: 0
+  assign msrp = product.metafields.recircle.msrp_new
+  assign compare_at = product.compare_at_price
+-%}
+
+<article class="product-card">
+  <div class="product-card__media">
+    <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image -%}
+        <img
+          srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                  {{ product.featured_image | image_url: width: 500 }} 500w,
+                  {{ product.featured_image | image_url: width: 800 }} 800w"
+          sizes="(min-width: 900px) 280px, 45vw"
+          src="{{ product.featured_image | image_url: width: 500 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}">
+      {%- else -%}
+        <div style="width:100%;height:100%;background:var(--color-bg-subtle)"></div>
+      {%- endif -%}
+    </a>
+    {%- if grade != '' or co2 > 0 -%}
+      <div class="product-card__overlay-badges">
+        {%- if grade != '' -%}
+          {% render 'condition-badge', grade: grade %}
+        {%- endif -%}
+        {%- if co2 > 0 and settings.co2_badge_enabled -%}
+          <span class="co2-badge" style="font-size:0.7rem">
+            <svg width="14" height="14" aria-hidden="true"><use href="#icon-leaf"/></svg>
+            {{ co2 }} kg CO₂
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if show_vendor and product.vendor != blank -%}
+    <p class="product-card__attrs">{{ product.vendor }}</p>
+  {%- endif -%}
+
+  <h3 class="product-card__title">
+    <a href="{{ product.url }}">{{ product.title }}</a>
+  </h3>
+
+  <div class="product-card__meta">
+    <div class="product-card__price">
+      {{ product.price | money }}
+      {%- if compare_at > product.price -%}
+        <s>{{ compare_at | money }}</s>
+      {%- elsif msrp != blank -%}
+        <s>{{ msrp }}</s>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

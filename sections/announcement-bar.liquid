@@ -1,0 +1,49 @@
+<div class="announcement-bar" role="region" aria-label="Announcements">
+  <div class="page-width flex items-center justify-between" style="gap:1rem">
+    <div style="flex:1">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'announcement' -%}
+          <span {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+            {%- else -%}
+              {{ block.settings.text }}
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+        {%- unless forloop.last -%}<span style="opacity:0.5;padding:0 0.5rem">·</span>{%- endunless -%}
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.dismissible -%}
+      <button type="button" class="site-header__icon-btn" data-announcement-close aria-label="Close announcement" style="color:#fff">
+        <svg width="16" height="16"><use href="#icon-close"/></svg>
+      </button>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow users to dismiss",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Welcome to our store" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

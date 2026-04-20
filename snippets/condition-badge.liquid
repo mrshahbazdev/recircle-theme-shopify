@@ -1,0 +1,37 @@
+{%- comment -%}
+  Renders a condition grade badge.
+  Accepts: grade (string: 'a' | 'b' | 'c' | 'd'), or
+           product (reads product.metafields.recircle.condition_grade)
+  Usage:   {% render 'condition-badge', grade: 'a' %}
+           {% render 'condition-badge', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  if product and grade == blank
+    assign grade_value = product.metafields.recircle.condition_grade | default: 'a'
+  else
+    assign grade_value = grade | default: 'a'
+  endif
+  assign grade_value = grade_value | downcase | strip
+
+  case grade_value
+    when 'a'
+      assign grade_label = settings.grading_label_a | default: 'Like new'
+    when 'b'
+      assign grade_label = settings.grading_label_b | default: 'Very good'
+    when 'c'
+      assign grade_label = settings.grading_label_c | default: 'Good'
+    when 'd'
+      assign grade_label = settings.grading_label_d | default: 'Fair'
+    else
+      assign grade_label = settings.grading_label_b | default: 'Very good'
+      assign grade_value = 'b'
+  endcase
+-%}
+
+{%- if settings.grading_enabled -%}
+  <span class="condition-badge condition-badge--{{ grade_value }}" role="img" aria-label="{{ 'products.refurbished.condition_title' | t }}: {{ grade_label }}">
+    <span class="condition-badge__dot" aria-hidden="true"></span>
+    Grade {{ grade_value | upcase }} · {{ grade_label }}
+  </span>
+{%- endif -%}

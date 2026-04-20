@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": { "skip_to_text": "Saltar al contenido", "close": "Cerrar", "previous": "Anterior", "next": "Siguiente", "loading": "Cargando" },
+    "search": { "placeholder": "Buscar productos reacondicionados", "submit": "Buscar" },
+    "cart": { "title": "Tu carrito", "empty": "Tu carrito está vacío", "continue_shopping": "Seguir comprando", "subtotal": "Subtotal", "checkout": "Finalizar compra", "tax_and_shipping": "Impuestos y envío calculados al pagar", "remove": "Eliminar" },
+    "404": { "title": "Página no encontrada", "subtext": "La página que buscas no existe.", "link": "Seguir comprando" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Añadir al carrito", "sold_out": "Agotado", "quantity": "Cantidad", "description_title": "Descripción" },
+    "refurbished": {
+      "condition_title": "Condición",
+      "grade_a_label": "Como nuevo", "grade_b_label": "Muy bueno", "grade_c_label": "Bueno", "grade_d_label": "Aceptable",
+      "warranty_months": "Garantía de {{ count }} meses",
+      "returns_days_eu": "{{ count }} días de devolución (UE)",
+      "dpp_title": "Pasaporte digital del producto",
+      "price_30day_low": "Precio más bajo en los últimos 30 días: {{ price }}",
+      "msrp_new": "Precio nuevo: {{ price }}",
+      "repairability": "Reparabilidad",
+      "co2_saved": "{{ value }} {{ unit }}"
+    }
+  }
+}

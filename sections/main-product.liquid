@@ -1,0 +1,173 @@
+<section class="section" aria-label="Product">
+  <div class="page-width">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="breadcrumbs__sep">/</span>
+      {%- if collection -%}
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+        <span class="breadcrumbs__sep">/</span>
+      {%- endif -%}
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="product-main">
+      <div>
+        {% render 'product-gallery', product: product %}
+      </div>
+
+      <div class="product-info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'vendor' -%}
+              {%- if product.vendor != blank -%}
+                <p class="product-info__vendor" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
+              {%- endif -%}
+
+            {%- when 'title' -%}
+              <h1 class="product-info__title" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+
+            {%- when 'badges' -%}
+              <div class="product-info__badges" {{ block.shopify_attributes }}>
+                {% render 'condition-badge', product: product %}
+                {% render 'co2-badge', product: product, compact: false %}
+              </div>
+
+            {%- when 'price' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'dual-price', product: product %}
+              </div>
+
+            {%- when 'variant_picker' -%}
+              {%- if product.has_only_default_variant == false -%}
+                <form class="variant-picker" {{ block.shopify_attributes }}>
+                  {%- for option in product.options_with_values -%}
+                    <fieldset style="border:none;padding:0;margin:0">
+                      <legend class="variant-picker__legend">{{ option.name }}</legend>
+                      <div class="variant-picker__options">
+                        {%- for value in option.values -%}
+                          <label class="variant-picker__option">
+                            <input type="radio"
+                                   name="option{{ option.position }}"
+                                   value="{{ value | escape }}"
+                                   {% if option.selected_value == value %}checked{% endif %}>
+                            {{ value }}
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    </fieldset>
+                  {%- endfor -%}
+                </form>
+              {%- endif -%}
+
+            {%- when 'buy_buttons' -%}
+              {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'product-form', novalidate: 'novalidate' -%}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <div class="product-form__quantity-wrap" style="margin-bottom:0.75rem">
+                  <label for="Quantity-{{ section.id }}" class="visually-hidden">{{ 'products.product.quantity' | t }}</label>
+                  <div class="product-form__quantity" data-quantity>
+                    <button type="button" data-qty-step="-1" aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
+                    <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="1" min="1" inputmode="numeric">
+                    <button type="button" data-qty-step="1" aria-label="{{ 'products.product.increase_quantity' | t }}">+</button>
+                  </div>
+                </div>
+                <div class="product-form__buttons">
+                  <button type="submit"
+                          class="btn btn--primary product-form__submit"
+                          {% unless product.available %}disabled{% endunless %}>
+                    {% if product.available %}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {% else %}
+                      {{ 'products.product.sold_out' | t }}
+                    {% endif %}
+                  </button>
+                </div>
+              {%- endform -%}
+
+            {%- when 'warranty_bar' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'warranty-bar', product: product %}
+              </div>
+
+            {%- when 'repairability' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'repairability-score', product: product %}
+              </div>
+
+            {%- when 'dpp' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'dpp-passport', product: product %}
+              </div>
+
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div {{ block.shopify_attributes }}>
+                  <h2 style="font-size:1rem;margin-bottom:0.5rem">{{ 'products.product.description_title' | t }}</h2>
+                  <div class="rte">{{ product.description }}</div>
+                </div>
+              {%- endif -%}
+
+            {%- when 'before_after' -%}
+              <div {{ block.shopify_attributes }} style="margin-top:1rem">
+                <h2 style="font-size:1rem;margin-bottom:0.5rem">{{ 'products.refurbished.before_after_heading' | t }}</h2>
+                {% render 'before-after-gallery', product: product %}
+              </div>
+
+            {%- when 'share' -%}
+              <div class="flex gap-1" {{ block.shopify_attributes }} style="font-size:0.85rem;color:var(--color-text-muted)">
+                <span>Share:</span>
+                <a href="https://www.facebook.com/sharer.php?u={{ shop.url | append: product.url }}" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://twitter.com/share?url={{ shop.url | append: product.url }}&text={{ product.title | escape }}" target="_blank" rel="noopener">Twitter</a>
+                <a href="mailto:?subject={{ product.title | escape }}&body={{ shop.url | append: product.url }}">Email</a>
+              </div>
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- assign structured_price = product.price | divided_by: 100.0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": {{ product.featured_image | image_url: width: 1200 | json }},
+  "description": {{ product.description | strip_html | truncatewords: 50 | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  "itemCondition": "https://schema.org/RefurbishedCondition",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": "{{ structured_price }}",
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "url": {{ shop.url | append: product.url | json }}
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "blocks": [
+    { "type": "@app" },
+    { "type": "vendor",  "name": "Vendor", "limit": 1 },
+    { "type": "title",   "name": "Title", "limit": 1 },
+    { "type": "badges",  "name": "Condition & CO₂ badges", "limit": 1 },
+    { "type": "price",   "name": "Price (dual EU-compliant)", "limit": 1 },
+    { "type": "variant_picker", "name": "Variant picker", "limit": 1 },
+    { "type": "buy_buttons",    "name": "Buy buttons", "limit": 1 },
+    { "type": "warranty_bar",   "name": "Warranty bar", "limit": 1 },
+    { "type": "repairability",  "name": "Repairability score", "limit": 1 },
+    { "type": "dpp",            "name": "Digital Product Passport", "limit": 1 },
+    { "type": "description",    "name": "Description", "limit": 1 },
+    { "type": "before_after",   "name": "Before/after gallery", "limit": 1 },
+    { "type": "share",          "name": "Share buttons", "limit": 1 }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

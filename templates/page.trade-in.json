@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rich-text",
+      "blocks": {
+        "h": { "type": "heading", "settings": { "heading": "Trade in your old device for instant cash" } },
+        "t": { "type": "text", "settings": { "text": "<p>Get an instant quote, ship it free, and receive payment within 3 business days. We keep more electronics in circulation and you get credit towards your next device.</p>" } }
+      },
+      "block_order": ["h", "t"],
+      "settings": { "alignment": "center" }
+    },
+    "calculator": {
+      "type": "trade-in-calculator",
+      "settings": {
+        "eyebrow": "Trade-in",
+        "heading": "Get your instant quote",
+        "text": "Select your device and condition — we'll give you an estimated trade-in quote instantly. Final offer confirmed after inspection.",
+        "cta_label": "Start full trade-in",
+        "cta_link": "/pages/contact"
+      }
+    },
+    "process": {
+      "type": "how-refurbishment-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "1. Get quote", "description": "Answer a few questions, see your estimated value." } },
+        "s2": { "type": "step", "settings": { "title": "2. Send device", "description": "We cover shipping with a prepaid label." } },
+        "s3": { "type": "step", "settings": { "title": "3. Inspection", "description": "Our technicians confirm condition within 3 business days." } },
+        "s4": { "type": "step", "settings": { "title": "4. Get paid", "description": "Receive cash or store credit with a 10% bonus." } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "eyebrow": "How trade-in works", "heading": "Simple, fair, fast" }
+    }
+  },
+  "order": ["hero", "calculator", "process"]
+}

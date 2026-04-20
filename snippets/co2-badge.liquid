@@ -1,0 +1,21 @@
+{%- comment -%}
+  Renders CO2 saved badge. Reads from product.metafields.recircle.co2_saved_kg (number).
+  Optional param: compact (boolean)
+{%- endcomment -%}
+
+{%- liquid
+  assign co2 = product.metafields.recircle.co2_saved_kg | default: 0
+  if co2 == 0 and variant
+    assign co2 = variant.metafields.recircle.co2_saved_kg | default: 0
+  endif
+-%}
+
+{%- if settings.co2_badge_enabled and co2 > 0 -%}
+  <span class="co2-badge" aria-label="{{ co2 }} {{ settings.co2_unit }}">
+    <svg width="18" height="18" aria-hidden="true"><use href="#icon-leaf"/></svg>
+    <span class="co2-badge__value">{{ co2 }}</span>
+    {%- unless compact -%}
+      <span>{{ settings.co2_unit }}</span>
+    {%- endunless -%}
+  </span>
+{%- endif -%}

@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": { "skip_to_text": "Vai al contenuto", "close": "Chiudi", "previous": "Precedente", "next": "Successivo", "loading": "Caricamento" },
+    "search": { "placeholder": "Cerca prodotti ricondizionati", "submit": "Cerca" },
+    "cart": { "title": "Il tuo carrello", "empty": "Il tuo carrello è vuoto", "continue_shopping": "Continua lo shopping", "subtotal": "Subtotale", "checkout": "Check-out", "tax_and_shipping": "Tasse e spedizione calcolate al check-out", "remove": "Rimuovi" },
+    "404": { "title": "Pagina non trovata", "subtext": "La pagina che cerchi non esiste.", "link": "Continua lo shopping" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Aggiungi al carrello", "sold_out": "Esaurito", "quantity": "Quantità", "description_title": "Descrizione" },
+    "refurbished": {
+      "condition_title": "Condizione",
+      "grade_a_label": "Come nuovo", "grade_b_label": "Ottimo", "grade_c_label": "Buono", "grade_d_label": "Discreto",
+      "warranty_months": "Garanzia {{ count }} mesi",
+      "returns_days_eu": "Reso {{ count }} giorni (UE)",
+      "dpp_title": "Passaporto digitale prodotto",
+      "price_30day_low": "Prezzo più basso negli ultimi 30 giorni: {{ price }}",
+      "msrp_new": "Prezzo nuovo: {{ price }}",
+      "repairability": "Riparabilità",
+      "co2_saved": "{{ value }} {{ unit }}"
+    }
+  }
+}

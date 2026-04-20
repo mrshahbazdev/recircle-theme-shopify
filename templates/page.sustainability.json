@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rich-text",
+      "blocks": {
+        "h": { "type": "heading", "settings": { "heading": "Our sustainability impact" } },
+        "t": { "type": "text", "settings": { "text": "<p>Refurbished electronics cut emissions by roughly 70% compared to buying new. Here's what we've achieved together.</p>" } }
+      },
+      "block_order": ["h", "t"],
+      "settings": { "alignment": "center" }
+    },
+    "counter": {
+      "type": "co2-impact-counter",
+      "settings": {
+        "eyebrow": "Real-time impact",
+        "heading": "CO₂ saved by the ReCircle community",
+        "target": 482000,
+        "duration": 2200,
+        "unit": "kg CO₂e saved this year",
+        "caption": "Updated monthly. Calculated using Fraunhofer IZM LCA methodology for refurbished electronics."
+      }
+    },
+    "stats": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "50,000+", "label": "Devices refurbished" } },
+        "s2": { "type": "stat", "settings": { "value": "482 t", "label": "CO₂e saved" } },
+        "s3": { "type": "stat", "settings": { "value": "2.1 M kg", "label": "E-waste diverted" } },
+        "s4": { "type": "stat", "settings": { "value": "99.2%", "label": "Reliability rate" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "eyebrow": "Our impact", "heading": "Numbers that matter" }
+    }
+  },
+  "order": ["hero", "counter", "stats"]
+}

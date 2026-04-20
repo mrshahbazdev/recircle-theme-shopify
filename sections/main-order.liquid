@@ -1,0 +1,35 @@
+<section class="section">
+  <div class="page-width">
+    <a href="{{ routes.account_url }}" class="btn btn--link" style="padding:0;margin-bottom:0.5rem">← {{ 'customer.account.title' | t }}</a>
+    <h1>{{ 'customer.orders.order_number' | t: number: order.name }}</h1>
+    <p style="color:var(--color-text-muted)">{{ order.created_at | date: format: 'date' }}</p>
+
+    <table class="cart-items">
+      <thead>
+        <tr><th>Product</th><th>SKU</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        {%- for line in order.line_items -%}
+          <tr>
+            <td>{{ line.product.title }}{%- if line.variant.title != 'Default Title' -%} <span style="color:var(--color-text-muted)">({{ line.variant.title }})</span>{%- endif -%}</td>
+            <td style="font-family:monospace">{{ line.sku }}</td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.price | money }}</td>
+            <td>{{ line.final_line_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+
+    <div class="cart-totals">
+      <span>{{ 'general.cart.subtotal' | t }}</span><span>{{ order.subtotal_price | money }}</span>
+    </div>
+    <div class="cart-totals">
+      <span>Total</span><span>{{ order.total_price | money }}</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Order", "tag": "section", "settings": [] }
+{% endschema %}

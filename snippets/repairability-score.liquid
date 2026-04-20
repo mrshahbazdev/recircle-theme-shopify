@@ -1,0 +1,34 @@
+{%- comment -%}
+  Repairability score ring (0-10).
+  Reads product.metafields.recircle.repair_score (number_decimal, 0-10).
+{%- endcomment -%}
+
+{%- liquid
+  assign score = product.metafields.recircle.repair_score | default: 0 | times: 1.0
+  if score == 0 then
+  endif
+  assign pct = score | divided_by: 10.0 | times: 100
+  assign circumference = 176
+  assign offset = 1 | minus: score | divided_by: 10.0 | times: circumference
+  if offset < 0
+    assign offset = 0
+  endif
+-%}
+
+{%- if settings.repairability_enabled and score > 0 -%}
+  <div class="repair-score" role="group" aria-label="{{ 'products.refurbished.repairability' | t }}: {{ score }}/10">
+    <div class="repair-score__ring" aria-hidden="true">
+      <svg viewBox="0 0 64 64">
+        <circle class="track" cx="32" cy="32" r="28"/>
+        <circle class="fill"  cx="32" cy="32" r="28"
+          stroke-dasharray="{{ circumference }}"
+          stroke-dashoffset="{{ offset }}"/>
+      </svg>
+      <div class="repair-score__ring-label">{{ score | round: 1 }}</div>
+    </div>
+    <div>
+      <h4 class="repair-score__title">{{ 'products.refurbished.repairability' | t }} · {{ score | round: 1 }}/10</h4>
+      <p class="repair-score__desc">{{ 'products.refurbished.repair_score_caption' | t }}</p>
+    </div>
+  </div>
+{%- endif -%}

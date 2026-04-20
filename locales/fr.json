@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": { "skip_to_text": "Aller au contenu", "close": "Fermer", "previous": "Précédent", "next": "Suivant", "loading": "Chargement" },
+    "search": { "placeholder": "Rechercher des produits reconditionnés", "submit": "Rechercher" },
+    "cart": { "title": "Votre panier", "empty": "Votre panier est vide", "continue_shopping": "Continuer mes achats", "subtotal": "Sous-total", "checkout": "Passer à la caisse", "tax_and_shipping": "Taxes et livraison calculées à la caisse", "remove": "Supprimer" },
+    "404": { "title": "Page introuvable", "subtext": "La page que vous cherchez n'existe pas.", "link": "Continuer mes achats" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Ajouter au panier", "sold_out": "Épuisé", "quantity": "Quantité", "description_title": "Description" },
+    "refurbished": {
+      "condition_title": "État",
+      "grade_a_label": "Comme neuf", "grade_b_label": "Très bon", "grade_c_label": "Bon", "grade_d_label": "Correct",
+      "warranty_months": "Garantie de {{ count }} mois",
+      "returns_days_eu": "Retours {{ count }} jours (UE)",
+      "dpp_title": "Passeport numérique produit",
+      "price_30day_low": "Prix le plus bas des 30 derniers jours : {{ price }}",
+      "msrp_new": "Prix neuf : {{ price }}",
+      "repairability": "Indice de réparabilité",
+      "co2_saved": "{{ value }} {{ unit }}"
+    }
+  }
+}

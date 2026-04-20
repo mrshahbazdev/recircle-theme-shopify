@@ -1,0 +1,30 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Certified refurbished · 12-month warranty · 14-day EU returns",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["announcement-1"],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_cart": true
+      }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

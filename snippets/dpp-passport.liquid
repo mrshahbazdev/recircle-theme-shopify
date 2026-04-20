@@ -1,0 +1,84 @@
+{%- comment -%}
+  Renders the Digital Product Passport block. Reads product.metafields.recircle.*
+  Required metafield definitions (create via Shopify admin):
+    recircle.passport_id          (single_line_text_field)
+    recircle.materials            (single_line_text_field)
+    recircle.origin               (single_line_text_field)
+    recircle.recycled_percent     (number_integer)
+    recircle.weight_grams         (number_integer)
+    recircle.battery_health       (number_integer)
+    recircle.serial               (single_line_text_field)
+    recircle.passport_url         (url)
+{%- endcomment -%}
+
+{%- if settings.dpp_enabled -%}
+  {%- liquid
+    assign m = product.metafields.recircle
+    assign passport_id = m.passport_id
+    assign materials = m.materials
+    assign origin = m.origin
+    assign recycled = m.recycled_percent
+    assign weight = m.weight_grams
+    assign battery = m.battery_health
+    assign serial = m.serial
+    assign passport_url = m.passport_url
+  -%}
+
+  <section class="dpp-block" aria-labelledby="dpp-title-{{ product.id }}">
+    <header class="dpp-block__header">
+      <div>
+        <p class="dpp-block__title" id="dpp-title-{{ product.id }}">
+          <svg width="18" height="18" aria-hidden="true" style="vertical-align:-3px"><use href="#icon-qr"/></svg>
+          {{ 'products.refurbished.dpp_title' | t }}
+        </p>
+        {%- if passport_id -%}
+          <p style="margin:0;font-size:0.8rem;color:var(--color-text-muted)">ID: <span style="font-family:monospace">{{ passport_id }}</span></p>
+        {%- endif -%}
+      </div>
+      {%- if passport_url != blank -%}
+        <a href="{{ passport_url }}" class="btn btn--link" target="_blank" rel="noopener">
+          {{ 'products.refurbished.dpp_view_full' | t }} →
+        </a>
+      {%- endif -%}
+    </header>
+
+    <dl class="dpp-block__grid">
+      {%- if materials -%}
+      <div class="dpp-block__item">
+        <dt>{{ 'products.refurbished.dpp_materials' | t }}</dt>
+        <dd>{{ materials }}</dd>
+      </div>
+      {%- endif -%}
+      {%- if origin -%}
+      <div class="dpp-block__item">
+        <dt>{{ 'products.refurbished.dpp_origin' | t }}</dt>
+        <dd>{{ origin }}</dd>
+      </div>
+      {%- endif -%}
+      {%- if recycled -%}
+      <div class="dpp-block__item">
+        <dt>{{ 'products.refurbished.dpp_recycled' | t }}</dt>
+        <dd>{{ recycled }}%</dd>
+      </div>
+      {%- endif -%}
+      {%- if weight -%}
+      <div class="dpp-block__item">
+        <dt>{{ 'products.refurbished.dpp_weight' | t }}</dt>
+        <dd>{{ weight }} g</dd>
+      </div>
+      {%- endif -%}
+      {%- if battery -%}
+      <div class="dpp-block__item">
+        <dt>{{ 'products.refurbished.dpp_battery_health' | t }}</dt>
+        <dd>{{ battery }}%</dd>
+      </div>
+      {%- endif -%}
+      {%- if serial -%}
+      <div class="dpp-block__item">
+        <dt>{{ 'products.refurbished.dpp_serial' | t }}</dt>
+        <dd style="font-family:monospace;font-size:0.8rem">{{ serial }}</dd>
+      </div>
+      {%- endif -%}
+    </dl>
+  </section>
+{%- endif -%}

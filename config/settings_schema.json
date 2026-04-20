@@ -1,0 +1,322 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "ReCircle",
+    "theme_version": "0.1.0",
+    "theme_author": "mrshahbazdev",
+    "theme_documentation_url": "https://github.com/mrshahbazdev/recircle-theme-shopify#readme",
+    "theme_support_email": "support@recircle-theme.com"
+  },
+  {
+    "name": "t:settings_schema.colors.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings_schema.colors.headers.brand"
+      },
+      {
+        "type": "color",
+        "id": "color_brand",
+        "label": "t:settings_schema.colors.labels.brand",
+        "default": "#0F4D3A"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_hover",
+        "label": "Brand hover",
+        "default": "#1E6B46"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (CO₂ / sustainability)",
+        "default": "#2E8659"
+      },
+      {
+        "type": "color",
+        "id": "color_amber",
+        "label": "Highlight (warranty / badges)",
+        "default": "#F5A623"
+      },
+      {
+        "type": "header",
+        "content": "Text & surfaces"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#07261D"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Muted text",
+        "default": "#6B7280"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Page background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_subtle",
+        "label": "Subtle background",
+        "default": "#F6FAF7"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border",
+        "default": "#D6ECDF"
+      },
+      {
+        "type": "header",
+        "content": "Condition grades"
+      },
+      {
+        "type": "color",
+        "id": "color_grade_a",
+        "label": "Grade A (Like-new)",
+        "default": "#0F4D3A"
+      },
+      {
+        "type": "color",
+        "id": "color_grade_b",
+        "label": "Grade B (Very good)",
+        "default": "#2E8659"
+      },
+      {
+        "type": "color",
+        "id": "color_grade_c",
+        "label": "Grade C (Good)",
+        "default": "#F5A623"
+      },
+      {
+        "type": "color",
+        "id": "color_grade_d",
+        "label": "Grade D (Fair)",
+        "default": "#B45309"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "label": "Heading font",
+        "default": "assistant_n7"
+      },
+      {
+        "type": "range",
+        "id": "type_header_scale",
+        "label": "Heading scale",
+        "min": 100,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "default": 110
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "type_body_scale",
+        "label": "Body scale",
+        "min": 100,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1280
+      },
+      {
+        "type": "range",
+        "id": "spacing_sections",
+        "label": "Space between sections",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 40
+      },
+      {
+        "type": "select",
+        "id": "corner_radius",
+        "label": "Corner radius",
+        "options": [
+          { "value": "0", "label": "Sharp" },
+          { "value": "6", "label": "Soft" },
+          { "value": "12", "label": "Rounded" }
+        ],
+        "default": "12"
+      }
+    ]
+  },
+  {
+    "name": "Refurbished & circular",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Condition grading"
+      },
+      {
+        "type": "checkbox",
+        "id": "grading_enabled",
+        "label": "Enable condition grading on product cards",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "grading_label_a",
+        "label": "Grade A label",
+        "default": "Like new"
+      },
+      {
+        "type": "text",
+        "id": "grading_label_b",
+        "label": "Grade B label",
+        "default": "Very good"
+      },
+      {
+        "type": "text",
+        "id": "grading_label_c",
+        "label": "Grade C label",
+        "default": "Good"
+      },
+      {
+        "type": "text",
+        "id": "grading_label_d",
+        "label": "Grade D label",
+        "default": "Fair"
+      },
+      {
+        "type": "header",
+        "content": "Sustainability"
+      },
+      {
+        "type": "checkbox",
+        "id": "co2_badge_enabled",
+        "label": "Show CO₂ saved badge on products",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "co2_unit",
+        "label": "CO₂ unit label",
+        "default": "kg CO₂e saved vs buying new"
+      },
+      {
+        "type": "header",
+        "content": "EU compliance"
+      },
+      {
+        "type": "checkbox",
+        "id": "dpp_enabled",
+        "label": "Show Digital Product Passport block on product pages",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "repairability_enabled",
+        "label": "Show repairability score on product pages",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "price_indication_enabled",
+        "label": "Show 30-day-low price (EU Price Indication Directive)",
+        "info": "Uses product.metafields.recircle.price_30day_low",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Warranty & returns"
+      },
+      {
+        "type": "text",
+        "id": "warranty_months",
+        "label": "Default warranty (months)",
+        "default": "12"
+      },
+      {
+        "type": "text",
+        "id": "returns_days_eu",
+        "label": "Default EU return window (days)",
+        "default": "14"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin",
+        "label": "LinkedIn URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      }
+    ]
+  },
+  {
+    "name": "Favicon & logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width",
+        "min": 60,
+        "max": 260,
+        "step": 10,
+        "unit": "px",
+        "default": 130
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+<section class="section">
+  <div class="page-width">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h1 style="margin:0">{{ 'customer.account.title' | t }}</h1>
+        <p style="color:var(--color-text-muted);margin:0.25rem 0 0">{{ customer.email }}</p>
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        <a href="{{ routes.account_addresses_url }}" class="btn btn--secondary">{{ 'customer.addresses.title' | t }}</a>
+        <a href="{{ routes.account_logout_url }}" class="btn btn--link">{{ 'customer.account.logout' | t }}</a>
+      </div>
+    </div>
+
+    <h2 style="margin-top:2rem">{{ 'customer.account.orders_title' | t }}</h2>
+    {%- if customer.orders.size > 0 -%}
+      <table class="cart-items">
+        <thead>
+          <tr>
+            <th>{{ 'customer.orders.order_number' | t: number: '' }}</th>
+            <th>{{ 'customer.orders.date' | t }}</th>
+            <th>{{ 'customer.orders.payment_status' | t }}</th>
+            <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+            <th>{{ 'customer.orders.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr>
+              <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+              <td>{{ order.created_at | date: format: 'date' }}</td>
+              <td>{{ order.financial_status_label }}</td>
+              <td>{{ order.fulfillment_status_label }}</td>
+              <td>{{ order.total_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- else -%}
+      <p>{{ 'customer.account.no_orders' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Account", "tag": "section", "settings": [] }
+{% endschema %}

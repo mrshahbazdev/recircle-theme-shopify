@@ -1,0 +1,33 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu-shop": {
+          "type": "menu",
+          "settings": { "heading": "Shop", "menu": "footer" }
+        },
+        "menu-company": {
+          "type": "menu",
+          "settings": { "heading": "Company", "menu": "footer" }
+        },
+        "menu-help": {
+          "type": "menu",
+          "settings": { "heading": "Help", "menu": "footer" }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Join the circular economy",
+            "body": "Monthly drops, price alerts, and sustainability news."
+          }
+        }
+      },
+      "block_order": ["newsletter", "menu-shop", "menu-company", "menu-help"],
+      "settings": {}
+    }
+  },
+  "order": ["footer"]
+}

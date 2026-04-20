@@ -1,0 +1,63 @@
+<section class="section" aria-labelledby="ti-heading-{{ section.id }}">
+  <div class="page-width">
+    <header class="section-heading">
+      {%- if section.settings.eyebrow != blank -%}<p class="section-heading__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="section-heading__title" id="ti-heading-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="section-heading__text">{{ section.settings.text }}</p>{%- endif -%}
+    </header>
+
+    <div class="trade-in">
+      <form data-trade-in-form novalidate>
+        <ol class="trade-in__steps">
+          <li class="field">
+            <label class="field__label" for="ti-brand">1. What device do you have?</label>
+            <select id="ti-brand" name="brand">
+              <option value="iphone">iPhone</option>
+              <option value="samsung">Samsung Galaxy</option>
+              <option value="macbook">MacBook</option>
+              <option value="ipad">iPad</option>
+              <option value="default">Other</option>
+            </select>
+          </li>
+          <li class="field">
+            <label class="field__label" for="ti-age">2. How old is it? (years)</label>
+            <input id="ti-age" name="age" type="number" min="0" max="10" value="2">
+          </li>
+          <li class="field">
+            <label class="field__label" for="ti-condition">3. Overall condition</label>
+            <select id="ti-condition" name="condition">
+              <option value="a">Like new — no marks</option>
+              <option value="b" selected>Very good — light wear</option>
+              <option value="c">Good — visible wear, all working</option>
+              <option value="d">Fair — noticeable wear</option>
+            </select>
+          </li>
+        </ol>
+      </form>
+
+      <div class="trade-in__result" role="status" aria-live="polite">
+        <p style="margin:0;color:var(--color-text-muted);font-size:0.85rem">Estimated trade-in quote</p>
+        <p class="trade-in__quote" data-trade-in-quote>€0</p>
+        <p style="margin:0;color:var(--color-text-muted);font-size:0.85rem" data-trade-in-note>Instant estimate — final offer confirmed after device inspection.</p>
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="btn btn--primary" style="margin-top:1rem">{{ section.settings.cta_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trade-in calculator",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Trade-in" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get instant cash for your old device" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Select your device and see an estimated trade-in quote in seconds. Your old device helps us keep more electronics in circulation." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Start full trade-in" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "presets": [ { "name": "Trade-in calculator" } ]
+}
+{% endschema %}

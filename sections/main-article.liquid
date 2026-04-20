@@ -1,0 +1,35 @@
+<article class="section">
+  <div class="page-width" style="max-width:780px">
+    <p class="product-info__vendor">{{ article.published_at | date: '%b %d, %Y' }} · {{ article.author }}</p>
+    <h1>{{ article.title }}</h1>
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 1600 }}" alt="{{ article.title | escape }}" style="border-radius:var(--radius);margin:1rem 0 2rem">
+    {%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+
+    {%- if blog.comments_enabled? -%}
+      <section style="margin-top:3rem">
+        <h2>{{ 'blogs.comments.title' | t }}</h2>
+        {%- if article.comments_count > 0 -%}
+          {%- for comment in article.comments -%}
+            <div style="border-top:1px solid var(--color-border);padding:1rem 0">
+              <p style="font-weight:600">{{ comment.author }}</p>
+              <p style="color:var(--color-text-muted);font-size:0.85rem">{{ comment.created_at | date: '%b %d, %Y' }}</p>
+              <div>{{ comment.content }}</div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+        {%- form 'new_comment', article -%}
+          <label>{{ 'blogs.comments.name' | t }}<input type="text" name="comment[author]" required></label>
+          <label>{{ 'blogs.comments.email' | t }}<input type="email" name="comment[email]" required></label>
+          <label>{{ 'blogs.comments.message' | t }}<textarea name="comment[body]" rows="5" required></textarea></label>
+          <button type="submit" class="btn btn--primary">{{ 'blogs.comments.post' | t }}</button>
+        {%- endform -%}
+      </section>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Article", "tag": "section", "settings": [], "enabled_on": { "templates": ["article"] } }
+{% endschema %}

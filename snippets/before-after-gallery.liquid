@@ -1,0 +1,35 @@
+{%- comment -%}
+  Before/after refurbishment comparison.
+  Reads product.metafields.recircle.before_image and .after_image (both file_reference → image).
+{%- endcomment -%}
+
+{%- liquid
+  assign before_img = product.metafields.recircle.before_image.value
+  assign after_img = product.metafields.recircle.after_image.value
+-%}
+
+{%- if before_img and after_img -%}
+  <figure>
+    <div class="before-after" data-before-after style="--split:50%">
+      <img src="{{ before_img | image_url: width: 900 }}"
+           alt="Before refurbishment"
+           loading="lazy" width="900" height="675">
+      <img class="before-after__after"
+           src="{{ after_img | image_url: width: 900 }}"
+           alt="After refurbishment"
+           loading="lazy" width="900" height="675">
+      <div class="before-after__divider" aria-hidden="true"></div>
+      <button type="button" class="before-after__handle"
+              data-ba-handle aria-label="Drag to compare before and after">
+        ⇔
+      </button>
+      <div class="before-after__labels" aria-hidden="true">
+        <span>{{ 'products.refurbished.before_after_before' | t }}</span>
+        <span>{{ 'products.refurbished.before_after_after' | t }}</span>
+      </div>
+    </div>
+    <figcaption style="margin-top:0.5rem;font-size:0.85rem;color:var(--color-text-muted);text-align:center">
+      Drag the handle to compare before &amp; after refurbishment
+    </figcaption>
+  </figure>
+{%- endif -%}

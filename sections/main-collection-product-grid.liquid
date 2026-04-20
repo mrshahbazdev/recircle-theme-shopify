@@ -1,0 +1,104 @@
+<section class="section" aria-label="Collection">
+  <div class="page-width">
+    <header class="section-heading">
+      <h1 class="section-heading__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="section-heading__text">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    <div class="facets-wrap">
+      <aside class="facets" aria-label="Filters">
+        {%- if section.settings.show_condition_filter -%}
+          <h3>Condition</h3>
+          <ul>
+            {%- for grade in 'a,b,c,d' | split: ',' -%}
+              <li>
+                <label>
+                  <input type="checkbox" name="filter.p.m.recircle.condition_grade" value="{{ grade }}"
+                    {% if current_tags contains grade %}checked{% endif %}>
+                  Grade {{ grade | upcase }}
+                </label>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if collection.all_vendors.size > 1 -%}
+          <h3>Brand</h3>
+          <ul>
+            {%- for vendor in collection.all_vendors limit: 10 -%}
+              <li><label><input type="checkbox" name="filter.p.vendor" value="{{ vendor | escape }}">{{ vendor }}</label></li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <h3>Price</h3>
+        <ul>
+          <li><label><input type="checkbox" name="filter.v.price" value="0-300"> Under €300</label></li>
+          <li><label><input type="checkbox" name="filter.v.price" value="300-600"> €300 – €600</label></li>
+          <li><label><input type="checkbox" name="filter.v.price" value="600-1000"> €600 – €1000</label></li>
+          <li><label><input type="checkbox" name="filter.v.price" value="1000-"> €1000+</label></li>
+        </ul>
+      </aside>
+
+      <div>
+        <div class="flex items-center justify-between mb-2" style="flex-direction:row;gap:1rem">
+          <p style="margin:0;color:var(--color-text-muted);font-size:0.9rem">
+            {{ 'collections.general.showing_count' | t: count: collection.products.size, total: collection.all_products_count }}
+          </p>
+          <label style="font-size:0.9rem">
+            {{ 'collections.general.sort_by' | t }}:
+            <select aria-label="Sort" style="margin-left:0.5rem">
+              <option value="manual">Featured</option>
+              <option value="price-ascending">Price, low to high</option>
+              <option value="price-descending">Price, high to low</option>
+              <option value="created-descending">Newest</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="collection-grid">
+          {%- if collection.products.size > 0 -%}
+            {%- paginate collection.products by 24 -%}
+              {%- for product in collection.products -%}
+                {% render 'product-card', product: product, show_vendor: true %}
+              {%- endfor -%}
+              {%- if paginate.pages > 1 -%}
+                <nav class="pagination" style="grid-column:1/-1" aria-label="Pagination">
+                  {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← {{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+                  {%- for part in paginate.parts -%}
+                    {%- if part.is_link -%}
+                      <a href="{{ part.url }}">{{ part.title }}</a>
+                    {%- else -%}
+                      {%- if part.title == paginate.current_page -%}
+                        <span class="active">{{ part.title }}</span>
+                      {%- else -%}
+                        <span>{{ part.title }}</span>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if paginate.next -%}<a href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }} →</a>{%- endif -%}
+                </nav>
+              {%- endif -%}
+            {%- endpaginate -%}
+          {%- else -%}
+            <p>{{ 'collections.general.no_products' | t }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_condition_filter", "label": "Show condition-grade filter", "default": true },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ],
+  "enabled_on": { "templates": ["collection"] }
+}
+{% endschema %}

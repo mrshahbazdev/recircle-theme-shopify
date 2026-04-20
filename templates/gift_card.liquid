@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift card – {{ shop.name }}</title>
+    {%- if settings.favicon != blank -%}<link rel="icon" href="{{ settings.favicon | image_url: width: 32 }}">{%- endif -%}
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+  </head>
+  <body style="padding:2rem;background:var(--color-bg-subtle)">
+    <main style="max-width:520px;margin:0 auto;text-align:center;padding:2rem;background:#fff;border-radius:var(--radius);border:1px solid var(--color-border)">
+      <p style="color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.08em;font-size:0.75rem">{{ shop.name }}</p>
+      <h1 style="margin-bottom:0.25rem">Gift card</h1>
+      <p style="font-size:3rem;font-weight:800;color:var(--color-brand);margin:1rem 0">{{ gift_card.initial_value | money }}</p>
+      <p style="color:var(--color-text-muted)">Remaining balance: {{ gift_card.balance | money }}</p>
+      <div style="margin:2rem 0;padding:1rem;background:var(--color-bg-subtle);border-radius:var(--radius);font-family:monospace;font-size:1.2rem;letter-spacing:0.05em">
+        {{ gift_card.code | format_code }}
+      </div>
+      {%- if gift_card.expired -%}
+        <p style="color:#c00">This gift card has expired.</p>
+      {%- elsif gift_card.expires_on -%}
+        <p style="font-size:0.85rem;color:var(--color-text-muted)">Expires on {{ gift_card.expires_on | date: format: 'date' }}</p>
+      {%- endif -%}
+      <div style="margin-top:2rem;display:flex;gap:0.5rem;justify-content:center">
+        <a href="{{ shop.url }}" class="btn btn--primary">Shop now</a>
+        <a href="{{ gift_card.pass_url }}" class="btn btn--secondary">Add to Apple Wallet</a>
+      </div>
+    </main>
+  </body>
+</html>

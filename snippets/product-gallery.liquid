@@ -1,0 +1,28 @@
+<div class="product-gallery" data-product-gallery>
+  <div class="product-gallery__main" data-gallery-main>
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 1200 }}"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        width="{{ product.featured_image.width }}"
+        height="{{ product.featured_image.height }}">
+    {%- endif -%}
+  </div>
+
+  {%- if product.images.size > 1 -%}
+    <div class="product-gallery__thumbs" role="group" aria-label="Product images">
+      {%- for image in product.images -%}
+        <button type="button"
+                class="{% if forloop.first %}is-active{% endif %}"
+                data-gallery-thumb
+                data-image-src="{{ image | image_url: width: 1200 }}"
+                data-image-alt="{{ image.alt | default: product.title | escape }}"
+                aria-label="Show image {{ forloop.index }}">
+          <img src="{{ image | image_url: width: 150 }}"
+               alt="{{ image.alt | default: product.title | escape }}"
+               loading="lazy">
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>

@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": { "skip_to_text": "Zum Inhalt springen", "close": "Schließen", "previous": "Vorherige", "next": "Nächste", "loading": "Wird geladen" },
+    "search": { "placeholder": "Refurbished Produkte suchen", "submit": "Suchen" },
+    "cart": { "title": "Ihr Warenkorb", "empty": "Ihr Warenkorb ist leer", "continue_shopping": "Weiter einkaufen", "subtotal": "Zwischensumme", "checkout": "Zur Kasse", "tax_and_shipping": "Steuern und Versand an der Kasse", "remove": "Entfernen" },
+    "404": { "title": "Seite nicht gefunden", "subtext": "Die von Ihnen gesuchte Seite existiert nicht.", "link": "Weiter einkaufen" }
+  },
+  "products": {
+    "product": { "add_to_cart": "In den Warenkorb", "sold_out": "Ausverkauft", "quantity": "Menge", "description_title": "Beschreibung" },
+    "refurbished": {
+      "condition_title": "Zustand",
+      "grade_a_label": "Wie neu", "grade_b_label": "Sehr gut", "grade_c_label": "Gut", "grade_d_label": "Akzeptabel",
+      "warranty_months": "{{ count }} Monate Garantie",
+      "returns_days_eu": "{{ count }} Tage Rückgaberecht",
+      "dpp_title": "Digitaler Produktpass",
+      "price_30day_low": "Niedrigster Preis der letzten 30 Tage: {{ price }}",
+      "msrp_new": "Neupreis (UVP): {{ price }}",
+      "repairability": "Reparierbarkeit",
+      "co2_saved": "{{ value }} {{ unit }}"
+    }
+  }
+}

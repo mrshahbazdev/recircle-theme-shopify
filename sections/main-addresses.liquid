@@ -1,0 +1,45 @@
+<section class="section">
+  <div class="page-width" style="max-width:780px">
+    <a href="{{ routes.account_url }}" class="btn btn--link" style="padding:0;margin-bottom:0.5rem">← {{ 'customer.account.title' | t }}</a>
+    <h1>{{ 'customer.addresses.title' | t }}</h1>
+
+    {%- paginate customer.addresses by 6 -%}
+      {%- for address in customer.addresses -%}
+        <article style="border:1px solid var(--color-border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem">
+          <div>{{ address | format_address }}</div>
+          <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+            <button type="button" class="btn btn--link" onclick="document.getElementById('edit-address-{{ address.id }}').toggleAttribute('open')">{{ 'customer.addresses.edit' | t }}</button>
+          </div>
+          <details id="edit-address-{{ address.id }}" style="margin-top:0.5rem">
+            {%- form 'customer_address', address -%}
+              <div class="field"><label class="field__label">First name<input type="text" name="address[first_name]" value="{{ form.first_name }}"></label></div>
+              <div class="field"><label class="field__label">Last name<input type="text" name="address[last_name]" value="{{ form.last_name }}"></label></div>
+              <div class="field"><label class="field__label">Address<input type="text" name="address[address1]" value="{{ form.address1 }}"></label></div>
+              <div class="field"><label class="field__label">City<input type="text" name="address[city]" value="{{ form.city }}"></label></div>
+              <div class="field"><label class="field__label">Country<input type="text" name="address[country]" value="{{ form.country }}"></label></div>
+              <div class="field"><label class="field__label">Zip<input type="text" name="address[zip]" value="{{ form.zip }}"></label></div>
+              <button type="submit" class="btn btn--primary" style="margin-top:0.5rem">Save</button>
+            {%- endform -%}
+          </details>
+        </article>
+      {%- endfor -%}
+    {%- endpaginate -%}
+
+    <details style="margin-top:1rem">
+      <summary class="btn btn--primary" style="display:inline-flex;list-style:none;cursor:pointer">{{ 'customer.addresses.add_new' | t }}</summary>
+      {%- form 'customer_address', customer.new_address -%}
+        <div class="field"><label class="field__label">First name<input type="text" name="address[first_name]"></label></div>
+        <div class="field"><label class="field__label">Last name<input type="text" name="address[last_name]"></label></div>
+        <div class="field"><label class="field__label">Address<input type="text" name="address[address1]"></label></div>
+        <div class="field"><label class="field__label">City<input type="text" name="address[city]"></label></div>
+        <div class="field"><label class="field__label">Country<input type="text" name="address[country]"></label></div>
+        <div class="field"><label class="field__label">Zip<input type="text" name="address[zip]"></label></div>
+        <button type="submit" class="btn btn--primary" style="margin-top:0.5rem">Save</button>
+      {%- endform -%}
+    </details>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Addresses", "tag": "section", "settings": [] }
+{% endschema %}

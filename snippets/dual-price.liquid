@@ -1,0 +1,23 @@
+{%- comment -%}
+  EU Price Indication Directive compliant price display.
+  Reads product.metafields.recircle.price_30day_low (money) and .msrp_new (money).
+{%- endcomment -%}
+
+{%- liquid
+  assign current_price = product.selected_or_first_available_variant.price | default: product.price
+  assign compare_at = product.selected_or_first_available_variant.compare_at_price | default: product.compare_at_price
+  assign low30 = product.metafields.recircle.price_30day_low
+  assign msrp = product.metafields.recircle.msrp_new
+-%}
+
+<div class="dual-price">
+  <span class="dual-price__current">{{ current_price | money }}</span>
+  {%- if compare_at and compare_at > current_price -%}
+    <span class="dual-price__msrp">{{ compare_at | money }}</span>
+  {%- elsif msrp != blank -%}
+    <span class="dual-price__msrp" title="{{ 'products.refurbished.msrp_new' | t: price: msrp }}">{{ msrp }}</span>
+  {%- endif -%}
+</div>
+{%- if settings.price_indication_enabled and low30 != blank -%}
+  <small class="dual-price__low30">{{ 'products.refurbished.price_30day_low' | t: price: low30 }}</small>
+{%- endif -%}
