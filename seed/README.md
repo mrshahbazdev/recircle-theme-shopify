@@ -77,6 +77,8 @@ SHOPIFY_ADMIN_TOKEN=shpat_xxx \
 npm run seed
 ```
 
+`npm run seed` creates **everything**: metafield definitions, collections, pages, blog + articles, and all 15 products (with images, metafield values, inventory, and Online-Store publication). `msrp_new` currency is auto-detected from `shop.currencyCode`.
+
 Selective runs:
 
 ```bash
@@ -84,15 +86,15 @@ npm run seed:metafields   # just the 17 definitions
 npm run seed:collections  # just collections
 npm run seed:pages        # just pages
 npm run seed:articles     # just blog + articles
+npm run seed:products     # just the 15 products + publish
+npm run seed:publish      # re-publish all existing products to Online Store
 ```
 
 Node 18+. No dependencies — uses the built-in `fetch` + `graphql.json` endpoint.
 
-### 3. Import products (CSV, separate step)
+### 3. (optional) Bulk CSV fallback
 
-The script deliberately does **not** create products — Shopify's native CSV import is faster and more tolerant than the API for bulk seed data.
-
-**Admin → Products → Import → `seed/products.csv`** → Upload.
+If you'd rather not grant `write_products` scope, skip `seed:products` and instead use the CSV: **Admin → Products → Import → `seed/products.csv`** → Upload. Metafield values are preserved inline.
 
 ---
 

@@ -12,7 +12,9 @@
     "seed:metafields": "node seed.mjs --only=metafields",
     "seed:collections": "node seed.mjs --only=collections",
     "seed:pages": "node seed.mjs --only=pages",
-    "seed:articles": "node seed.mjs --only=articles"
+    "seed:articles": "node seed.mjs --only=articles",
+    "seed:products": "node seed.mjs --only=products",
+    "seed:publish": "node seed.mjs --only=publish"
   },
   "engines": { "node": ">=18" },
   "dependencies": {}
