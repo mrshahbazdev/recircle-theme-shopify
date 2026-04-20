@@ -136,6 +136,13 @@
   </div>
 </section>
 
+<div class="mobile-atc" data-mobile-atc aria-hidden="true">
+  <span class="mobile-atc__price">{{ product.price | money }}</span>
+  <a href="#Quantity-{{ section.id }}" class="btn btn--primary mobile-atc__cta">
+    {% if product.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}
+  </a>
+</div>
+
 {%- assign structured_price = product.price | divided_by: 100.0 -%}
 <script type="application/ld+json">
 {

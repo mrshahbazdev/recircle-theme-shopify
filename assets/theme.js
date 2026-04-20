@@ -644,6 +644,18 @@
         renderCompareBar();
         const root = document.querySelector('[data-compare-root]');
         if (root) renderComparePage(root);
+        return;
+      }
+      const removeBtn = e.target.closest('[data-compare-col-remove]');
+      if (removeBtn) {
+        const handle = removeBtn.dataset.compareColRemove;
+        if (!handle) return;
+        const list = readList(CMP_KEY).filter((h) => h !== handle);
+        writeList(CMP_KEY, list);
+        syncCompareButtons();
+        renderCompareBar();
+        const root = document.querySelector('[data-compare-root]');
+        if (root) renderComparePage(root);
       }
     });
     const root = document.querySelector('[data-compare-root]');
@@ -712,33 +724,61 @@
     if (!list.length) { wrap.hidden = true; empty.hidden = false; return; }
     empty.hidden = true;
     wrap.hidden = false;
-    head.innerHTML = '<th scope="col"></th>';
+    head.innerHTML = '<th scope="col" class="compare-table__row-label-cell"><span class="visually-hidden">Spec</span></th>';
     body.innerHTML = '';
-    Promise.all(list.map((h) => fetchProduct(h).catch(() => null))).then((products) => {
-      const valid = products.filter(Boolean);
-      valid.forEach((p) => {
+    Promise.all(list.map((h) => Promise.all([
+      fetchProduct(h).catch(() => null),
+      fetchCompareMeta(h).catch(() => null),
+    ]))).then((pairs) => {
+      const valid = pairs.filter((p) => p[0]);
+      valid.forEach(([p, meta]) => {
         const th = document.createElement('th');
         th.scope = 'col';
+        th.className = 'compare-table__product-cell';
+        const grade = ((meta && meta.grade) || '').toUpperCase();
+        const gradeHtml = grade ? `<span class="compare-table__grade grade-${grade.toLowerCase()}">Grade ${grade}</span>` : '';
         th.innerHTML = `
+          <button type="button" class="compare-table__remove" data-compare-col-remove="${p.handle}" aria-label="Remove ${(p.title || '').replace(/"/g, '&quot;')} from compare">
+            <svg width="14" height="14" aria-hidden="true" focusable="false" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
           <a href="${p.url}" class="compare-table__product">
             <img src="${p.featured_image || ''}" alt="${(p.title || '').replace(/"/g, '&quot;')}" loading="lazy">
-            <span>${p.title}</span>
+            <span class="compare-table__product-title">${p.title}</span>
           </a>
-          <strong>${formatMoney(p.price)}</strong>
+          ${gradeHtml}
+          <strong class="compare-table__price">${formatMoney(p.price)}</strong>
         `;
         head.appendChild(th);
       });
+      const firstAvail = (p) => (p.available ? '<span class="compare-table__pill compare-table__pill--in">In stock</span>' : '<span class="compare-table__pill compare-table__pill--out">Sold out</span>');
+      const mfVal = (meta, key, suffix) => {
+        if (!meta) return '\u2014';
+        const v = meta[key];
+        if (v === undefined || v === null || v === '') return '\u2014';
+        return suffix ? `${v}${suffix}` : String(v);
+      };
       const rows = [
-        { label: 'Vendor', get: (p) => p.vendor || '\u2014' },
-        { label: 'Type', get: (p) => p.type || '\u2014' },
-        { label: 'Tags', get: (p) => (p.tags || []).join(', ') || '\u2014' },
-        { label: 'Available', get: (p) => (p.available ? 'In stock' : 'Sold out') },
+        { label: 'Brand',          get: ([p])       => p.vendor || '\u2014' },
+        { label: 'CO\u2082 saved', get: ([, meta])  => mfVal(meta, 'co2', ' kg') },
+        { label: 'Repairability',  get: ([, meta])  => mfVal(meta, 'repair', ' / 10') },
+        { label: 'Warranty',       get: ([, meta])  => mfVal(meta, 'warranty', ' mo') },
+        { label: 'Availability',   get: ([p])       => firstAvail(p) },
       ];
       rows.forEach((r) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<th scope="row">${r.label}</th>` + valid.map((p) => `<td>${r.get(p)}</td>`).join('');
+        tr.innerHTML = `<th scope="row" class="compare-table__row-label">${r.label}</th>` + valid.map((pair) => `<td>${r.get(pair)}</td>`).join('');
         body.appendChild(tr);
       });
     });
+  }
+
+  function fetchCompareMeta(handle) {
+    return fetch(`/products/${encodeURIComponent(handle)}?view=compare-meta`, { credentials: 'same-origin' })
+      .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+      .then((html) => {
+        const m = html.match(/<script[^>]*id="compare-meta"[^>]*>([\s\S]*?)<\/script>/i);
+        if (!m) return null;
+        try { return JSON.parse(m[1]); } catch (_) { return null; }
+      });
   }
 })();
