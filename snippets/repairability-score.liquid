@@ -5,11 +5,11 @@
 
 {%- liquid
   assign score = product.metafields.recircle.repair_score | default: 0 | times: 1.0
-  if score == 0 then
-  endif
   assign pct = score | divided_by: 10.0 | times: 100
   assign circumference = 176
-  assign offset = 1 | minus: score | divided_by: 10.0 | times: circumference
+  assign ratio = score | divided_by: 10.0
+  assign remainder = 1.0 | minus: ratio
+  assign offset = remainder | times: circumference
   if offset < 0
     assign offset = 0
   endif
