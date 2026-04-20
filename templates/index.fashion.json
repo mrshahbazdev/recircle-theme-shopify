@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "hero": {
+      "type": "refurbished-hero",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "Curated", "label": "by stylists" } },
+        "s2": { "type": "stat", "settings": { "value": "-70%", "label": "vs retail" } },
+        "s3": { "type": "stat", "settings": { "value": "14d", "label": "Free returns" } },
+        "s4": { "type": "stat", "settings": { "value": "82%", "label": "Less CO₂" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Pre-loved fashion",
+        "heading": "Second-hand shouldn't look it.",
+        "text": "Hand-picked designer and high-street pieces, professionally steamed, inspected, and graded. Every item one-of-a-kind.",
+        "cta_primary_label": "Shop women",
+        "cta_primary_link": "/collections/women",
+        "cta_secondary_label": "Shop men",
+        "cta_secondary_link": "/collections/men"
+      }
+    },
+    "grades": {
+      "type": "condition-grade-explainer",
+      "blocks": {
+        "a": { "type": "grade", "settings": { "grade": "a", "title": "A · New with tags", "description": "Unworn, original tags or packaging intact." } },
+        "b": { "type": "grade", "settings": { "grade": "b", "title": "B · Excellent", "description": "Barely worn. No flaws under close inspection." } },
+        "c": { "type": "grade", "settings": { "grade": "c", "title": "C · Very good", "description": "Light wear. Minor marks disclosed in photos." } },
+        "d": { "type": "grade", "settings": { "grade": "d", "title": "D · Good", "description": "Vintage character. Everything disclosed, best price." } }
+      },
+      "block_order": ["a", "b", "c", "d"],
+      "settings": { "eyebrow": "How we grade", "heading": "Honest grading for pre-loved fashion", "text": "" }
+    },
+    "process": {
+      "type": "how-refurbishment-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Authenticate", "description": "Every designer piece verified by in-house experts." } },
+        "s2": { "type": "step", "settings": { "title": "Clean", "description": "Professional dry-cleaning and steaming for every item." } },
+        "s3": { "type": "step", "settings": { "title": "Inspect", "description": "Fabric, stitching, zippers, hardware all hand-checked." } },
+        "s4": { "type": "step", "settings": { "title": "Grade", "description": "Transparent A-D grading with detailed flaw photos." } },
+        "s5": { "type": "step", "settings": { "title": "Ship", "description": "Plastic-free packaging. 14-day free EU returns." } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": { "eyebrow": "Our process", "heading": "From consigned to ready-to-wear", "text": "" }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": { "eyebrow": "New in", "heading": "Just landed this week", "product_limit": 8, "show_vendor": true }
+    },
+    "co2": {
+      "type": "co2-impact-counter",
+      "settings": { "eyebrow": "Our impact", "heading": "kg of CO₂ saved by extending garment life", "target": 218000, "duration": 1800, "unit": "kg CO₂e saved this year", "caption": "A pre-loved garment saves ~82% of the emissions of a newly-manufactured equivalent." }
+    },
+    "stats": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "120,000+", "label": "Pieces circulated" } },
+        "s2": { "type": "stat", "settings": { "value": "218 t", "label": "CO₂e saved" } },
+        "s3": { "type": "stat", "settings": { "value": "96%", "label": "Authentication accuracy" } },
+        "s4": { "type": "stat", "settings": { "value": "4.9/5", "label": "Customer rating" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "eyebrow": "Our impact", "heading": "Numbers that matter" }
+    }
+  },
+  "order": ["hero", "grades", "process", "featured", "co2", "stats"]
+}

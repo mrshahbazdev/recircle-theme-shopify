@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "hero": {
+      "type": "refurbished-hero",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "-50%", "label": "vs new" } },
+        "s2": { "type": "stat", "settings": { "value": "24m", "label": "Warranty" } },
+        "s3": { "type": "stat", "settings": { "value": "White-glove", "label": "Delivery" } },
+        "s4": { "type": "stat", "settings": { "value": "65%", "label": "Less CO₂" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Refurbished furniture & appliances",
+        "heading": "Mid-century, designer, and everyday pieces — made whole again.",
+        "text": "Restored by our in-house craftspeople. Fully functional appliances with 24-month warranty. Shipped with care.",
+        "cta_primary_label": "Shop furniture",
+        "cta_primary_link": "/collections/furniture",
+        "cta_secondary_label": "Shop appliances",
+        "cta_secondary_link": "/collections/appliances"
+      }
+    },
+    "grades": {
+      "type": "condition-grade-explainer",
+      "blocks": {
+        "a": { "type": "grade", "settings": { "grade": "a", "title": "A · Restored to new", "description": "Expertly restored. Reupholstered, refinished, no visible wear." } },
+        "b": { "type": "grade", "settings": { "grade": "b", "title": "B · Lightly restored", "description": "Cleaned, repaired, very minor cosmetic character kept as-is." } },
+        "c": { "type": "grade", "settings": { "grade": "c", "title": "C · Authentic patina", "description": "Vintage character preserved. Structurally perfect." } },
+        "d": { "type": "grade", "settings": { "grade": "d", "title": "D · Project piece", "description": "Fully working but cosmetically tired — best price tier." } }
+      },
+      "block_order": ["a", "b", "c", "d"],
+      "settings": { "eyebrow": "How we grade", "heading": "Four grades for furniture and appliances", "text": "" }
+    },
+    "process": {
+      "type": "how-refurbishment-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Source", "description": "From estate clearings, hotels, corporate moves, and consumer trade-ins." } },
+        "s2": { "type": "step", "settings": { "title": "Assess", "description": "Structural and functional inspection by certified craftspeople." } },
+        "s3": { "type": "step", "settings": { "title": "Restore", "description": "Cleaning, refinishing, reupholstering, appliance servicing." } },
+        "s4": { "type": "step", "settings": { "title": "Warranty", "description": "24-month warranty on restored appliances. 12-month on furniture." } },
+        "s5": { "type": "step", "settings": { "title": "Deliver", "description": "White-glove delivery. Old item take-back available." } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": { "eyebrow": "Our process", "heading": "From sourced to doorstep", "text": "" }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": { "eyebrow": "Most wanted", "heading": "In-demand pieces, while they last", "product_limit": 6, "show_vendor": true }
+    },
+    "co2": {
+      "type": "co2-impact-counter",
+      "settings": { "eyebrow": "Collective impact", "heading": "kg of CO₂ kept out of landfills", "target": 356000, "duration": 1800, "unit": "kg CO₂e saved this year", "caption": "Restoring a sofa saves ~120 kg CO₂e vs buying new. An appliance, up to 450 kg." }
+    },
+    "stats": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "18,000+", "label": "Pieces restored" } },
+        "s2": { "type": "stat", "settings": { "value": "356 t", "label": "CO₂e saved" } },
+        "s3": { "type": "stat", "settings": { "value": "98%", "label": "Appliance pass rate" } },
+        "s4": { "type": "stat", "settings": { "value": "4.7/5", "label": "Delivery rating" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": { "eyebrow": "Our impact", "heading": "Numbers that matter" }
+    }
+  },
+  "order": ["hero", "grades", "process", "featured", "co2", "stats"]
+}

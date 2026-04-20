@@ -5,7 +5,8 @@
       "close": "Close",
       "previous": "Previous",
       "next": "Next",
-      "loading": "Loading"
+      "loading": "Loading",
+      "menu": "Menu"
     },
     "password_page": {
       "opening_soon": "Opening Soon",
@@ -18,7 +19,11 @@
     "search": {
       "placeholder": "Search refurbished products",
       "submit": "Search",
-      "no_results_html": "No results found for \"{{ terms }}\". Check your spelling or use a different word or phrase."
+      "no_results_html": "No results found for \"{{ terms }}\". Check your spelling or use a different word or phrase.",
+      "products": "Products",
+      "collections": "Collections",
+      "articles": "Articles",
+      "suggestions": "Suggestions"
     },
     "cart": {
       "title": "Your cart",
@@ -27,7 +32,10 @@
       "subtotal": "Subtotal",
       "checkout": "Check out",
       "tax_and_shipping": "Taxes and shipping calculated at checkout",
-      "remove": "Remove"
+      "remove": "Remove",
+      "view_cart": "View cart",
+      "added_to_cart": "Added to cart",
+      "co2_savings_html": "You will save <strong>{{ kg }} kg CO\u2082e</strong> with this basket."
     },
     "pagination": {
       "previous": "Previous",
@@ -122,6 +130,22 @@
       "email": "Email",
       "message": "Message",
       "post": "Post comment"
+    }
+  },
+  "sections": {
+    "trade_in": {
+      "step_device": "1. What device do you have?",
+      "step_age": "2. How old is it? (years)",
+      "step_condition": "3. Overall condition",
+      "condition_a": "Like new \u2014 no marks",
+      "condition_b": "Very good \u2014 light wear",
+      "condition_c": "Good \u2014 visible wear, all working",
+      "condition_d": "Fair \u2014 noticeable wear",
+      "quote_label": "Estimated trade-in quote",
+      "quote_note": "Instant estimate \u2014 final offer confirmed after device inspection.",
+      "pricing_table": "See full pricing table",
+      "device": "Device",
+      "base_price": "Base (new-like, 0 yr)"
     }
   },
   "customer": {

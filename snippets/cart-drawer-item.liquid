@@ -1,0 +1,44 @@
+<li class="cart-drawer__item" data-line-item data-line-key="{{ item.key }}">
+  <a href="{{ item.url }}" class="cart-drawer__item-media" tabindex="-1" aria-hidden="true">
+    {%- if item.image -%}
+      <img src="{{ item.image | image_url: width: 160 }}"
+           alt="{{ item.title | escape }}"
+           width="80" height="80" loading="lazy">
+    {%- endif -%}
+  </a>
+  <div class="cart-drawer__item-body">
+    <a href="{{ item.url }}" class="cart-drawer__item-title">{{ item.product.title }}</a>
+    {%- if item.variant.title != 'Default Title' -%}
+      <p class="cart-drawer__item-variant">{{ item.variant.title }}</p>
+    {%- endif -%}
+    {%- assign grade = item.product.metafields.recircle.condition_grade %}
+    {%- if grade -%}
+      {% render 'condition-badge', grade: grade %}
+    {%- endif -%}
+    <div class="cart-drawer__item-row">
+      <div class="product-form__quantity" data-quantity>
+        <button type="button"
+                data-qty-step="-1"
+                data-line-change="{{ item.key }}"
+                aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
+        <input type="number"
+               value="{{ item.quantity }}"
+               min="0"
+               data-line-input="{{ item.key }}"
+               aria-label="{{ 'products.product.quantity' | t }}">
+        <button type="button"
+                data-qty-step="1"
+                data-line-change="{{ item.key }}"
+                aria-label="{{ 'products.product.increase_quantity' | t }}">+</button>
+      </div>
+      <span class="cart-drawer__item-price">{{ item.final_line_price | money }}</span>
+    </div>
+    <button type="button"
+            class="cart-drawer__item-remove"
+            data-line-remove="{{ item.key }}"
+            aria-label="{{ 'general.cart.remove' | t | default: 'Remove' }}: {{ item.product.title | escape }}">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-close"/></svg>
+      {{ 'general.cart.remove' | t | default: 'Remove' }}
+    </button>
+  </div>
+</li>

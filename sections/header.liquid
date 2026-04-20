@@ -1,5 +1,14 @@
-<header class="site-header">
+<header class="site-header" data-header>
   <div class="page-width site-header__inner">
+    <button type="button"
+            class="site-header__menu-toggle"
+            data-menu-toggle
+            aria-expanded="false"
+            aria-controls="SiteNav"
+            aria-label="{{ 'accessibility.menu' | t | default: 'Menu' }}">
+      <svg width="22" height="22" aria-hidden="true"><use href="#icon-menu"/></svg>
+    </button>
+
     <a href="{{ routes.root_url }}" class="site-header__logo">
       {%- if settings.logo != blank -%}
         <img src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
@@ -12,33 +21,93 @@
       {%- endif -%}
     </a>
 
-    <nav class="site-nav" aria-label="Primary">
+    <nav id="SiteNav" class="site-nav" aria-label="Primary" data-site-nav>
       {%- for link in linklists[section.settings.menu].links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
+        <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
       {%- endfor -%}
     </nav>
 
     <div class="site-header__actions">
       {%- if section.settings.show_search -%}
-        <a href="{{ routes.search_url }}" class="site-header__icon-btn" aria-label="{{ 'general.search.submit' | t }}">
+        <button type="button"
+                class="site-header__icon-btn"
+                data-search-toggle
+                aria-expanded="false"
+                aria-controls="PredictiveSearch"
+                aria-label="{{ 'general.search.submit' | t }}">
           <svg width="20" height="20" aria-hidden="true"><use href="#icon-search"/></svg>
-        </a>
+        </button>
       {%- endif -%}
+
+      {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
+        <form method="post" action="/localization" id="HeaderCountryForm" accept-charset="UTF-8" enctype="multipart/form-data">
+          <input type="hidden" name="_method" value="put">
+          <input name="return_to" type="hidden" value="{{ request.path }}">
+          <label for="HeaderCountrySelect" class="visually-hidden">Country/region</label>
+          <select id="HeaderCountrySelect" name="country_code" class="site-header__country" onchange="this.form.submit()">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}"
+                      {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+              </option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+
       {%- if section.settings.show_account -%}
-        <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="Account">
+        <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="{{ 'customer.account.title' | t }}">
           <svg width="20" height="20" aria-hidden="true"><use href="#icon-user"/></svg>
         </a>
       {%- endif -%}
+
       {%- if section.settings.show_cart -%}
-        <a href="{{ routes.cart_url }}" class="site-header__icon-btn" aria-label="Cart">
+        <button type="button"
+                class="site-header__icon-btn"
+                data-cart-toggle
+                aria-label="{{ 'general.cart.title' | t }}"
+                aria-controls="CartDrawer"
+                aria-expanded="false">
           <svg width="20" height="20" aria-hidden="true"><use href="#icon-cart"/></svg>
-          {%- if cart.item_count > 0 -%}
-            <span class="cart-count-bubble">{{ cart.item_count }}</span>
-          {%- endif -%}
-        </a>
+          <span class="cart-count-bubble"
+                data-cart-count
+                {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </button>
       {%- endif -%}
     </div>
   </div>
+
+  {%- if section.settings.show_search -%}
+    <div id="PredictiveSearch"
+         class="predictive-search"
+         role="search"
+         hidden
+         data-predictive-search>
+      <div class="page-width predictive-search__wrap">
+        <form action="{{ routes.search_url }}" method="get" class="predictive-search__form" role="search">
+          <svg width="18" height="18" aria-hidden="true"><use href="#icon-search"/></svg>
+          <label for="PredictiveSearchInput" class="visually-hidden">{{ 'general.search.placeholder' | t }}</label>
+          <input type="search"
+                 id="PredictiveSearchInput"
+                 name="q"
+                 placeholder="{{ 'general.search.placeholder' | t }}"
+                 autocomplete="off"
+                 autocorrect="off"
+                 data-predictive-search-input
+                 aria-controls="PredictiveSearchResults"
+                 aria-activedescendant=""
+                 aria-expanded="false">
+          <button type="button"
+                  class="predictive-search__close"
+                  data-search-toggle
+                  aria-label="{{ 'accessibility.close' | t }}">
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-close"/></svg>
+          </button>
+        </form>
+        <div data-predictive-search-target aria-live="polite"></div>
+      </div>
+    </div>
+  {%- endif -%}
 </header>
 
 {% schema %}
@@ -48,7 +117,8 @@
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
     { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
     { "type": "checkbox", "id": "show_account", "label": "Show account icon", "default": true },
-    { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true }
+    { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true },
+    { "type": "checkbox", "id": "show_country_selector", "label": "Show country/currency selector", "default": true }
   ],
   "enabled_on": { "groups": ["header"] }
 }

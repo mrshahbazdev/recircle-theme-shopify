@@ -1,0 +1,21 @@
+<aside id="CartDrawer"
+       class="cart-drawer"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="CartDrawer-title-{{ section.id }}"
+       aria-hidden="true"
+       data-cart-drawer
+       hidden>
+  <div class="cart-drawer__overlay" data-close-drawer aria-hidden="true"></div>
+  <div class="cart-drawer__panel" role="document" tabindex="-1">
+    {% render 'cart-drawer-contents' %}
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "tag": "aside",
+  "settings": []
+}
+{% endschema %}

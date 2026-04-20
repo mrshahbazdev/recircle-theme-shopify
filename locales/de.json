@@ -1,9 +1,25 @@
 {
   "general": {
-    "accessibility": { "skip_to_text": "Zum Inhalt springen", "close": "Schließen", "previous": "Vorherige", "next": "Nächste", "loading": "Wird geladen" },
-    "search": { "placeholder": "Refurbished Produkte suchen", "submit": "Suchen" },
-    "cart": { "title": "Ihr Warenkorb", "empty": "Ihr Warenkorb ist leer", "continue_shopping": "Weiter einkaufen", "subtotal": "Zwischensumme", "checkout": "Zur Kasse", "tax_and_shipping": "Steuern und Versand an der Kasse", "remove": "Entfernen" },
+    "accessibility": { "skip_to_text": "Zum Inhalt springen", "close": "Schließen", "previous": "Vorherige", "next": "Nächste", "loading": "Wird geladen", "menu": "Menü" },
+    "search": { "placeholder": "Refurbished Produkte suchen", "submit": "Suchen", "products": "Produkte", "collections": "Kategorien", "articles": "Artikel", "suggestions": "Vorschläge" },
+    "cart": { "title": "Ihr Warenkorb", "empty": "Ihr Warenkorb ist leer", "continue_shopping": "Weiter einkaufen", "subtotal": "Zwischensumme", "checkout": "Zur Kasse", "tax_and_shipping": "Steuern und Versand an der Kasse", "remove": "Entfernen", "view_cart": "Warenkorb ansehen", "added_to_cart": "In den Warenkorb gelegt", "co2_savings_html": "Mit diesem Warenkorb sparen Sie <strong>{{ kg }} kg CO\u2082e</strong>." },
     "404": { "title": "Seite nicht gefunden", "subtext": "Die von Ihnen gesuchte Seite existiert nicht.", "link": "Weiter einkaufen" }
+  },
+  "sections": {
+    "trade_in": {
+      "step_device": "1. Welches Gerät haben Sie?",
+      "step_age": "2. Wie alt ist es? (Jahre)",
+      "step_condition": "3. Gesamtzustand",
+      "condition_a": "Wie neu \u2014 keine Gebrauchsspuren",
+      "condition_b": "Sehr gut \u2014 leichte Gebrauchsspuren",
+      "condition_c": "Gut \u2014 sichtbare Gebrauchsspuren, voll funktionsfähig",
+      "condition_d": "Akzeptabel \u2014 deutliche Gebrauchsspuren",
+      "quote_label": "Geschätzter Inzahlungnahme-Preis",
+      "quote_note": "Sofortsch\u00e4tzung \u2014 endg\u00fcltiges Angebot nach Ger\u00e4teinspektion.",
+      "pricing_table": "Vollst\u00e4ndige Preistabelle anzeigen",
+      "device": "Ger\u00e4t",
+      "base_price": "Basispreis (neuwertig, 0 Jahre)"
+    }
   },
   "products": {
     "product": { "add_to_cart": "In den Warenkorb", "sold_out": "Ausverkauft", "quantity": "Menge", "description_title": "Beschreibung" },
@@ -11,7 +27,7 @@
       "condition_title": "Zustand",
       "grade_a_label": "Wie neu", "grade_b_label": "Sehr gut", "grade_c_label": "Gut", "grade_d_label": "Akzeptabel",
       "warranty_months": "{{ count }} Monate Garantie",
-      "returns_days_eu": "{{ count }} Tage Rückgaberecht",
+      "returns_days_eu": "{{ count }} Tage R\u00fcckgaberecht",
       "dpp_title": "Digitaler Produktpass",
       "price_30day_low": "Niedrigster Preis der letzten 30 Tage: {{ price }}",
       "msrp_new": "Neupreis (UVP): {{ price }}",
