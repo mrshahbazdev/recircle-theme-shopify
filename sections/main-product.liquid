@@ -10,7 +10,7 @@
       <span aria-current="page">{{ product.title }}</span>
     </nav>
 
-    <div class="product-main">
+    <div class="product-main" data-product-form-wrap data-product-handle="{{ product.handle }}">
       <div>
         {% render 'product-gallery', product: product %}
       </div>
@@ -113,6 +113,13 @@
                 {% render 'before-after-gallery', product: product %}
               </div>
 
+            {%- when 'wishlist' -%}
+              {%- if settings.wishlist_enabled -%}
+                <div {{ block.shopify_attributes }} style="margin-top:0.75rem">
+                  {% render 'wishlist-toggle', product: product %}
+                </div>
+              {%- endif -%}
+
             {%- when 'share' -%}
               <div class="flex gap-1" {{ block.shopify_attributes }} style="font-size:0.85rem;color:var(--color-text-muted)">
                 <span>Share:</span>
@@ -166,6 +173,7 @@
     { "type": "dpp",            "name": "Digital Product Passport", "limit": 1 },
     { "type": "description",    "name": "Description", "limit": 1 },
     { "type": "before_after",   "name": "Before/after gallery", "limit": 1 },
+    { "type": "wishlist",       "name": "Wishlist button", "limit": 1 },
     { "type": "share",          "name": "Share buttons", "limit": 1 }
   ],
   "enabled_on": { "templates": ["product"] }

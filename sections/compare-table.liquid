@@ -1,0 +1,47 @@
+{%- comment -%}
+  Compare page. Renders a placeholder; the JS compare module fetches
+  `/products/{handle}.js` for each stored handle and builds a side-by-side
+  table keyed on recircle.* metafields.
+{%- endcomment -%}
+
+<section class="section compare-page" data-compare-root>
+  <div class="page-width">
+    <header class="section__header">
+      <h1 class="section__heading">{{ section.settings.heading | default: 'Compare refurbished products' }}</h1>
+      <p class="section__subheading">{{ section.settings.subheading }}</p>
+    </header>
+
+    <div class="compare-empty" data-compare-empty>
+      <p>{{ 'recircle.compare.empty_body' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'recircle.compare.empty_cta' | t }}</a>
+    </div>
+
+    <div class="compare-table-wrap" data-compare-wrap hidden>
+      <table class="compare-table" data-compare-table>
+        <caption class="visually-hidden">{{ section.settings.heading }}</caption>
+        <thead>
+          <tr data-compare-head></tr>
+        </thead>
+        <tbody data-compare-body></tbody>
+      </table>
+
+      <div class="compare-actions">
+        <button type="button" class="button button--outline" data-compare-clear>
+          <svg width="16" height="16" aria-hidden="true"><use href="#icon-trash"/></svg>
+          {{ 'recircle.compare.clear' | t }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Compare",
+  "settings": [
+    { "type": "text",     "id": "heading",    "label": "Heading",    "default": "Compare refurbished products" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Side-by-side specs, condition grade, CO\u2082 savings and warranty.</p>" }
+  ],
+  "presets": [{ "name": "Compare" }]
+}
+{% endschema %}

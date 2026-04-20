@@ -55,6 +55,13 @@
         </form>
       {%- endif -%}
 
+      {%- if settings.wishlist_enabled and section.settings.show_wishlist -%}
+        <a href="/pages/wishlist" class="site-header__icon-btn" aria-label="{{ 'recircle.wishlist.title' | t }}">
+          <svg width="20" height="20" aria-hidden="true"><use href="#icon-heart"/></svg>
+          <span class="cart-count-bubble" data-wishlist-count hidden>0</span>
+        </a>
+      {%- endif -%}
+
       {%- if section.settings.show_account -%}
         <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="{{ 'customer.account.title' | t }}">
           <svg width="20" height="20" aria-hidden="true"><use href="#icon-user"/></svg>
@@ -117,6 +124,7 @@
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
     { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
     { "type": "checkbox", "id": "show_account", "label": "Show account icon", "default": true },
+    { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist icon", "default": true },
     { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true },
     { "type": "checkbox", "id": "show_country_selector", "label": "Show country/currency selector", "default": true }
   ],

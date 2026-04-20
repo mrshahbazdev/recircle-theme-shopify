@@ -1,0 +1,36 @@
+{%- comment -%}
+  Floating action buttons for a product card: wishlist, quick-view, compare.
+  Accepts: product
+{%- endcomment -%}
+
+<div class="card-actions"
+     data-card-actions
+     data-product-handle="{{ product.handle }}"
+     data-product-id="{{ product.id }}">
+  {%- if settings.wishlist_enabled -%}
+    <button type="button"
+            class="card-actions__btn"
+            data-wishlist-toggle
+            aria-pressed="false"
+            aria-label="{{ 'recircle.wishlist.add' | t }}">
+      <svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#icon-heart"/></svg>
+    </button>
+  {%- endif -%}
+  {%- if settings.quickview_enabled -%}
+    <button type="button"
+            class="card-actions__btn"
+            data-quick-view
+            aria-label="{{ 'recircle.quick_view.open' | t }}">
+      <svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#icon-eye"/></svg>
+    </button>
+  {%- endif -%}
+  {%- if settings.compare_enabled -%}
+    <button type="button"
+            class="card-actions__btn"
+            data-compare-toggle
+            aria-pressed="false"
+            aria-label="{{ 'recircle.compare.add' | t }}">
+      <svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#icon-compare"/></svg>
+    </button>
+  {%- endif -%}
+</div>

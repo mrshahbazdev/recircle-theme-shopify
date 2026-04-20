@@ -1,38 +1,99 @@
 {
   "general": {
-    "accessibility": { "skip_to_text": "Aller au contenu", "close": "Fermer", "previous": "Précédent", "next": "Suivant", "loading": "Chargement", "menu": "Menu" },
-    "search": { "placeholder": "Rechercher des produits reconditionnés", "submit": "Rechercher", "products": "Produits", "collections": "Collections", "articles": "Articles", "suggestions": "Suggestions" },
-    "cart": { "title": "Votre panier", "empty": "Votre panier est vide", "continue_shopping": "Continuer mes achats", "subtotal": "Sous-total", "checkout": "Payer", "tax_and_shipping": "Taxes et livraison calculées au paiement", "remove": "Retirer", "view_cart": "Voir le panier", "added_to_cart": "Ajouté au panier", "co2_savings_html": "Vous économisez <strong>{{ kg }} kg CO\u2082e</strong> avec ce panier." },
-    "404": { "title": "Page introuvable", "subtext": "La page que vous cherchez n'existe pas.", "link": "Continuer mes achats" }
+    "accessibility": {
+      "skip_to_text": "Aller au contenu",
+      "close": "Fermer",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "loading": "Chargement",
+      "menu": "Menu"
+    },
+    "search": {
+      "placeholder": "Rechercher des produits reconditionnés",
+      "submit": "Rechercher",
+      "products": "Produits",
+      "collections": "Collections",
+      "articles": "Articles",
+      "suggestions": "Suggestions"
+    },
+    "cart": {
+      "title": "Votre panier",
+      "empty": "Votre panier est vide",
+      "continue_shopping": "Continuer mes achats",
+      "subtotal": "Sous-total",
+      "checkout": "Payer",
+      "tax_and_shipping": "Taxes et livraison calculées au paiement",
+      "remove": "Retirer",
+      "view_cart": "Voir le panier",
+      "added_to_cart": "Ajouté au panier",
+      "co2_savings_html": "Vous économisez <strong>{{ kg }} kg CO₂e</strong> avec ce panier."
+    },
+    "404": {
+      "title": "Page introuvable",
+      "subtext": "La page que vous cherchez n'existe pas.",
+      "link": "Continuer mes achats"
+    }
   },
   "sections": {
     "trade_in": {
-      "step_device": "1. Quel appareil poss\u00e9dez-vous ?",
-      "step_age": "2. Quel \u00e2ge a-t-il ? (ann\u00e9es)",
-      "step_condition": "3. \u00c9tat g\u00e9n\u00e9ral",
-      "condition_a": "Comme neuf \u2014 aucune marque",
-      "condition_b": "Tr\u00e8s bon \u2014 l\u00e9g\u00e8res traces d'usage",
-      "condition_c": "Bon \u2014 traces visibles, enti\u00e8rement fonctionnel",
-      "condition_d": "Correct \u2014 traces notables",
+      "step_device": "1. Quel appareil possédez-vous ?",
+      "step_age": "2. Quel âge a-t-il ? (années)",
+      "step_condition": "3. État général",
+      "condition_a": "Comme neuf — aucune marque",
+      "condition_b": "Très bon — légères traces d'usage",
+      "condition_c": "Bon — traces visibles, entièrement fonctionnel",
+      "condition_d": "Correct — traces notables",
       "quote_label": "Estimation de reprise",
-      "quote_note": "Estimation instantan\u00e9e \u2014 offre d\u00e9finitive apr\u00e8s inspection.",
+      "quote_note": "Estimation instantanée — offre définitive après inspection.",
       "pricing_table": "Voir le tableau complet",
       "device": "Appareil",
       "base_price": "Prix de base (neuf, 0 an)"
     }
   },
   "products": {
-    "product": { "add_to_cart": "Ajouter au panier", "sold_out": "\u00c9puis\u00e9", "quantity": "Quantit\u00e9", "description_title": "Description" },
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "quantity": "Quantité",
+      "description_title": "Description"
+    },
     "refurbished": {
-      "condition_title": "\u00c9tat",
-      "grade_a_label": "Comme neuf", "grade_b_label": "Tr\u00e8s bon", "grade_c_label": "Bon", "grade_d_label": "Correct",
+      "condition_title": "État",
+      "grade_a_label": "Comme neuf",
+      "grade_b_label": "Très bon",
+      "grade_c_label": "Bon",
+      "grade_d_label": "Correct",
       "warranty_months": "{{ count }} mois de garantie",
       "returns_days_eu": "Retours {{ count }} jours",
-      "dpp_title": "Passeport Num\u00e9rique de Produit",
+      "dpp_title": "Passeport Numérique de Produit",
       "price_30day_low": "Prix le plus bas des 30 derniers jours : {{ price }}",
-      "msrp_new": "Prix neuf conseill\u00e9 : {{ price }}",
-      "repairability": "R\u00e9parabilit\u00e9",
+      "msrp_new": "Prix neuf conseillé : {{ price }}",
+      "repairability": "Réparabilité",
       "co2_saved": "{{ value }} {{ unit }}"
+    }
+  },
+  "recircle": {
+    "wishlist": {
+      "title": "Liste de souhaits",
+      "add": "Enregistrer",
+      "remove": "Enregistré",
+      "empty_body": "Votre liste de souhaits est vide. Touchez le cœur pour sauvegarder des produits.",
+      "empty_cta": "Voir les produits",
+      "clear": "Vider la liste"
+    },
+    "quick_view": {
+      "open": "Aperçu rapide",
+      "title": "Aperçu rapide",
+      "view_full": "Voir le détail complet"
+    },
+    "compare": {
+      "add": "Comparer",
+      "remove": "Dans le comparatif",
+      "view": "Comparer",
+      "clear": "Vider le comparatif",
+      "bar_label": "Produits sélectionnés à comparer",
+      "empty_body": "Ajoutez des produits pour comparer leurs caractéristiques côte à côte.",
+      "empty_cta": "Voir les produits"
     }
   }
 }

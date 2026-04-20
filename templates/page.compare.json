@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "compare-table",
+      "settings": {
+        "heading": "Compare refurbished products",
+        "subheading": "<p>Side-by-side specs, condition grade, CO\u2082 savings and warranty.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

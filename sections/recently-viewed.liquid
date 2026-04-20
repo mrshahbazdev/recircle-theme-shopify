@@ -1,0 +1,30 @@
+{%- comment -%}
+  Recently-viewed rail. Pure JS-driven from localStorage (`recircle:recent`).
+  The section itself renders an empty scaffold; cards are injected client-side.
+{%- endcomment -%}
+
+<section class="section recently-viewed"
+         data-recently-viewed
+         data-max="{{ section.settings.max_items | default: 8 }}"
+         {% if hide_current_product %}data-exclude-handle="{{ product.handle }}"{% endif %}
+         hidden>
+  <div class="page-width">
+    <header class="section__header">
+      <h2 class="section__heading">{{ section.settings.heading | default: 'Recently viewed' }}</h2>
+    </header>
+    <div class="product-grid product-grid--rail" data-recently-viewed-grid>
+      <!-- Cards injected by JS. -->
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "settings": [
+    { "type": "text",   "id": "heading",   "label": "Heading",   "default": "Recently viewed" },
+    { "type": "range",  "id": "max_items", "label": "Max items", "min": 4, "max": 12, "step": 1, "default": 8 }
+  ],
+  "presets": [{ "name": "Recently viewed" }]
+}
+{% endschema %}
