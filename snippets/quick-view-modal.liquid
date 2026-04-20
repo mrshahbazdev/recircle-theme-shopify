@@ -1,0 +1,25 @@
+{%- comment -%}
+  Global empty shell for the quick-view modal. JS injects a product section
+  fetched from /products/{handle}?section_id=main-quick-view into [data-qv-body].
+{%- endcomment -%}
+
+<div class="modal"
+     id="QuickViewModal"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="QuickViewTitle"
+     hidden
+     data-quick-view-modal>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__panel" role="document">
+    <div class="modal__header">
+      <h2 id="QuickViewTitle" class="modal__title">{{ 'recircle.quick_view.title' | t }}</h2>
+      <button type="button" class="modal__close" data-modal-close aria-label="{{ 'accessibility.close' | t }}">
+        <svg width="18" height="18" aria-hidden="true"><use href="#icon-close"/></svg>
+      </button>
+    </div>
+    <div class="modal__body" data-qv-body aria-live="polite">
+      <div class="modal__loader">{{ 'accessibility.loading' | t }}…</div>
+    </div>
+  </div>
+</div>

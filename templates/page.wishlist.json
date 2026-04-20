@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "wishlist",
+      "settings": {
+        "heading": "Your wishlist",
+        "subheading": "<p>Refurbished picks you've saved for later. Stored locally on this device.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

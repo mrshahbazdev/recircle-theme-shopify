@@ -17,6 +17,10 @@
     initCartDrawer();
     initPredictiveSearch();
     initProductFormAjax();
+    initWishlist();
+    initRecentlyViewed();
+    initQuickView();
+    initCompare();
   });
 
   /* -------- Accessibility helpers ----------------------------------------- */
@@ -397,6 +401,343 @@
         } finally {
           if (btn) { btn.disabled = false; btn.classList.remove('is-loading'); }
         }
+      });
+    });
+  }
+
+  /* -------- Storage helpers ----------------------------------------------- */
+  function readList(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) { return []; }
+  }
+  function writeList(key, arr) {
+    try { localStorage.setItem(key, JSON.stringify(arr)); }
+    catch (_) { /* quota / private mode */ }
+  }
+  function fetchProduct(handle) {
+    return fetch(`/products/${encodeURIComponent(handle)}.js`, { credentials: 'same-origin' })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
+  }
+  function formatMoney(cents) {
+    if (window.Shopify && Shopify.formatMoney) {
+      try { return Shopify.formatMoney(cents); } catch (_) { /* fall through */ }
+    }
+    return ((cents || 0) / 100).toFixed(2);
+  }
+
+  /* -------- Wishlist ------------------------------------------------------ */
+  const WL_KEY = 'recircle:wishlist';
+
+  function initWishlist() {
+    syncWishlistButtons();
+    bindWishlistButtons(document);
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-wishlist-toggle]');
+      if (!btn) return;
+      e.preventDefault();
+      const wrap = btn.closest('[data-card-actions], [data-product-card], [data-product-form-wrap]') || btn;
+      const handle = btn.dataset.productHandle || wrap.dataset.productHandle || (document.querySelector('[data-product-handle]') || {}).dataset?.productHandle;
+      if (!handle) return;
+      toggleWishlist(handle);
+      syncWishlistButtons();
+    });
+    const root = document.querySelector('[data-wishlist-root]');
+    if (root) renderWishlistPage(root);
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('[data-wishlist-clear]')) return;
+      writeList(WL_KEY, []);
+      syncWishlistButtons();
+      const r = document.querySelector('[data-wishlist-root]');
+      if (r) renderWishlistPage(r);
+    });
+  }
+
+  function bindWishlistButtons(scope) {
+    // No-op binder kept for symmetry; delegated above.
+    return scope;
+  }
+
+  function toggleWishlist(handle) {
+    const list = readList(WL_KEY);
+    const idx = list.indexOf(handle);
+    if (idx === -1) {
+      list.push(handle);
+      announce('Saved to wishlist');
+    } else {
+      list.splice(idx, 1);
+      announce('Removed from wishlist');
+    }
+    writeList(WL_KEY, list);
+    document.dispatchEvent(new CustomEvent('recircle:wishlist:change', { detail: { list } }));
+  }
+
+  function syncWishlistButtons() {
+    const list = readList(WL_KEY);
+    document.querySelectorAll('[data-wishlist-toggle]').forEach((btn) => {
+      const wrap = btn.closest('[data-card-actions], [data-product-card], [data-product-form-wrap]') || btn;
+      const handle = btn.dataset.productHandle || wrap.dataset.productHandle;
+      if (!handle) return;
+      const active = list.indexOf(handle) !== -1;
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.classList.toggle('is-active', active);
+      const label = btn.querySelector('[data-wishlist-label]');
+      if (label) label.textContent = active ? 'Saved' : 'Save';
+    });
+    const counter = document.querySelector('[data-wishlist-count]');
+    if (counter) {
+      counter.textContent = list.length;
+      counter.hidden = list.length === 0;
+    }
+  }
+
+  function renderWishlistPage(root) {
+    const grid = root.querySelector('[data-wishlist-grid]');
+    const empty = root.querySelector('[data-wishlist-empty]');
+    const actions = root.querySelector('[data-wishlist-actions]');
+    if (!grid || !empty) return;
+    const handles = readList(WL_KEY);
+    if (!handles.length) {
+      grid.hidden = true;
+      empty.hidden = false;
+      if (actions) actions.hidden = true;
+      return;
+    }
+    empty.hidden = true;
+    grid.hidden = false;
+    if (actions) actions.hidden = false;
+    grid.innerHTML = '';
+    Promise.all(handles.map((h) => fetchProduct(h).catch(() => null))).then((products) => {
+      products.filter(Boolean).forEach((p) => {
+        grid.appendChild(buildMiniCard(p));
+      });
+    });
+  }
+
+  function buildMiniCard(p) {
+    const a = document.createElement('article');
+    a.className = 'product-card';
+    a.dataset.productCard = '';
+    a.dataset.productHandle = p.handle;
+    a.innerHTML = `
+      <div class="product-card__media">
+        <a href="${p.url}" aria-label="${p.title.replace(/"/g, '&quot;')}">
+          <img src="${p.featured_image || ''}" alt="${(p.title || '').replace(/"/g, '&quot;')}" loading="lazy" decoding="async">
+        </a>
+        <div class="card-actions" data-card-actions data-product-handle="${p.handle}">
+          <button type="button" class="card-actions__btn" data-wishlist-toggle aria-pressed="true" aria-label="Remove from wishlist">
+            <svg width="18" height="18" aria-hidden="true"><use href="#icon-heart"/></svg>
+          </button>
+        </div>
+      </div>
+      <h3 class="product-card__title"><a href="${p.url}">${p.title}</a></h3>
+      <div class="product-card__meta"><div class="product-card__price">${formatMoney(p.price)}</div></div>
+    `;
+    syncWishlistButtons();
+    return a;
+  }
+
+  /* -------- Recently viewed ----------------------------------------------- */
+  const RV_KEY = 'recircle:recent';
+  const RV_MAX_STORE = 24;
+
+  function initRecentlyViewed() {
+    rememberCurrentProduct();
+    document.querySelectorAll('[data-recently-viewed]').forEach(renderRecentlyViewed);
+  }
+
+  function rememberCurrentProduct() {
+    const root = document.querySelector('[data-product-form-wrap], [data-product-handle]');
+    const handle = root && root.dataset.productHandle;
+    if (!handle) return;
+    const list = readList(RV_KEY).filter((h) => h !== handle);
+    list.unshift(handle);
+    writeList(RV_KEY, list.slice(0, RV_MAX_STORE));
+  }
+
+  function renderRecentlyViewed(section) {
+    const grid = section.querySelector('[data-recently-viewed-grid]');
+    if (!grid) return;
+    const max = parseInt(section.dataset.max, 10) || 8;
+    const exclude = section.dataset.excludeHandle || '';
+    const list = readList(RV_KEY).filter((h) => h !== exclude).slice(0, max);
+    if (!list.length) return;
+    Promise.all(list.map((h) => fetchProduct(h).catch(() => null))).then((products) => {
+      const valid = products.filter(Boolean);
+      if (!valid.length) return;
+      grid.innerHTML = '';
+      valid.forEach((p) => grid.appendChild(buildMiniCard(p)));
+      section.hidden = false;
+    });
+  }
+
+  /* -------- Quick view ---------------------------------------------------- */
+  function initQuickView() {
+    const modal = document.querySelector('[data-quick-view-modal]');
+    if (!modal) return;
+    const body = modal.querySelector('[data-qv-body]');
+    let lastFocus = null;
+    let releaseFocus = null;
+
+    const close = () => {
+      modal.hidden = true;
+      modal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
+      if (releaseFocus) releaseFocus();
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+
+    document.addEventListener('click', async (e) => {
+      const trigger = e.target.closest('[data-quick-view]');
+      if (!trigger) return;
+      e.preventDefault();
+      const wrap = trigger.closest('[data-card-actions], [data-product-card]');
+      const handle = trigger.dataset.productHandle || (wrap && wrap.dataset.productHandle);
+      if (!handle) return;
+      lastFocus = trigger;
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.classList.add('is-open'));
+      document.body.classList.add('modal-open');
+      body.innerHTML = `<div class="modal__loader">Loading…</div>`;
+      try {
+        const html = await fetch(`/products/${encodeURIComponent(handle)}?section_id=main-quick-view`, { credentials: 'same-origin' }).then((r) => r.text());
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+        const inner = wrapper.querySelector('[data-quick-view-body]') || wrapper;
+        body.innerHTML = '';
+        body.appendChild(inner);
+        releaseFocus = trapFocus(modal, modal.querySelector('.modal__close'));
+      } catch (_) {
+        body.innerHTML = `<p class="quick-view-error">Could not load product. <a href="/products/${handle}">Open product page</a>.</p>`;
+      }
+    });
+
+    modal.addEventListener('click', (e) => { if (e.target.closest('[data-modal-close]')) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
+  }
+
+  /* -------- Compare ------------------------------------------------------- */
+  const CMP_KEY = 'recircle:compare';
+
+  function initCompare() {
+    const max = parseInt((document.documentElement.dataset.compareMax || ''), 10) || 4;
+    syncCompareButtons();
+    renderCompareBar();
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-compare-toggle]');
+      if (!btn) return;
+      e.preventDefault();
+      const wrap = btn.closest('[data-card-actions], [data-product-card]');
+      const handle = btn.dataset.productHandle || (wrap && wrap.dataset.productHandle);
+      if (!handle) return;
+      toggleCompare(handle, max);
+      syncCompareButtons();
+      renderCompareBar();
+    });
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-compare-bar-clear], [data-compare-clear]')) {
+        writeList(CMP_KEY, []);
+        syncCompareButtons();
+        renderCompareBar();
+        const root = document.querySelector('[data-compare-root]');
+        if (root) renderComparePage(root);
+      }
+    });
+    const root = document.querySelector('[data-compare-root]');
+    if (root) renderComparePage(root);
+  }
+
+  function toggleCompare(handle, max) {
+    const list = readList(CMP_KEY);
+    const i = list.indexOf(handle);
+    if (i !== -1) {
+      list.splice(i, 1);
+      announce('Removed from compare');
+    } else {
+      if (list.length >= max) {
+        announce(`You can compare up to ${max} products`);
+        return;
+      }
+      list.push(handle);
+      announce('Added to compare');
+    }
+    writeList(CMP_KEY, list);
+  }
+
+  function syncCompareButtons() {
+    const list = readList(CMP_KEY);
+    document.querySelectorAll('[data-compare-toggle]').forEach((btn) => {
+      const wrap = btn.closest('[data-card-actions], [data-product-card]') || btn;
+      const handle = btn.dataset.productHandle || wrap.dataset.productHandle;
+      if (!handle) return;
+      const active = list.indexOf(handle) !== -1;
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.classList.toggle('is-active', active);
+    });
+  }
+
+  function renderCompareBar() {
+    const bar = document.querySelector('[data-compare-bar]');
+    if (!bar) return;
+    const list = readList(CMP_KEY);
+    const count = bar.querySelector('[data-compare-bar-count]');
+    const thumbs = bar.querySelector('[data-compare-bar-thumbs]');
+    if (count) count.textContent = list.length;
+    if (!list.length) { bar.hidden = true; if (thumbs) thumbs.innerHTML = ''; return; }
+    bar.hidden = false;
+    if (!thumbs) return;
+    thumbs.innerHTML = '';
+    Promise.all(list.map((h) => fetchProduct(h).catch(() => null))).then((products) => {
+      products.filter(Boolean).forEach((p) => {
+        const t = document.createElement('a');
+        t.className = 'compare-bar__thumb';
+        t.href = p.url;
+        t.title = p.title;
+        t.innerHTML = `<img src="${p.featured_image || ''}" alt="${p.title.replace(/"/g, '&quot;')}" loading="lazy">`;
+        thumbs.appendChild(t);
+      });
+    });
+  }
+
+  function renderComparePage(root) {
+    const wrap = root.querySelector('[data-compare-wrap]');
+    const empty = root.querySelector('[data-compare-empty]');
+    const head = root.querySelector('[data-compare-head]');
+    const body = root.querySelector('[data-compare-body]');
+    if (!wrap || !empty || !head || !body) return;
+    const list = readList(CMP_KEY);
+    if (!list.length) { wrap.hidden = true; empty.hidden = false; return; }
+    empty.hidden = true;
+    wrap.hidden = false;
+    head.innerHTML = '<th scope="col"></th>';
+    body.innerHTML = '';
+    Promise.all(list.map((h) => fetchProduct(h).catch(() => null))).then((products) => {
+      const valid = products.filter(Boolean);
+      valid.forEach((p) => {
+        const th = document.createElement('th');
+        th.scope = 'col';
+        th.innerHTML = `
+          <a href="${p.url}" class="compare-table__product">
+            <img src="${p.featured_image || ''}" alt="${(p.title || '').replace(/"/g, '&quot;')}" loading="lazy">
+            <span>${p.title}</span>
+          </a>
+          <strong>${formatMoney(p.price)}</strong>
+        `;
+        head.appendChild(th);
+      });
+      const rows = [
+        { label: 'Vendor', get: (p) => p.vendor || '\u2014' },
+        { label: 'Type', get: (p) => p.type || '\u2014' },
+        { label: 'Tags', get: (p) => (p.tags || []).join(', ') || '\u2014' },
+        { label: 'Available', get: (p) => (p.available ? 'In stock' : 'Sold out') },
+      ];
+      rows.forEach((r) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<th scope="row">${r.label}</th>` + valid.map((p) => `<td>${r.get(p)}</td>`).join('');
+        body.appendChild(tr);
       });
     });
   }

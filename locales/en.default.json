@@ -107,6 +107,30 @@
       "before_after_heading": "Before &amp; after refurbishment"
     }
   },
+  "recircle": {
+    "wishlist": {
+      "title": "Wishlist",
+      "add": "Save",
+      "remove": "Saved",
+      "empty_body": "Your wishlist is empty. Browse refurbished products and tap the heart to save them for later.",
+      "empty_cta": "Browse products",
+      "clear": "Clear wishlist"
+    },
+    "quick_view": {
+      "open": "Quick view",
+      "title": "Quick view",
+      "view_full": "View full details"
+    },
+    "compare": {
+      "add": "Compare",
+      "remove": "In compare",
+      "view": "Compare",
+      "clear": "Clear compare",
+      "bar_label": "Selected products to compare",
+      "empty_body": "Add products from any collection or product page to compare specs side-by-side.",
+      "empty_cta": "Browse products"
+    }
+  },
   "collections": {
     "general": {
       "view_all": "View all",

@@ -1,0 +1,21 @@
+{%- comment -%}
+  Sticky compare dock. Shown at the bottom when >=1 items are stored. JS
+  populates the thumbnails. Links to /pages/compare.
+{%- endcomment -%}
+
+<aside class="compare-bar"
+       aria-label="{{ 'recircle.compare.bar_label' | t }}"
+       hidden
+       data-compare-bar>
+  <div class="page-width compare-bar__inner">
+    <div class="compare-bar__thumbs" data-compare-bar-thumbs></div>
+    <div class="compare-bar__cta">
+      <a href="/pages/compare" class="button button--primary">
+        {{ 'recircle.compare.view' | t }} (<span data-compare-bar-count>0</span>)
+      </a>
+      <button type="button" class="button button--ghost" data-compare-bar-clear aria-label="{{ 'recircle.compare.clear' | t }}">
+        <svg width="14" height="14" aria-hidden="true"><use href="#icon-close"/></svg>
+      </button>
+    </div>
+  </div>
+</aside>

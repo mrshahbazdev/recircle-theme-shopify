@@ -270,6 +270,64 @@
     ]
   },
   {
+    "name": "Premium add-ons",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Wishlist"
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_enabled",
+        "label": "Enable wishlist (heart on product cards)",
+        "default": true,
+        "info": "Stored locally per shopper. Page template: page.wishlist."
+      },
+      {
+        "type": "header",
+        "content": "Quick view"
+      },
+      {
+        "type": "checkbox",
+        "id": "quickview_enabled",
+        "label": "Enable quick-view modal on product cards",
+        "default": true,
+        "info": "Fetches /products/<handle>?section_id=main-quick-view."
+      },
+      {
+        "type": "header",
+        "content": "Compare"
+      },
+      {
+        "type": "checkbox",
+        "id": "compare_enabled",
+        "label": "Enable product compare",
+        "default": true,
+        "info": "Up to 4 items. Page template: page.compare."
+      },
+      {
+        "type": "range",
+        "id": "compare_max",
+        "label": "Max items in compare tray",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Recently viewed"
+      },
+      {
+        "type": "checkbox",
+        "id": "recently_viewed_enabled",
+        "label": "Track recently-viewed products",
+        "default": true,
+        "info": "Add the \"Recently viewed\" section to any template to display the rail."
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {

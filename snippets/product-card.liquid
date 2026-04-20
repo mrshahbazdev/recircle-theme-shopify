@@ -10,7 +10,7 @@
   assign compare_at = product.compare_at_price
 -%}
 
-<article class="product-card">
+<article class="product-card" data-product-card data-product-handle="{{ product.handle }}">
   <div class="product-card__media">
     <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
       {%- if product.featured_image -%}
@@ -42,6 +42,7 @@
         {%- endif -%}
       </div>
     {%- endif -%}
+    {% render 'card-actions', product: product %}
   </div>
 
   {%- if show_vendor and product.vendor != blank -%}

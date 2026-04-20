@@ -1,0 +1,93 @@
+{%- comment -%}
+  Lightweight product view fetched by JS into the quick-view modal.
+  Usage: GET /products/<handle>?section_id=main-quick-view
+{%- endcomment -%}
+
+<div class="quick-view-product" data-quick-view-body>
+  <div class="quick-view-product__media">
+    {%- if product.featured_image -%}
+      <img
+        srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
+                {{ product.featured_image | image_url: width: 700 }} 700w,
+                {{ product.featured_image | image_url: width: 1000 }} 1000w"
+        sizes="(min-width: 700px) 360px, 80vw"
+        src="{{ product.featured_image | image_url: width: 700 }}"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        width="{{ product.featured_image.width }}"
+        height="{{ product.featured_image.height }}"
+        loading="lazy"
+        decoding="async">
+    {%- endif -%}
+  </div>
+
+  <div class="quick-view-product__info">
+    <div class="quick-view-product__badges">
+      {% render 'condition-badge', product: product %}
+      {% render 'co2-badge', product: product, compact: true %}
+    </div>
+
+    <h2 class="quick-view-product__title">{{ product.title }}</h2>
+
+    <div class="quick-view-product__price">
+      {% render 'dual-price', product: product %}
+    </div>
+
+    {%- if product.description != blank -%}
+      <div class="quick-view-product__summary rte">
+        {{ product.description | strip_html | truncatewords: 40 }}
+      </div>
+    {%- endif -%}
+
+    <form method="post" action="{{ routes.cart_add_url }}" class="quick-view-product__form" data-product-form>
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {%- if product.has_only_default_variant == false -%}
+        <div class="quick-view-product__variants">
+          {%- for option in product.options_with_values -%}
+            <label class="quick-view-product__variant-label">
+              <span>{{ option.name }}</span>
+              <select name="options[{{ option.name | escape }}]" data-quick-view-option>
+                {%- for value in option.values -%}
+                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            </label>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="quick-view-product__cta-row">
+        <button type="submit"
+                name="add"
+                class="button button--primary"
+                {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+        <a href="{{ product.url }}" class="button button--outline">{{ 'recircle.quick_view.view_full' | t }}</a>
+      </div>
+    </form>
+
+    <dl class="quick-view-product__specs">
+      {%- assign warranty = product.metafields.recircle.warranty_text -%}
+      {%- if warranty != blank -%}
+        <dt>{{ 'products.refurbished.warranty_months' | t: count: product.metafields.recircle.warranty_months }}</dt>
+        <dd>{{ warranty }}</dd>
+      {%- endif -%}
+      {%- assign score = product.metafields.recircle.repair_score -%}
+      {%- if score -%}
+        <dt>{{ 'products.refurbished.repairability' | t }}</dt>
+        <dd>{{ score }}/10</dd>
+      {%- endif -%}
+    </dl>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Quick view",
+  "settings": []
+}
+{% endschema %}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}" class="no-js">
+<html lang="{{ request.locale.iso_code }}" class="no-js" data-compare-max="{{ settings.compare_max | default: 4 }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -95,6 +95,14 @@
     {% sections 'footer-group' %}
 
     {% section 'cart-drawer' %}
+
+    {%- if settings.quickview_enabled -%}
+      {% render 'quick-view-modal' %}
+    {%- endif -%}
+
+    {%- if settings.compare_enabled -%}
+      {% render 'compare-bar' %}
+    {%- endif -%}
 
     {% render 'svg-definitions' %}
 
