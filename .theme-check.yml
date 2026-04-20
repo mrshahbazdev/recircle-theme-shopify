@@ -3,12 +3,12 @@
 
 root: "."
 
-extends: :theme_app_extension
-
 ignore:
   - node_modules/
   - .github/
   - "*.md"
+  - "SKILL.md"
+  - "screenshots/**"
 
 MissingTemplate:
   ignore:

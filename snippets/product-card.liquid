@@ -22,6 +22,7 @@
           src="{{ product.featured_image | image_url: width: 500 }}"
           alt="{{ product.featured_image.alt | default: product.title | escape }}"
           loading="lazy"
+          decoding="async"
           width="{{ product.featured_image.width }}"
           height="{{ product.featured_image.height }}">
       {%- else -%}

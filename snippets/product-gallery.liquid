@@ -2,10 +2,18 @@
   <div class="product-gallery__main" data-gallery-main>
     {%- if product.featured_image -%}
       <img
+        srcset="{{ product.featured_image | image_url: width: 600 }} 600w,
+                {{ product.featured_image | image_url: width: 900 }} 900w,
+                {{ product.featured_image | image_url: width: 1200 }} 1200w,
+                {{ product.featured_image | image_url: width: 1600 }} 1600w"
+        sizes="(min-width: 900px) 560px, 100vw"
         src="{{ product.featured_image | image_url: width: 1200 }}"
         alt="{{ product.featured_image.alt | default: product.title | escape }}"
         width="{{ product.featured_image.width }}"
-        height="{{ product.featured_image.height }}">
+        height="{{ product.featured_image.height }}"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high">
     {%- endif -%}
   </div>
 
