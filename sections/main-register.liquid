@@ -1,17 +1,51 @@
-<section class="section">
-  <div class="page-width" style="max-width:460px">
-    <h1>{{ 'customer.register.title' | t }}</h1>
-    {%- form 'create_customer' -%}
-      {%- if form.errors -%}<p style="color:#c00">{{ form.errors | default_errors }}</p>{%- endif -%}
-      <div class="field"><label class="field__label" for="FirstName">{{ 'customer.register.first_name' | t }}</label><input id="FirstName" type="text" name="customer[first_name]" autocomplete="given-name"></div>
-      <div class="field" style="margin-top:0.75rem"><label class="field__label" for="LastName">{{ 'customer.register.last_name' | t }}</label><input id="LastName" type="text" name="customer[last_name]" autocomplete="family-name"></div>
-      <div class="field" style="margin-top:0.75rem"><label class="field__label" for="RegEmail">{{ 'customer.login.email' | t }}</label><input id="RegEmail" type="email" name="customer[email]" required autocomplete="email"></div>
-      <div class="field" style="margin-top:0.75rem"><label class="field__label" for="RegPassword">{{ 'customer.login.password' | t }}</label><input id="RegPassword" type="password" name="customer[password]" required autocomplete="new-password"></div>
-      <button type="submit" class="btn btn--primary" style="margin-top:1rem">{{ 'customer.register.submit' | t }}</button>
-    {%- endform -%}
+<section class="section editorial-page" aria-label="Create account">
+  <div class="page-width">
+    <header class="editorial-page__header editorial-page__header--centered" style="margin-bottom:2rem">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-user"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Join ReCircle' }}</span>
+        </p>
+        <h1 class="editorial-page__heading" style="margin-bottom:0">{{ 'customer.register.title' | t }}</h1>
+      </div>
+    </header>
+
+    <div class="editorial-panel">
+      {%- form 'create_customer' -%}
+        {%- if form.errors -%}
+          <p class="editorial-panel__error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+        <div class="field">
+          <label class="field__label" for="FirstName">{{ 'customer.register.first_name' | t }}</label>
+          <input id="FirstName" type="text" name="customer[first_name]" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label class="field__label" for="LastName">{{ 'customer.register.last_name' | t }}</label>
+          <input id="LastName" type="text" name="customer[last_name]" autocomplete="family-name">
+        </div>
+        <div class="field">
+          <label class="field__label" for="RegEmail">{{ 'customer.login.email' | t }}</label>
+          <input id="RegEmail" type="email" name="customer[email]" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label class="field__label" for="RegPassword">{{ 'customer.login.password' | t }}</label>
+          <input id="RegPassword" type="password" name="customer[password]" required autocomplete="new-password">
+        </div>
+        <div class="editorial-panel__footer">
+          <a href="{{ routes.account_login_url }}" style="font-size:0.88rem;color:var(--color-text-muted)">Already a member? Sign in</a>
+          <button type="submit" class="button button--primary">{{ 'customer.register.submit' | t }}</button>
+        </div>
+      {%- endform -%}
+    </div>
   </div>
 </section>
 
 {% schema %}
-{ "name": "Register", "tag": "section", "settings": [] }
+{
+  "name": "Register",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join ReCircle" }
+  ]
+}
 {% endschema %}

@@ -1,27 +1,69 @@
-<section class="section" aria-label="Blog">
+<section class="section editorial-page blog-page" aria-label="Blog">
   <div class="page-width">
-    <h1>{{ blog.title }}</h1>
-    <div class="collection-grid">
+    <header class="editorial-page__header editorial-page__header--centered">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-leaf"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Journal' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ blog.title }}</h1>
+        {%- if section.settings.subheading != blank -%}
+          <div class="editorial-page__subheading" style="margin:0 auto">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+      </div>
+    </header>
+
+    <div class="editorial-grid--articles">
       {%- paginate blog.articles by 12 -%}
         {%- for article in blog.articles -%}
-          <article class="product-card">
+          <article class="article-card">
             {%- if article.image -%}
-              <div class="product-card__media">
-                <a href="{{ article.url }}"><img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}" loading="lazy"></a>
-              </div>
+              <a href="{{ article.url }}" class="article-card__media">
+                <img
+                  src="{{ article.image | image_url: width: 700 }}"
+                  srcset="{{ article.image | image_url: width: 400 }} 400w, {{ article.image | image_url: width: 700 }} 700w, {{ article.image | image_url: width: 1000 }} 1000w"
+                  sizes="(min-width: 900px) 320px, 90vw"
+                  alt="{{ article.title | escape }}"
+                  loading="lazy">
+              </a>
             {%- endif -%}
-            <h2 class="product-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
-            <p class="product-card__attrs">{{ article.published_at | date: '%b %d, %Y' }} · {{ article.author }}</p>
-            {%- if article.excerpt_or_content != blank -%}
-              <p style="font-size:0.9rem;color:var(--color-text-muted);margin:0">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
-            {%- endif -%}
+            <div class="article-card__body">
+              <p class="article-card__meta">{{ article.published_at | date: '%b %d, %Y' }} · {{ article.author }}</p>
+              <h2 class="article-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+              {%- if article.excerpt_or_content != blank -%}
+                <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 22 }}</p>
+              {%- endif -%}
+              <a href="{{ article.url }}" class="article-card__cta">
+                {{ 'blogs.article.read_more' | t | default: 'Read more' }}
+                <svg width="12" height="12" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+              </a>
+            </div>
           </article>
         {%- endfor -%}
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" style="grid-column:1/-1" aria-label="Pagination">
+            {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← {{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>
+              {%- else -%}{%- if part.title == paginate.current_page -%}<span class="active">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}{%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}<a href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }} →</a>{%- endif -%}
+          </nav>
+        {%- endif -%}
       {%- endpaginate -%}
     </div>
   </div>
 </section>
 
 {% schema %}
-{ "name": "Blog posts", "tag": "section", "settings": [], "enabled_on": { "templates": ["blog"] } }
+{
+  "name": "Blog posts",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Notes on refurbishment, sustainability and the craft behind every product.</p>" }
+  ],
+  "enabled_on": { "templates": ["blog"] }
+}
 {% endschema %}
