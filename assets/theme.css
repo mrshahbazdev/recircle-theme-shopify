@@ -1676,10 +1676,10 @@ h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: 0; }
 @media (min-width: 1100px) {
   .product-main { grid-template-columns: minmax(0, 1.5fr) minmax(420px, 1fr); }
 }
+.product-gallery-wrap { min-width: 0; }
 .product-gallery {
   gap: 1rem;
-  position: sticky;
-  top: calc(var(--header-h) + 16px);
+  position: static;
 }
 .product-gallery__main {
   border-radius: var(--radius-lg);
@@ -1696,15 +1696,38 @@ h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: 0; }
 .product-info {
   position: sticky;
   top: calc(var(--header-h) + 16px);
+  align-self: start;
   padding: clamp(1.25rem, 2.5vw, 2rem);
   background: var(--color-bg);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
   gap: 1.15rem;
+  max-height: calc(100vh - var(--header-h) - 32px);
+  overflow-y: auto;
 }
 @media (max-width: 1099px) {
-  .product-info { position: static; box-shadow: none; border: none; padding: 0; background: transparent; }
+  .product-info {
+    position: static;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+/* Full-width details row below the sticky buy card */
+.product-details {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: clamp(2rem, 5vw, 4rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--color-border);
+  max-width: 72ch;
 }
 .product-info__vendor {
   font-size: 0.7rem;
