@@ -10,13 +10,17 @@
       <span aria-current="page">{{ product.title }}</span>
     </nav>
 
+    {%- assign buy_card_types = 'vendor,title,badges,price,variant_picker,buy_buttons,warranty_bar,wishlist,share' | split: ',' -%}
+    {%- assign details_types  = 'repairability,dpp,description,before_after' | split: ',' -%}
+
     <div class="product-main" data-product-form-wrap data-product-handle="{{ product.handle }}">
-      <div>
+      <div class="product-gallery-wrap">
         {% render 'product-gallery', product: product %}
       </div>
 
       <div class="product-info">
         {%- for block in section.blocks -%}
+          {%- unless buy_card_types contains block.type -%}{%- continue -%}{%- endunless -%}
           {%- case block.type -%}
 
             {%- when 'vendor' -%}
@@ -127,6 +131,39 @@
                 <a href="https://www.facebook.com/sharer.php?u={{ shop.url | append: product.url }}" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://twitter.com/share?url={{ shop.url | append: product.url }}&text={{ product.title | escape }}" target="_blank" rel="noopener">Twitter</a>
                 <a href="mailto:?subject={{ product.title | escape }}&body={{ shop.url | append: product.url }}">Email</a>
+              </div>
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="product-details">
+        {%- for block in section.blocks -%}
+          {%- unless details_types contains block.type -%}{%- continue -%}{%- endunless -%}
+          {%- case block.type -%}
+
+            {%- when 'repairability' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'repairability-score', product: product %}
+              </div>
+
+            {%- when 'dpp' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'dpp-passport', product: product %}
+              </div>
+
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div {{ block.shopify_attributes }}>
+                  <h2 style="font-size:1rem;margin-bottom:0.5rem">{{ 'products.product.description_title' | t }}</h2>
+                  <div class="rte">{{ product.description }}</div>
+                </div>
+              {%- endif -%}
+
+            {%- when 'before_after' -%}
+              <div {{ block.shopify_attributes }} style="margin-top:1rem">
+                <h2 style="font-size:1rem;margin-bottom:0.5rem">{{ 'products.refurbished.before_after_heading' | t }}</h2>
+                {% render 'before-after-gallery', product: product %}
               </div>
 
           {%- endcase -%}
