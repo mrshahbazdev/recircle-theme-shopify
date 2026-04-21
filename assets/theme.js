@@ -443,6 +443,15 @@
       if (!handle) return;
       toggleWishlist(handle);
       syncWishlistButtons();
+      // If we're on the wishlist page, remove the card from the grid immediately.
+      const wishlistRoot = document.querySelector('[data-wishlist-root]');
+      if (wishlistRoot) {
+        const card = btn.closest('[data-product-card]');
+        if (card && card.parentElement && wishlistRoot.contains(card)) {
+          card.remove();
+        }
+        renderWishlistPage(wishlistRoot);
+      }
     });
     const root = document.querySelector('[data-wishlist-root]');
     if (root) renderWishlistPage(root);
@@ -453,6 +462,39 @@
       syncWishlistButtons();
       const r = document.querySelector('[data-wishlist-root]');
       if (r) renderWishlistPage(r);
+    });
+
+    // Add-to-cart directly from a wishlist card (first available variant).
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-wishlist-atc]');
+      if (!btn) return;
+      const variantId = btn.dataset.variantId;
+      if (!variantId) return;
+      e.preventDefault();
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.classList.add('is-loading');
+      try {
+        const fd = new FormData();
+        fd.append('id', variantId);
+        fd.append('quantity', '1');
+        const res = await fetch('/cart/add.js', {
+          method: 'POST',
+          body: fd,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (!res.ok) throw new Error('add failed');
+        if (window.ReCircle && window.ReCircle.refreshCartDrawer) {
+          await window.ReCircle.refreshCartDrawer();
+          if (window.ReCircle.openCartDrawer) window.ReCircle.openCartDrawer();
+        }
+        announce('Added to cart');
+      } catch (_) {
+        announce('Could not add to cart');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('is-loading');
+      }
     });
   }
 
@@ -500,21 +542,94 @@
     const actions = root.querySelector('[data-wishlist-actions]');
     if (!grid || !empty) return;
     const handles = readList(WL_KEY);
+    const countEarly = root.querySelector('[data-wishlist-count-label]');
     if (!handles.length) {
       grid.hidden = true;
       empty.hidden = false;
       if (actions) actions.hidden = true;
+      if (countEarly) countEarly.textContent = '';
       return;
     }
     empty.hidden = true;
     grid.hidden = false;
     if (actions) actions.hidden = false;
     grid.innerHTML = '';
+    const countEl = root.querySelector('[data-wishlist-count-label]');
+    if (countEl) countEl.textContent = handles.length === 1 ? '1 item saved' : `${handles.length} items saved`;
     Promise.all(handles.map((h) => fetchProduct(h).catch(() => null))).then((products) => {
-      products.filter(Boolean).forEach((p) => {
-        grid.appendChild(buildMiniCard(p));
-      });
+      const valid = products.filter(Boolean);
+      if (!valid.length) {
+        // All fetches failed (e.g. products deleted) — reset to empty state.
+        grid.hidden = true;
+        empty.hidden = false;
+        if (actions) actions.hidden = true;
+        if (countEl) countEl.textContent = '';
+        return;
+      }
+      if (countEl) countEl.textContent = valid.length === 1 ? '1 item saved' : `${valid.length} items saved`;
+      valid.forEach((p) => grid.appendChild(buildWishlistCard(p)));
+      syncWishlistButtons();
     });
+  }
+
+  function buildWishlistCard(p) {
+    const a = document.createElement('article');
+    a.className = 'product-card product-card--wishlist';
+    a.dataset.productCard = '';
+    a.dataset.productHandle = p.handle;
+    const title = escapeAttr(p.title || '');
+    const vendor = escapeAttr(p.vendor || '');
+    const img = p.featured_image || (p.images && p.images[0]) || '';
+    const srcset = img
+      ? `${buildImgUrl(img, 300)} 300w, ${buildImgUrl(img, 500)} 500w, ${buildImgUrl(img, 800)} 800w`
+      : '';
+    const firstVariant = (p.variants || []).find((v) => v.available) || (p.variants || [])[0];
+    const soldOut = !firstVariant || !firstVariant.available;
+    const compareAtHtml = p.compare_at_price && p.compare_at_price > p.price
+      ? `<s>${formatMoney(p.compare_at_price)}</s>` : '';
+    a.innerHTML = `
+      <div class="product-card__media">
+        <a href="${p.url}" aria-label="${title}">
+          ${img
+            ? `<img src="${buildImgUrl(img, 500)}" ${srcset ? `srcset="${srcset}"` : ''} sizes="(min-width: 900px) 280px, 45vw" alt="${title}" loading="lazy" decoding="async">`
+            : `<div class="product-card__media-placeholder" aria-hidden="true"></div>`}
+        </a>
+      </div>
+      ${vendor ? `<p class="product-card__attrs">${vendor}</p>` : ''}
+      <h3 class="product-card__title"><a href="${p.url}">${title}</a></h3>
+      <div class="product-card__meta">
+        <div class="product-card__price">${formatMoney(p.price)}${compareAtHtml}</div>
+      </div>
+      <div class="product-card__wishlist-actions">
+        ${firstVariant && !soldOut
+          ? `<button type="button" class="button button--primary product-card__atc" data-wishlist-atc data-variant-id="${firstVariant.id}" data-product-handle="${p.handle}">
+               <svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#icon-cart"/></svg>
+               <span>Add to cart</span>
+             </button>`
+          : `<button type="button" class="button button--outline product-card__atc" disabled>Sold out</button>`}
+        <button type="button" class="product-card__remove" data-wishlist-toggle aria-pressed="true" data-product-handle="${p.handle}" aria-label="Remove ${title} from wishlist">
+          <svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#icon-trash"/></svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    `;
+    return a;
+  }
+
+  function escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function buildImgUrl(src, width) {
+    if (!src) return '';
+    // Shopify CDN URLs accept a `width=` query param on the final path component.
+    try {
+      const url = new URL(src, window.location.origin);
+      url.searchParams.set('width', String(width));
+      return url.toString();
+    } catch (_) {
+      return src;
+    }
   }
 
   function buildMiniCard(p) {
@@ -522,18 +637,20 @@
     a.className = 'product-card';
     a.dataset.productCard = '';
     a.dataset.productHandle = p.handle;
+    const title = escapeAttr(p.title || '');
+    const img = p.featured_image || (p.images && p.images[0]) || '';
     a.innerHTML = `
       <div class="product-card__media">
-        <a href="${p.url}" aria-label="${p.title.replace(/"/g, '&quot;')}">
-          <img src="${p.featured_image || ''}" alt="${(p.title || '').replace(/"/g, '&quot;')}" loading="lazy" decoding="async">
+        <a href="${p.url}" aria-label="${title}">
+          ${img ? `<img src="${buildImgUrl(img, 500)}" alt="${title}" loading="lazy" decoding="async">` : ''}
         </a>
         <div class="card-actions" data-card-actions data-product-handle="${p.handle}">
-          <button type="button" class="card-actions__btn" data-wishlist-toggle aria-pressed="true" aria-label="Remove from wishlist">
+          <button type="button" class="card-actions__btn" data-wishlist-toggle aria-label="Save">
             <svg width="18" height="18" aria-hidden="true"><use href="#icon-heart"/></svg>
           </button>
         </div>
       </div>
-      <h3 class="product-card__title"><a href="${p.url}">${p.title}</a></h3>
+      <h3 class="product-card__title"><a href="${p.url}">${title}</a></h3>
       <div class="product-card__meta"><div class="product-card__price">${formatMoney(p.price)}</div></div>
     `;
     syncWishlistButtons();

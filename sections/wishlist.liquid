@@ -7,25 +7,42 @@
 
 <section class="section wishlist-page" data-wishlist-root>
   <div class="page-width">
-    <header class="section__header">
-      <h1 class="section__heading">{{ section.settings.heading | default: 'Your wishlist' }}</h1>
-      <p class="section__subheading" data-wishlist-subheading>{{ section.settings.subheading }}</p>
+    <header class="wishlist-page__header">
+      <div class="wishlist-page__heading-group">
+        <p class="wishlist-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-heart"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Saved for later' }}</span>
+        </p>
+        <h1 class="wishlist-page__heading">{{ section.settings.heading | default: 'Your wishlist' }}</h1>
+        <div class="wishlist-page__subheading">{{ section.settings.subheading }}</div>
+        <p class="wishlist-page__count" data-wishlist-count-label></p>
+      </div>
+
+      <div class="wishlist-page__header-actions" data-wishlist-actions hidden>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--outline wishlist-page__continue">
+          {{ 'recircle.wishlist.continue' | t | default: 'Continue shopping' }}
+        </a>
+        <button type="button" class="button button--ghost wishlist-page__clear" data-wishlist-clear>
+          <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-trash"/></svg>
+          <span>{{ 'recircle.wishlist.clear' | t }}</span>
+        </button>
+      </div>
     </header>
 
     <div class="wishlist-empty" data-wishlist-empty>
-      <p>{{ 'recircle.wishlist.empty_body' | t }}</p>
-      <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'recircle.wishlist.empty_cta' | t }}</a>
+      <div class="wishlist-empty__icon" aria-hidden="true">
+        <svg width="36" height="36"><use href="#icon-heart"/></svg>
+      </div>
+      <h2 class="wishlist-empty__title">{{ 'recircle.wishlist.empty_title' | t | default: 'Nothing saved yet' }}</h2>
+      <p class="wishlist-empty__body">{{ 'recircle.wishlist.empty_body' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--primary wishlist-empty__cta">
+        {{ 'recircle.wishlist.empty_cta' | t }}
+        <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg>
+      </a>
     </div>
 
-    <div class="product-grid" data-wishlist-grid hidden>
+    <div class="product-grid wishlist-grid" data-wishlist-grid hidden>
       <!-- Cards injected by JS. -->
-    </div>
-
-    <div class="wishlist-actions" data-wishlist-actions hidden>
-      <button type="button" class="button button--outline" data-wishlist-clear>
-        <svg width="16" height="16" aria-hidden="true"><use href="#icon-trash"/></svg>
-        {{ 'recircle.wishlist.clear' | t }}
-      </button>
     </div>
   </div>
 </section>
@@ -34,8 +51,9 @@
 {
   "name": "Wishlist",
   "settings": [
+    { "type": "text",     "id": "eyebrow",    "label": "Eyebrow",    "default": "Saved for later" },
     { "type": "text",     "id": "heading",    "label": "Heading",    "default": "Your wishlist" },
-    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Refurbished picks you've saved for later. Stored locally on this device.</p>" }
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Refurbished picks you've saved for later. Stored locally on this device — no account required.</p>" }
   ],
   "presets": [{ "name": "Wishlist" }]
 }

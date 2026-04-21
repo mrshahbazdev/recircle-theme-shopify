@@ -77,6 +77,8 @@
       "title": "Lista dei desideri",
       "add": "Salva",
       "remove": "Salvato",
+      "empty_title": "Niente ancora",
+      "continue": "Continua lo shopping",
       "empty_body": "La tua lista dei desideri è vuota. Tocca il cuore per salvare prodotti per dopo.",
       "empty_cta": "Vedi i prodotti",
       "clear": "Svuota la lista"

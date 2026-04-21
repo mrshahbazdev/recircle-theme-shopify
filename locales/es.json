@@ -77,6 +77,8 @@
       "title": "Lista de deseos",
       "add": "Guardar",
       "remove": "Guardado",
+      "empty_title": "Nada guardado",
+      "continue": "Seguir comprando",
       "empty_body": "Tu lista de deseos está vacía. Toca el corazón para guardar productos.",
       "empty_cta": "Ver productos",
       "clear": "Vaciar lista"

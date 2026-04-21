@@ -77,6 +77,8 @@
       "title": "Liste de souhaits",
       "add": "Enregistrer",
       "remove": "Enregistré",
+      "empty_title": "Rien d'enregistré",
+      "continue": "Continuer les achats",
       "empty_body": "Votre liste de souhaits est vide. Touchez le cœur pour sauvegarder des produits.",
       "empty_cta": "Voir les produits",
       "clear": "Vider la liste"

@@ -77,6 +77,8 @@
       "title": "Wunschliste",
       "add": "Merken",
       "remove": "Gemerkt",
+      "empty_title": "Noch nichts gespeichert",
+      "continue": "Weiter einkaufen",
       "empty_body": "Ihre Wunschliste ist leer. Tippen Sie auf das Herz, um Produkte für später zu speichern.",
       "empty_cta": "Produkte ansehen",
       "clear": "Wunschliste leeren"
