@@ -14,7 +14,8 @@
         srcset="{{ article.image | image_url: width: 900 }} 900w, {{ article.image | image_url: width: 1400 }} 1400w, {{ article.image | image_url: width: 1800 }} 1800w"
         sizes="(min-width: 900px) 780px, 100vw"
         alt="{{ article.title | escape }}"
-        loading="eager"
+        width="1600" height="900"
+        loading="eager" decoding="async"
         fetchpriority="high">
     {%- endif -%}
 

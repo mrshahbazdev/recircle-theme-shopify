@@ -14,7 +14,10 @@
         <img src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
              alt="{{ shop.name }}"
              width="{{ settings.logo_width }}"
-             height="auto">
+             height="auto"
+             loading="eager"
+             decoding="async"
+             fetchpriority="high">
       {%- else -%}
         <span class="site-header__logo-mark" aria-hidden="true">R</span>
         <span>{{ shop.name }}</span>

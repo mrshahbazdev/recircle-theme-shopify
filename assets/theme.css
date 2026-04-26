@@ -3037,3 +3037,111 @@ h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: 0; }
   background: color-mix(in srgb, var(--color-brand) 10%, transparent);
   border-radius: 999px;
 }
+
+/* ============================================================
+ * Phase 13 — Performance + Accessibility polish
+ * ----------------------------------------------------------------
+ * - Locks media aspect-ratios for zero-CLS (Cumulative Layout Shift)
+ * - Defers paint of below-fold blocks via `content-visibility: auto`
+ * - Strengthens focus rings + skip-link visibility for WCAG 2.2 AA
+ * - Completes prefers-reduced-motion coverage
+ * ============================================================ */
+
+/* CLS — every media container has a reserved box */
+.product-card__media,
+.product-gallery__main,
+.cart-line__media,
+.cart-drawer__item-media,
+.article-card__media,
+.collection-list__link,
+.hero__image,
+.quick-view-product__media,
+.predictive-search__media {
+  contain: layout paint;
+}
+
+.article-card__media { aspect-ratio: 16 / 10; overflow: hidden; }
+.collection-list__link { aspect-ratio: 4 / 3; overflow: hidden; }
+.cart-line__media { aspect-ratio: 1 / 1; }
+.cart-drawer__item-media { aspect-ratio: 1 / 1; flex-shrink: 0; }
+
+img { max-width: 100%; height: auto; }
+img[width][height] { height: auto; }
+
+/* Below-the-fold deferred paint (browsers that support it skip painting
+ * until the section nears the viewport — big TBT/INP win on long pages) */
+.collection-grid,
+.editorial-grid--articles,
+.collection-list,
+.cart-lines,
+.product-page__details,
+.recently-viewed-rail {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Reserve grid intrinsic size per item to avoid layout flicker */
+.product-card { contain-intrinsic-size: 1px 380px; }
+.article-card { contain-intrinsic-size: 1px 360px; }
+
+/* Skip-link — make it always reachable + WCAG-compliant on focus */
+.skip-to-content {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  border-radius: 0 0 8px 0;
+  box-shadow: 0 6px 20px rgba(13, 33, 26, 0.18);
+}
+.skip-to-content:focus {
+  outline: 3px solid var(--color-amber);
+  outline-offset: 0;
+}
+
+/* Focus ring contrast: dual outline ensures ≥3:1 against any bg */
+:focus-visible {
+  outline: 3px solid var(--color-amber);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(13, 33, 26, 0.18);
+}
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--color-amber);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(13, 33, 26, 0.22);
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 1px;
+  border-color: var(--color-brand);
+}
+
+/* Reduced motion — completeness pass */
+@media (prefers-reduced-motion: reduce) {
+  .product-card:hover .product-card__media img,
+  .article-card:hover .article-card__media img,
+  .collection-list__link:hover img {
+    transform: none !important;
+  }
+  .before-after { scroll-behavior: auto !important; }
+  .cart-drawer,
+  .quick-view-modal,
+  .compare-bar { transition: none !important; }
+}
+
+/* Forced-colors mode (Windows High Contrast) */
+@media (forced-colors: active) {
+  .btn,
+  .button,
+  .product-card,
+  .editorial-panel,
+  .cart-summary,
+  .editorial-empty {
+    border: 1px solid CanvasText;
+  }
+  .skip-to-content { border: 2px solid CanvasText; }
+}
+
+/* ===== Phase 13 — End ===== */

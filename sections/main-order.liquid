@@ -23,7 +23,7 @@
         {%- for line in order.line_items -%}
           <article class="cart-line">
             <div class="cart-line__media">
-              {%- if line.image -%}<img src="{{ line.image | image_url: width: 200 }}" alt="{{ line.title | escape }}" width="96" height="96" loading="lazy">{%- endif -%}
+              {%- if line.image -%}<img src="{{ line.image | image_url: width: 200 }}" srcset="{{ line.image | image_url: width: 200 }} 1x, {{ line.image | image_url: width: 400 }} 2x" alt="{{ line.title | escape }}" width="96" height="96" loading="lazy" decoding="async">{%- endif -%}
             </div>
             <div class="cart-line__body">
               <h3 class="cart-line__title">{{ line.product.title }}</h3>
