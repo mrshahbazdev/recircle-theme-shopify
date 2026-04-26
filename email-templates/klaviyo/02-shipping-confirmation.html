@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light dark">
+  <title>{{ organization.name }} — your order is on its way</title>
+  <style>
+    @media only screen and (max-width: 620px) {
+      .container { width: 100% !important; }
+      .px-32 { padding-left: 20px !important; padding-right: 20px !important; }
+      .py-32 { padding-top: 24px !important; padding-bottom: 24px !important; }
+      .h1 { font-size: 26px !important; line-height: 1.2 !important; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .body-bg { background-color: #15201C !important; }
+      .text-deep, .h1 { color: #F2EBDD !important; }
+      .text-mute { color: #B6AFA1 !important; }
+      .card { background-color: #1B2925 !important; }
+      .pill, .eyebrow { background-color: #2A3A35 !important; color: #F2EBDD !important; }
+    }
+  </style>
+</head>
+<body class="body-bg" style="margin:0;padding:0;background-color:#EFE8DA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#1A1A1A;">
+  <div style="display:none;font-size:1px;color:#EFE8DA;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+    Order #{{ event.extra.order_number|default:event.OrderId }} is on its way{% if event.extra.tracking_number %} — track it here{% endif %}.
+  </div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="body-bg" style="background-color:#EFE8DA;">
+    <tr><td align="center" class="px-32" style="padding:32px 16px;">
+      <table role="presentation" class="container" width="600" cellspacing="0" cellpadding="0" border="0" style="width:600px;max-width:600px;">
+
+        <tr><td align="center" class="text-mute" style="padding:0 0 24px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#5A5A5A;">{{ organization.name }}</td></tr>
+
+        <tr><td class="card" style="background-color:#FBF8F3;border-radius:8px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td class="px-32 py-32" style="padding:40px 44px;">
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr>
+              <td class="eyebrow pill" style="background-color:#E8E0CC;color:#0D211A;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;padding:6px 12px;border-radius:999px;">On its way</td>
+            </tr></table>
+
+            <h1 class="h1 text-deep" style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:600;font-size:32px;line-height:1.18;letter-spacing:-0.01em;color:#0D211A;margin:18px 0 6px;">Your order has shipped.</h1>
+            <p class="text-mute" style="font-size:15px;line-height:1.6;color:#5A5A5A;margin:0 0 28px;">
+              Order <strong style="color:#0D211A;">#{{ event.extra.order_number|default:event.OrderId }}</strong> left us on
+              {{ event.Date|date:"F j, Y" }}{% if event.extra.estimated_delivery_at %}, expected by <strong style="color:#0D211A;">{{ event.extra.estimated_delivery_at|date:"F j, Y" }}</strong>{% endif %}.
+            </p>
+
+            {% if event.extra.tracking_number %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#F1EADC;border-radius:6px;margin:0 0 24px;">
+                <tr><td style="padding:22px 24px;">
+                  <div class="text-mute" style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#7A7A7A;margin-bottom:6px;">Tracking</div>
+                  <div style="font-family:'Playfair Display',Georgia,serif;font-size:18px;color:#0D211A;margin-bottom:4px;">{{ event.extra.tracking_company }}</div>
+                  <div style="font-size:14px;color:#0D211A;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">{{ event.extra.tracking_number }}</div>
+                </td></tr>
+              </table>
+
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 32px;"><tr>
+                <td align="center" style="border-radius:6px;background-color:#0D211A;">
+                  <a href="{{ event.extra.tracking_url }}" style="display:inline-block;padding:14px 28px;font-size:14px;letter-spacing:0.06em;font-weight:600;color:#FBF8F3;text-decoration:none;border-radius:6px;background-color:#0D211A;">Track shipment</a>
+                </td>
+              </tr></table>
+            {% endif %}
+
+            <hr style="border:0;border-top:1px solid #E5DDC9;margin:0 0 22px;">
+            <div class="text-mute" style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7A7A7A;margin-bottom:14px;">In this shipment</div>
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+              {% for line in event.extra.line_items %}
+                <tr>
+                  <td width="68" valign="top" style="padding:0 14px 18px 0;">
+                    {% if line.image %}<img src="{{ line.image }}" alt="{{ line.title|escape }}" width="64" height="64" style="display:block;width:64px;height:64px;border-radius:6px;object-fit:cover;background:#EFE8DA;">{% endif %}
+                  </td>
+                  <td valign="top" style="padding:0 0 18px;">
+                    <div style="font-size:14px;font-weight:600;color:#0D211A;line-height:1.4;margin-bottom:4px;">{{ line.title }}</div>
+                    <span class="text-mute" style="font-size:13px;color:#5A5A5A;">× {{ line.quantity }}</span>
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+
+          </td></tr></table>
+        </td></tr>
+
+        <tr><td class="text-mute" align="center" style="padding:28px 24px 0;font-size:12px;line-height:1.7;color:#5A5A5A;">
+          <p style="margin:0 0 6px;">{{ organization.name }} · {{ organization.full_address }}</p>
+          <p style="margin:0;"><a href="{% unsubscribe %}" style="color:#5A5A5A;text-decoration:underline;">Unsubscribe</a></p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

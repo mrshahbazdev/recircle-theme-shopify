@@ -1,0 +1,28 @@
+{{ shop.name | default: organization.name }}
+TRADE-IN QUOTE READY
+
+Reference: #{{ quote.reference | default: customer.id | default: event.extra.reference }}
+Submitted: {{ "now" | date: format: "date" }}
+
+INDICATIVE CREDIT
+{{ quote.value | default: event.extra.value | money }}
+(Valid for 14 days · subject to inspection)
+
+ITEM DETAILS
+Product:           {{ quote.product_title | default: event.extra.product_title }}
+Brand:             {{ quote.brand | default: event.extra.brand }}
+Reported condition: {{ quote.condition | default: event.extra.condition }}
+{% if quote.notes %}Your notes:        {{ quote.notes }}{% endif %}
+
+----------------------------------------------------------------
+WHAT HAPPENS NEXT
+
+  1. Print your label. A prepaid shipping label arrives in a separate email within an hour.
+  2. Pack & ship. Drop at any carrier collection point — free.
+  3. We inspect & pay. Final credit issued within 3 business days of arrival.
+
+If the device differs from your description, we'll send a revised offer for your approval.
+
+Need help? Reply to this email — a real human will respond within one business day.
+
+{{ shop.name }}
