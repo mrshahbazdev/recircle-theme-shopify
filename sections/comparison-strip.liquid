@@ -1,0 +1,157 @@
+{%- liquid
+  assign heading_id = 'compare-strip-' | append: section.id
+-%}
+
+<section class="section compare-strip" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    <header class="section-heading compare-strip__heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-heading__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="section-heading__title" id="{{ heading_id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-heading__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- assign columns = section.blocks | where: 'type', 'column' -%}
+    {%- assign rows = section.blocks | where: 'type', 'row' -%}
+
+    {%- if columns.size > 0 and rows.size > 0 -%}
+      <div class="compare-strip__wrap">
+        <table class="compare-strip__table" role="table">
+          <caption class="visually-hidden">{{ section.settings.heading }}</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="compare-strip__row-head"><span class="visually-hidden">Feature</span></th>
+              {%- for col in columns -%}
+                <th scope="col" class="compare-strip__col-head{% if col.settings.highlight %} is-highlight{% endif %}">
+                  {%- if col.settings.eyebrow != blank -%}
+                    <span class="compare-strip__col-eyebrow">{{ col.settings.eyebrow }}</span>
+                  {%- endif -%}
+                  <span class="compare-strip__col-title">{{ col.settings.title }}</span>
+                  {%- if col.settings.subtitle != blank -%}
+                    <span class="compare-strip__col-sub">{{ col.settings.subtitle }}</span>
+                  {%- endif -%}
+                </th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for row in rows -%}
+              <tr>
+                <th scope="row" class="compare-strip__row-label">
+                  {{ row.settings.label }}
+                  {%- if row.settings.help != blank -%}
+                    <span class="compare-strip__help" title="{{ row.settings.help | escape }}" aria-label="{{ row.settings.help | escape }}">i</span>
+                  {%- endif -%}
+                </th>
+                {%- for col in columns -%}
+                  {%- assign idx = forloop.index -%}
+                  {%- case idx -%}
+                    {%- when 1 -%}{%- assign cell = row.settings.col1 -%}
+                    {%- when 2 -%}{%- assign cell = row.settings.col2 -%}
+                    {%- when 3 -%}{%- assign cell = row.settings.col3 -%}
+                    {%- when 4 -%}{%- assign cell = row.settings.col4 -%}
+                  {%- endcase -%}
+                  <td class="compare-strip__cell{% if col.settings.highlight %} is-highlight{% endif %}">
+                    {%- if cell == 'yes' -%}
+                      <span class="compare-strip__icon compare-strip__icon--yes" aria-label="Yes">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m3 7.5 2.5 2.5L11 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    {%- elsif cell == 'no' -%}
+                      <span class="compare-strip__icon compare-strip__icon--no" aria-label="No">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5 10.5 10.5M10.5 3.5 3.5 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                      </span>
+                    {%- elsif cell == 'partial' -%}
+                      <span class="compare-strip__icon compare-strip__icon--partial" aria-label="Partial">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                      </span>
+                    {%- else -%}
+                      <span class="compare-strip__text">{{ cell }}</span>
+                    {%- endif -%}
+                  </td>
+                {%- endfor -%}
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- else -%}
+      <p class="section-heading__text">Add at least one column and one row block in the theme editor to populate the table.</p>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <div class="compare-strip__cta">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison strip",
+  "tag": "section",
+  "class": "section-compare-strip",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Refurbished vs new" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Same device. Better deal." },
+    { "type": "textarea", "id": "text", "label": "Intro text" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Shop refurbished" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Option" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Refurbished" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "From £499" },
+        { "type": "checkbox", "id": "highlight", "label": "Highlight this column", "default": false }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Feature", "default": "12-month warranty" },
+        { "type": "text", "id": "help", "label": "Tooltip (optional)" },
+        {
+          "type": "select", "id": "col1", "label": "Column 1",
+          "options": [
+            { "value": "yes", "label": "Yes (✓)" },
+            { "value": "no", "label": "No (✕)" },
+            { "value": "partial", "label": "Partial (–)" },
+            { "value": "text", "label": "Custom text (use field below)" }
+          ],
+          "default": "yes"
+        },
+        { "type": "select", "id": "col2", "label": "Column 2", "options": [{"value":"yes","label":"Yes"},{"value":"no","label":"No"},{"value":"partial","label":"Partial"},{"value":"text","label":"Custom"}], "default": "no" },
+        { "type": "select", "id": "col3", "label": "Column 3", "options": [{"value":"yes","label":"Yes"},{"value":"no","label":"No"},{"value":"partial","label":"Partial"},{"value":"text","label":"Custom"}], "default": "yes" },
+        { "type": "select", "id": "col4", "label": "Column 4", "options": [{"value":"yes","label":"Yes"},{"value":"no","label":"No"},{"value":"partial","label":"Partial"},{"value":"text","label":"Custom"}], "default": "yes" }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "Refurbished vs new",
+      "blocks": [
+        { "type": "column", "settings": { "eyebrow": "Buy new", "title": "New from manufacturer", "subtitle": "From £999", "highlight": false } },
+        { "type": "column", "settings": { "eyebrow": "Marketplace", "title": "Used (eBay etc.)", "subtitle": "From £400", "highlight": false } },
+        { "type": "column", "settings": { "eyebrow": "Best value", "title": "ReCircle refurbished", "subtitle": "From £499", "highlight": true } },
+        { "type": "row", "settings": { "label": "Functionally tested", "col1": "yes", "col2": "no", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "12-month warranty", "col1": "yes", "col2": "no", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "Battery health verified", "col1": "yes", "col2": "no", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "Genuine parts only", "col1": "yes", "col2": "no", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "14-day no-quibble returns", "col1": "yes", "col2": "no", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "Independent A/B/C/D grading", "col1": "no", "col2": "no", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "CO₂ saved vs new", "col1": "no", "col2": "partial", "col3": "yes" } },
+        { "type": "row", "settings": { "label": "Trade-in credit", "col1": "no", "col2": "no", "col3": "yes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,140 @@
+{%- liquid
+  assign target = all_products[section.settings.product]
+  if target == blank or target == empty
+    assign target = nil
+  endif
+-%}
+
+{%- if target -%}
+  {%- assign variant = target.selected_or_first_available_variant -%}
+  <aside class="sticky-atc"
+         data-sticky-atc
+         {% if section.settings.delay_px > 0 %}data-show-after="{{ section.settings.delay_px }}"{% endif %}
+         aria-label="Quick add to cart">
+    <div class="page-width sticky-atc__inner">
+      <div class="sticky-atc__product">
+        {%- if target.featured_image -%}
+          <img class="sticky-atc__thumb"
+               src="{{ target.featured_image | image_url: width: 96 }}"
+               alt="{{ target.title | escape }}"
+               width="48" height="48"
+               loading="lazy" decoding="async">
+        {%- endif -%}
+        <div class="sticky-atc__meta">
+          <div class="sticky-atc__title">{{ target.title | truncate: 56 }}</div>
+          <div class="sticky-atc__price-row">
+            {%- if target.compare_at_price > target.price -%}
+              <span class="sticky-atc__price">{{ target.price | money }}</span>
+              <span class="sticky-atc__msrp">{{ target.compare_at_price | money }}</span>
+            {%- else -%}
+              <span class="sticky-atc__price">{{ target.price | money }}</span>
+            {%- endif -%}
+            {%- assign grade = target.metafields.recircle.grade -%}
+            {%- if grade -%}
+              <span class="sticky-atc__pill">Grade {{ grade }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="sticky-atc__form" data-sticky-atc-form>
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+
+        {%- if target.has_only_default_variant == false and target.variants.size > 1 -%}
+          <label for="StickyAtcVariant-{{ section.id }}" class="visually-hidden">Variant</label>
+          <select id="StickyAtcVariant-{{ section.id }}"
+                  name="id"
+                  class="sticky-atc__variant"
+                  data-sticky-atc-variant>
+            {%- for v in target.variants -%}
+              <option value="{{ v.id }}" {% if v.id == variant.id %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
+                {{ v.title }}{% unless v.available %} — sold out{% endunless %}
+              </option>
+            {%- endfor -%}
+          </select>
+        {%- endif -%}
+
+        <button type="submit"
+                class="btn btn--primary sticky-atc__btn"
+                {% unless variant.available %}disabled{% endunless %}>
+          {%- if variant.available -%}
+            <span class="sticky-atc__btn-label">{{ section.settings.button_label | default: 'Add to cart' }}</span>
+            <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+          {%- else -%}
+            <span class="sticky-atc__btn-label">{{ 'products.product.sold_out' | t | default: 'Sold out' }}</span>
+          {%- endif -%}
+        </button>
+      </form>
+
+      <button type="button" class="sticky-atc__close" data-sticky-atc-close aria-label="Dismiss quick add bar">
+        <svg width="14" height="14" aria-hidden="true"><use href="#icon-close"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <script>
+  (() => {
+    const bar = document.currentScript.previousElementSibling;
+    if (!bar) return;
+    const showAfter = parseInt(bar.dataset.showAfter || '600', 10);
+    const close = bar.querySelector('[data-sticky-atc-close]');
+    let dismissed = sessionStorage.getItem('recircle:sticky-atc:dismissed:{{ section.id }}') === '1';
+
+    const update = () => {
+      if (dismissed) { bar.classList.remove('is-visible'); return; }
+      if (window.scrollY > showAfter) bar.classList.add('is-visible');
+      else bar.classList.remove('is-visible');
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+
+    close && close.addEventListener('click', () => {
+      dismissed = true;
+      sessionStorage.setItem('recircle:sticky-atc:dismissed:{{ section.id }}', '1');
+      bar.classList.remove('is-visible');
+    });
+
+    // Keep variant select in sync with hidden id input
+    const variant = bar.querySelector('[data-sticky-atc-variant]');
+    if (variant) {
+      const hidden = bar.querySelector('input[name="id"]');
+      variant.addEventListener('change', () => { if (hidden) hidden.value = variant.value; });
+    }
+
+    // AJAX submit, fall back to native form post if cart drawer not present
+    const form = bar.querySelector('[data-sticky-atc-form]');
+    form && form.addEventListener('submit', (e) => {
+      const drawer = document.querySelector('[data-cart-drawer]');
+      if (!drawer || !window.fetch) return;
+      e.preventDefault();
+      const fd = new FormData(form);
+      fetch('{{ routes.cart_add_url }}', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(r => r.json())
+        .then(() => {
+          document.dispatchEvent(new CustomEvent('cart:refresh'));
+          document.querySelector('[data-cart-toggle]')?.click();
+        })
+        .catch(() => form.submit());
+    });
+  })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky add-to-cart bar",
+  "tag": "aside",
+  "class": "section-sticky-atc",
+  "settings": [
+    { "type": "header", "content": "Featured product" },
+    { "type": "product", "id": "product", "label": "Product to feature" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "header", "content": "Behaviour" },
+    { "type": "range", "id": "delay_px", "label": "Show after scrolling (px)", "min": 0, "max": 2000, "step": 100, "default": 600, "info": "Bar appears after the user scrolls this many pixels down. Set to 0 to always show." }
+  ],
+  "presets": [
+    { "name": "Sticky ATC bar" }
+  ]
+}
+{% endschema %}
