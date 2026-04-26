@@ -27,8 +27,10 @@
                 data-image-alt="{{ image.alt | default: product.title | escape }}"
                 aria-label="Show image {{ forloop.index }}">
           <img src="{{ image | image_url: width: 150 }}"
+               srcset="{{ image | image_url: width: 100 }} 1x, {{ image | image_url: width: 200 }} 2x"
                alt="{{ image.alt | default: product.title | escape }}"
-               loading="lazy">
+               width="60" height="60"
+               loading="lazy" decoding="async">
         </button>
       {%- endfor -%}
     </div>

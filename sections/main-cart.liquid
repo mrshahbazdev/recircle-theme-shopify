@@ -1,64 +1,111 @@
-<section class="section" aria-label="Cart">
+<section class="section editorial-page cart-page" aria-label="Cart">
   <div class="page-width">
-    <h1>{{ 'general.cart.title' | t }}</h1>
+    <header class="editorial-page__header">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-cart"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Your basket' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ 'general.cart.title' | t }}</h1>
+        {%- if cart.item_count > 0 -%}
+          <div class="editorial-page__subheading">
+            <p>{% if cart.item_count == 1 %}1 item ready for check-out.{% else %}{{ cart.item_count }} items ready for check-out.{% endif %}</p>
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if cart.item_count > 0 -%}
+        <div class="editorial-page__header-actions">
+          <a href="{{ routes.root_url }}" class="button button--outline">{{ 'general.cart.continue_shopping' | t }}</a>
+        </div>
+      {%- endif -%}
+    </header>
 
     {%- if cart.item_count > 0 -%}
-      {%- form 'cart', cart -%}
-        <table class="cart-items">
-          <thead>
-            <tr>
-              <th colspan="2">Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
+      {%- form 'cart', cart, class: 'cart-form' -%}
+        <div class="cart-layout">
+          <div class="cart-lines">
             {%- for item in cart.items -%}
-              <tr>
-                <td style="width:80px">
-                  <a href="{{ item.url }}"><img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="80" height="80" loading="lazy"></a>
-                </td>
-                <td>
-                  <a href="{{ item.url }}" style="color:var(--color-text);font-weight:600">{{ item.product.title }}</a>
-                  {%- if item.variant.title != 'Default Title' -%}
-                    <div style="color:var(--color-text-muted);font-size:0.85rem">{{ item.variant.title }}</div>
+              <article class="cart-line" data-cart-line="{{ forloop.index }}">
+                <a href="{{ item.url }}" class="cart-line__media" aria-hidden="true" tabindex="-1">
+                  {%- if item.image -%}
+                    <img src="{{ item.image | image_url: width: 200 }}" srcset="{{ item.image | image_url: width: 200 }} 1x, {{ item.image | image_url: width: 400 }} 2x" alt="{{ item.title | escape }}" width="96" height="96" loading="lazy" decoding="async">
                   {%- endif -%}
-                  <div>{% render 'condition-badge', product: item.product %}</div>
-                </td>
-                <td>{{ item.final_price | money }}</td>
-                <td>
-                  <div class="product-form__quantity" data-quantity>
-                    <button type="button" data-qty-step="-1" aria-label="Decrease">−</button>
-                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ forloop.index }}">
-                    <button type="button" data-qty-step="1" aria-label="Increase">+</button>
+                </a>
+                <div class="cart-line__body">
+                  <h3 class="cart-line__title"><a href="{{ item.url }}">{{ item.product.title }}</a></h3>
+                  {%- if item.variant.title != 'Default Title' -%}
+                    <p class="cart-line__variant">{{ item.variant.title }}</p>
+                  {%- endif -%}
+                  <div class="cart-line__meta">
+                    {% render 'condition-badge', product: item.product %}
+                    {%- assign co2 = item.product.metafields.recircle.co2_saved_kg.value -%}
+                    {%- if co2 != blank -%}
+                      <span class="pill pill--muted">{{ co2 }} kg CO₂e saved</span>
+                    {%- endif -%}
                   </div>
-                </td>
-                <td>{{ item.final_line_price | money }}</td>
-              </tr>
+                  <div class="cart-line__controls" style="margin-top:0.6rem;display:flex;gap:0.85rem;align-items:center;flex-wrap:wrap">
+                    <div class="product-form__quantity" data-quantity>
+                      <button type="button" data-qty-step="-1" aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
+                      <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ forloop.index }}" aria-label="{{ 'products.product.quantity' | t }}">
+                      <button type="button" data-qty-step="1" aria-label="{{ 'products.product.increase_quantity' | t }}">+</button>
+                    </div>
+                    <button type="button" class="cart-line__remove" data-cart-remove="{{ forloop.index }}">{{ 'general.cart.remove' | t }}</button>
+                  </div>
+                </div>
+                <div class="cart-line__price-stack">
+                  <span class="cart-line__line-price">{{ item.final_line_price | money }}</span>
+                  {%- if item.quantity > 1 -%}
+                    <span class="cart-line__unit-price">{{ item.final_price | money }} each</span>
+                  {%- endif -%}
+                </div>
+              </article>
             {%- endfor -%}
-          </tbody>
-        </table>
-
-        <div class="cart-totals">
-          <span>{{ 'general.cart.subtotal' | t }}:</span>
-          <span>{{ cart.total_price | money }}</span>
-        </div>
-        <p style="color:var(--color-text-muted);font-size:0.85rem;text-align:right;margin-bottom:1rem">
-          {{ 'general.cart.tax_and_shipping' | t }}
-        </p>
-
-        <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-          <a href="{{ routes.root_url }}" class="btn btn--secondary">{{ 'general.cart.continue_shopping' | t }}</a>
-          <div style="display:flex;gap:0.5rem">
-            <button type="submit" name="update" class="btn btn--secondary">Update</button>
-            <button type="submit" name="checkout" class="btn btn--primary">{{ 'general.cart.checkout' | t }}</button>
           </div>
+
+          <aside class="cart-summary" aria-label="Order summary">
+            <h2 class="cart-summary__title">Order summary</h2>
+            <div class="cart-summary__row">
+              <span>{{ 'general.cart.subtotal' | t }}</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <div class="cart-summary__row cart-summary__total">
+              <span>Total</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <p class="cart-summary__note">{{ 'general.cart.tax_and_shipping' | t }}</p>
+
+            {%- assign cart_co2 = 0 -%}
+            {%- for item in cart.items -%}
+              {%- assign item_co2 = item.product.metafields.recircle.co2_saved_kg.value | default: 0 | times: item.quantity -%}
+              {%- assign cart_co2 = cart_co2 | plus: item_co2 -%}
+            {%- endfor -%}
+            {%- if cart_co2 > 0 -%}
+              <div class="cart-summary__co2">
+                <svg width="18" height="18" aria-hidden="true"><use href="#icon-leaf"/></svg>
+                <span>{{ 'general.cart.co2_savings_html' | t: kg: cart_co2 }}</span>
+              </div>
+            {%- endif -%}
+
+            <div style="display:flex;gap:0.5rem;margin-top:1.25rem">
+              <button type="submit" name="update" class="button button--outline" style="flex:1">Update</button>
+              <button type="submit" name="checkout" class="button button--primary cart-summary__checkout" style="flex:2">{{ 'general.cart.checkout' | t }}</button>
+            </div>
+            <a href="{{ routes.root_url }}" class="cart-summary__continue">{{ 'general.cart.continue_shopping' | t }} →</a>
+          </aside>
         </div>
       {%- endform -%}
     {%- else -%}
-      <p>{{ 'general.cart.empty' | t }}</p>
-      <a href="{{ routes.root_url }}" class="btn btn--primary">{{ 'general.cart.continue_shopping' | t }}</a>
+      <div class="editorial-empty">
+        <div class="editorial-empty__icon" aria-hidden="true">
+          <svg width="36" height="36"><use href="#icon-cart"/></svg>
+        </div>
+        <h2 class="editorial-empty__title">{{ 'general.cart.empty' | t }}</h2>
+        <p class="editorial-empty__body">Browse refurbished finds, add a favourite, and come back here to check out.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">
+          Browse refurbished
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+        </a>
+      </div>
     {%- endif -%}
   </div>
 </section>
@@ -67,7 +114,9 @@
 {
   "name": "Cart",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your basket" }
+  ],
   "enabled_on": { "templates": ["cart"] }
 }
 {% endschema %}

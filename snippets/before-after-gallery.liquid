@@ -12,12 +12,16 @@
   <figure>
     <div class="before-after" data-before-after style="--split:50%">
       <img src="{{ before_img | image_url: width: 900 }}"
+           srcset="{{ before_img | image_url: width: 600 }} 600w, {{ before_img | image_url: width: 900 }} 900w, {{ before_img | image_url: width: 1200 }} 1200w"
+           sizes="(min-width: 900px) 540px, 100vw"
            alt="Before refurbishment"
-           loading="lazy" width="900" height="675">
+           loading="lazy" decoding="async" width="900" height="675">
       <img class="before-after__after"
            src="{{ after_img | image_url: width: 900 }}"
+           srcset="{{ after_img | image_url: width: 600 }} 600w, {{ after_img | image_url: width: 900 }} 900w, {{ after_img | image_url: width: 1200 }} 1200w"
+           sizes="(min-width: 900px) 540px, 100vw"
            alt="After refurbishment"
-           loading="lazy" width="900" height="675">
+           loading="lazy" decoding="async" width="900" height="675">
       <div class="before-after__divider" aria-hidden="true"></div>
       <button type="button" class="before-after__handle"
               data-ba-handle aria-label="Drag to compare before and after">

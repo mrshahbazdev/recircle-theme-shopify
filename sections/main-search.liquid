@@ -1,29 +1,73 @@
-<section class="section" aria-label="Search">
+<section class="section editorial-page search-page" aria-label="Search">
   <div class="page-width">
-    <form action="{{ routes.search_url }}" method="get" role="search" style="margin-bottom:2rem">
-      <label for="search-input" class="visually-hidden">{{ 'general.search.submit' | t }}</label>
-      <div style="display:flex;gap:0.5rem;max-width:640px">
-        <input id="search-input" type="search" name="q" value="{{ search.terms | escape }}"
-               placeholder="{{ 'general.search.placeholder' | t }}" style="flex:1">
-        <button type="submit" class="btn btn--primary">{{ 'general.search.submit' | t }}</button>
+    <header class="editorial-page__header editorial-page__header--centered">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Search the shop' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">
+          {%- if search.performed -%}
+            {%- if search.results_count > 0 -%}
+              Results for &ldquo;{{ search.terms | escape }}&rdquo;
+            {%- else -%}
+              Nothing for &ldquo;{{ search.terms | escape }}&rdquo;
+            {%- endif -%}
+          {%- else -%}
+            What are you looking for?
+          {%- endif -%}
+        </h1>
+        {%- if search.performed -%}
+          <p class="editorial-page__meta">{{ search.results_count }} results</p>
+        {%- endif -%}
       </div>
+    </header>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
+      <label for="search-input" class="visually-hidden">{{ 'general.search.submit' | t }}</label>
+      <input id="search-input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" autofocus>
+      <button type="submit" class="button button--primary">{{ 'general.search.submit' | t }}</button>
     </form>
 
     {%- if search.performed -%}
-      <p>{{ search.results_count }} results for "{{ search.terms | escape }}"</p>
-
       {%- if search.results_count == 0 -%}
-        <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+        <div class="editorial-empty">
+          <div class="editorial-empty__icon" aria-hidden="true">
+            <svg width="30" height="30"><use href="#icon-search"/></svg>
+          </div>
+          <h2 class="editorial-empty__title">No matches yet</h2>
+          <p class="editorial-empty__body">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">Browse everything</a>
+        </div>
       {%- else -%}
         <div class="collection-grid">
           {%- paginate search.results by 24 -%}
             {%- for item in search.results -%}
               {%- if item.object_type == 'product' -%}
                 {% render 'product-card', product: item %}
+              {%- elsif item.object_type == 'article' -%}
+                <article class="article-card">
+                  {%- if item.image -%}
+                    <a href="{{ item.url }}" class="article-card__media">
+                      <img src="{{ item.image | image_url: width: 600 }}"
+                           srcset="{{ item.image | image_url: width: 400 }} 400w, {{ item.image | image_url: width: 700 }} 700w, {{ item.image | image_url: width: 1000 }} 1000w"
+                           sizes="(min-width: 900px) 320px, 90vw"
+                           alt="{{ item.title | escape }}"
+                           width="600" height="400"
+                           loading="lazy" decoding="async">
+                    </a>
+                  {%- endif -%}
+                  <div class="article-card__body">
+                    <p class="article-card__meta">Journal</p>
+                    <h3 class="article-card__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+                  </div>
+                </article>
               {%- else -%}
-                <article class="product-card">
-                  <h3 class="product-card__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
-                  <p class="product-card__attrs">{{ item.object_type }}</p>
+                <article class="article-card">
+                  <div class="article-card__body">
+                    <p class="article-card__meta">{{ item.object_type }}</p>
+                    <h3 class="article-card__title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+                  </div>
                 </article>
               {%- endif -%}
             {%- endfor -%}
@@ -38,7 +82,9 @@
 {
   "name": "Search results",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Search the shop" }
+  ],
   "enabled_on": { "templates": ["search"] }
 }
 {% endschema %}

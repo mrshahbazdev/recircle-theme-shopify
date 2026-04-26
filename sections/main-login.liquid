@@ -1,36 +1,53 @@
-<section class="section">
-  <div class="page-width" style="max-width:460px">
-    <h1>{{ 'customer.login.title' | t }}</h1>
-    {%- form 'customer_login', novalidate: 'novalidate' -%}
-      {%- if form.errors -%}
-        <p style="color:#c00">{{ form.errors | default_errors }}</p>
-      {%- endif -%}
-      <div class="field">
-        <label for="CustomerEmail" class="field__label">{{ 'customer.login.email' | t }}</label>
-        <input type="email" id="CustomerEmail" name="customer[email]" autocomplete="email" required>
+<section class="section editorial-page" aria-label="Login">
+  <div class="page-width">
+    <header class="editorial-page__header editorial-page__header--centered" style="margin-bottom:2rem">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-user"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Welcome back' }}</span>
+        </p>
+        <h1 class="editorial-page__heading" style="margin-bottom:0">{{ 'customer.login.title' | t }}</h1>
       </div>
-      <div class="field" style="margin-top:0.75rem">
-        <label for="CustomerPassword" class="field__label">{{ 'customer.login.password' | t }}</label>
-        <input type="password" id="CustomerPassword" name="customer[password]" autocomplete="current-password" required>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem">
-        <a href="{{ routes.account_recover_url }}" class="btn btn--link">{{ 'customer.login.forgot_password' | t }}</a>
-        <button type="submit" class="btn btn--primary">{{ 'customer.login.sign_in' | t }}</button>
-      </div>
-    {%- endform -%}
+    </header>
 
-    <p style="margin-top:2rem;text-align:center">
-      <a href="{{ routes.account_register_url }}" class="btn btn--link">{{ 'customer.login.create_account' | t }}</a>
+    <div class="editorial-panel">
+      {%- form 'customer_login', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+          <p class="editorial-panel__error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+        <div class="field">
+          <label for="CustomerEmail" class="field__label">{{ 'customer.login.email' | t }}</label>
+          <input type="email" id="CustomerEmail" name="customer[email]" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="CustomerPassword" class="field__label">{{ 'customer.login.password' | t }}</label>
+          <input type="password" id="CustomerPassword" name="customer[password]" autocomplete="current-password" required>
+        </div>
+        <div class="editorial-panel__footer">
+          <a href="{{ routes.account_recover_url }}" style="font-size:0.88rem;color:var(--color-text-muted)">{{ 'customer.login.forgot_password' | t }}</a>
+          <button type="submit" class="button button--primary">{{ 'customer.login.sign_in' | t }}</button>
+        </div>
+      {%- endform -%}
+
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="editorial-panel__success" style="margin-top:1rem">We've sent you an email with a link to reset your password.</p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    <p class="editorial-panel__aside">
+      New here? <a href="{{ routes.account_register_url }}">{{ 'customer.login.create_account' | t }}</a>
     </p>
-
-    {%- form 'recover_customer_password' -%}
-      {%- if form.posted_successfully? -%}
-        <p style="color:var(--color-accent);margin-top:1rem">We've sent you an email with a link to reset your password.</p>
-      {%- endif -%}
-    {%- endform -%}
   </div>
 </section>
 
 {% schema %}
-{ "name": "Login", "tag": "section", "settings": [] }
+{
+  "name": "Login",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Welcome back" }
+  ]
+}
 {% endschema %}

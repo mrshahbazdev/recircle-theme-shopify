@@ -13,7 +13,7 @@
               <a href="{{ product.url }}" class="predictive-search__item">
                 <span class="predictive-search__media">
                   {%- if product.featured_image -%}
-                    <img src="{{ product.featured_image | image_url: width: 120 }}" alt="" loading="lazy" width="48" height="48">
+                    <img src="{{ product.featured_image | image_url: width: 120 }}" srcset="{{ product.featured_image | image_url: width: 96 }} 1x, {{ product.featured_image | image_url: width: 192 }} 2x" alt="" loading="lazy" decoding="async" width="48" height="48">
                   {%- endif -%}
                 </span>
                 <span class="predictive-search__body">

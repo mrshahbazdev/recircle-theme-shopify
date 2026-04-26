@@ -1,12 +1,26 @@
-<section class="section text-center">
-  <div class="page-width" style="max-width:640px">
-    <h1 style="font-size:clamp(3rem, 10vw, 6rem);margin:0 0 0.5em">404</h1>
-    <h2>{{ 'general.404.title' | t }}</h2>
-    <p style="color:var(--color-text-muted)">{{ 'general.404.subtext' | t }}</p>
-    <a href="{{ routes.root_url }}" class="btn btn--primary" style="margin-top:1rem">{{ 'general.404.link' | t }}</a>
+<section class="section page-404">
+  <div class="page-width page-404__inner">
+    <p class="editorial-page__eyebrow" style="margin:0 auto 1rem">
+      <svg width="14" height="14" aria-hidden="true"><use href="#icon-leaf"/></svg>
+      <span>{{ section.settings.eyebrow | default: 'Lost in the warehouse' }}</span>
+    </p>
+    <div class="page-404__code" aria-hidden="true">404</div>
+    <h1 class="page-404__title">{{ 'general.404.title' | t }}</h1>
+    <p class="page-404__body">{{ 'general.404.subtext' | t }}</p>
+    <div style="display:inline-flex;gap:0.5rem;flex-wrap:wrap;justify-content:center">
+      <a href="{{ routes.root_url }}" class="button button--primary">{{ 'general.404.link' | t }}</a>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--outline">Browse refurbished</a>
+    </div>
   </div>
 </section>
 
 {% schema %}
-{ "name": "404", "tag": "section", "settings": [], "enabled_on": { "templates": ["404"] } }
+{
+  "name": "404",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Lost in the warehouse" }
+  ],
+  "enabled_on": { "templates": ["404"] }
+}
 {% endschema %}

@@ -1,31 +1,50 @@
-<section class="section">
+<section class="section editorial-page order-page" aria-label="Order">
   <div class="page-width">
-    <a href="{{ routes.account_url }}" class="btn btn--link" style="padding:0;margin-bottom:0.5rem">← {{ 'customer.account.title' | t }}</a>
-    <h1>{{ 'customer.orders.order_number' | t: number: order.name }}</h1>
-    <p style="color:var(--color-text-muted)">{{ order.created_at | date: format: 'date' }}</p>
+    <a href="{{ routes.account_url }}" style="display:inline-flex;align-items:center;gap:0.35rem;margin-bottom:1rem;color:var(--color-text-muted);font-size:0.88rem">
+      ← {{ 'customer.account.title' | t }}
+    </a>
+    <header class="editorial-page__header">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-cart"/></svg>
+          <span>Order detail</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ 'customer.orders.order_number' | t: number: order.name }}</h1>
+        <p class="editorial-page__meta">{{ order.created_at | date: format: 'date' }}</p>
+      </div>
+      <div class="editorial-page__header-actions">
+        <span class="pill pill--muted">{{ order.financial_status_label }}</span>
+        <span class="pill pill--muted">{{ order.fulfillment_status_label }}</span>
+      </div>
+    </header>
 
-    <table class="cart-items">
-      <thead>
-        <tr><th>Product</th><th>SKU</th><th>Qty</th><th>Price</th><th>Total</th></tr>
-      </thead>
-      <tbody>
+    <div class="cart-layout">
+      <div class="cart-lines">
         {%- for line in order.line_items -%}
-          <tr>
-            <td>{{ line.product.title }}{%- if line.variant.title != 'Default Title' -%} <span style="color:var(--color-text-muted)">({{ line.variant.title }})</span>{%- endif -%}</td>
-            <td style="font-family:monospace">{{ line.sku }}</td>
-            <td>{{ line.quantity }}</td>
-            <td>{{ line.price | money }}</td>
-            <td>{{ line.final_line_price | money }}</td>
-          </tr>
+          <article class="cart-line">
+            <div class="cart-line__media">
+              {%- if line.image -%}<img src="{{ line.image | image_url: width: 200 }}" srcset="{{ line.image | image_url: width: 200 }} 1x, {{ line.image | image_url: width: 400 }} 2x" alt="{{ line.title | escape }}" width="96" height="96" loading="lazy" decoding="async">{%- endif -%}
+            </div>
+            <div class="cart-line__body">
+              <h3 class="cart-line__title">{{ line.product.title }}</h3>
+              {%- if line.variant.title != 'Default Title' -%}<p class="cart-line__variant">{{ line.variant.title }}</p>{%- endif -%}
+              <p class="cart-line__variant" style="font-family:monospace;font-size:0.78rem">SKU: {{ line.sku }}</p>
+            </div>
+            <div class="cart-line__price-stack">
+              <span class="cart-line__line-price">{{ line.final_line_price | money }}</span>
+              <span class="cart-line__unit-price">{{ line.quantity }} × {{ line.price | money }}</span>
+            </div>
+          </article>
         {%- endfor -%}
-      </tbody>
-    </table>
+      </div>
 
-    <div class="cart-totals">
-      <span>{{ 'general.cart.subtotal' | t }}</span><span>{{ order.subtotal_price | money }}</span>
-    </div>
-    <div class="cart-totals">
-      <span>Total</span><span>{{ order.total_price | money }}</span>
+      <aside class="cart-summary">
+        <h2 class="cart-summary__title">Summary</h2>
+        <div class="cart-summary__row"><span>{{ 'general.cart.subtotal' | t }}</span><span>{{ order.subtotal_price | money }}</span></div>
+        {%- if order.shipping_price > 0 -%}<div class="cart-summary__row"><span>Shipping</span><span>{{ order.shipping_price | money }}</span></div>{%- endif -%}
+        {%- if order.tax_price > 0 -%}<div class="cart-summary__row"><span>Tax</span><span>{{ order.tax_price | money }}</span></div>{%- endif -%}
+        <div class="cart-summary__row cart-summary__total"><span>Total</span><span>{{ order.total_price | money }}</span></div>
+      </aside>
     </div>
   </div>
 </section>

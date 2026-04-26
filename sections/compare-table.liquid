@@ -1,19 +1,28 @@
-{%- comment -%}
-  Compare page. Renders a placeholder; the JS compare module fetches
-  `/products/{handle}.js` for each stored handle and builds a side-by-side
-  table keyed on recircle.* metafields.
-{%- endcomment -%}
-
-<section class="section compare-page" data-compare-root>
+<section class="section editorial-page compare-page" data-compare-root>
   <div class="page-width">
-    <header class="section__header">
-      <h1 class="section__heading">{{ section.settings.heading | default: 'Compare refurbished products' }}</h1>
-      <p class="section__subheading">{{ section.settings.subheading }}</p>
+    <header class="editorial-page__header editorial-page__header--centered">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-compare"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Side by side' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ section.settings.heading | default: 'Compare refurbished products' }}</h1>
+        {%- if section.settings.subheading != blank -%}
+          <div class="editorial-page__subheading" style="margin:0 auto">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+      </div>
     </header>
 
-    <div class="compare-empty" data-compare-empty>
-      <p>{{ 'recircle.compare.empty_body' | t }}</p>
-      <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'recircle.compare.empty_cta' | t }}</a>
+    <div class="editorial-empty" data-compare-empty>
+      <div class="editorial-empty__icon" aria-hidden="true">
+        <svg width="30" height="30"><use href="#icon-compare"/></svg>
+      </div>
+      <h2 class="editorial-empty__title">Nothing to compare yet</h2>
+      <p class="editorial-empty__body">{{ 'recircle.compare.empty_body' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">
+        {{ 'recircle.compare.empty_cta' | t }}
+        <svg width="14" height="14" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+      </a>
     </div>
 
     <div class="compare-table-wrap" data-compare-wrap hidden>
@@ -39,6 +48,7 @@
 {
   "name": "Compare",
   "settings": [
+    { "type": "text",     "id": "eyebrow",    "label": "Eyebrow",    "default": "Side by side" },
     { "type": "text",     "id": "heading",    "label": "Heading",    "default": "Compare refurbished products" },
     { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Side-by-side specs, condition grade, CO\u2082 savings and warranty.</p>" }
   ],

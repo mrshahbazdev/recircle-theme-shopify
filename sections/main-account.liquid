@@ -1,46 +1,75 @@
-<section class="section">
+<section class="section editorial-page account-page" aria-label="Account">
   <div class="page-width">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
-      <div>
-        <h1 style="margin:0">{{ 'customer.account.title' | t }}</h1>
-        <p style="color:var(--color-text-muted);margin:0.25rem 0 0">{{ customer.email }}</p>
+    <header class="editorial-page__header">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-user"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Your account' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ 'customer.account.title' | t }}</h1>
       </div>
-      <div style="display:flex;gap:0.5rem">
-        <a href="{{ routes.account_addresses_url }}" class="btn btn--secondary">{{ 'customer.addresses.title' | t }}</a>
-        <a href="{{ routes.account_logout_url }}" class="btn btn--link">{{ 'customer.account.logout' | t }}</a>
+      <div class="editorial-page__header-actions">
+        <a href="{{ routes.account_logout_url }}" class="button button--outline">{{ 'customer.account.logout' | t }}</a>
+      </div>
+    </header>
+
+    <div class="account-layout">
+      <aside class="account-sidebar" aria-label="Account navigation">
+        <p class="account-sidebar__label">Signed in as</p>
+        <p class="account-sidebar__email">{{ customer.email }}</p>
+        <ul class="account-sidebar__nav" role="list">
+          <li><a href="{{ routes.account_url }}">Order history</a></li>
+          <li><a href="{{ routes.account_addresses_url }}">{{ 'customer.addresses.title' | t }}</a></li>
+          <li><a href="/pages/wishlist">Wishlist</a></li>
+          <li><a href="{{ routes.account_logout_url }}">{{ 'customer.account.logout' | t }}</a></li>
+        </ul>
+      </aside>
+
+      <div class="account-orders-card">
+        <h2>{{ 'customer.account.orders_title' | t }}</h2>
+        {%- if customer.orders.size > 0 -%}
+          <table class="cart-items">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>{{ 'customer.orders.date' | t }}</th>
+                <th>{{ 'customer.orders.payment_status' | t }}</th>
+                <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th style="text-align:right">{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}" style="font-weight:600">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: format: 'date' }}</td>
+                  <td><span class="pill pill--muted">{{ order.financial_status_label }}</span></td>
+                  <td><span class="pill pill--muted">{{ order.fulfillment_status_label }}</span></td>
+                  <td style="text-align:right;font-weight:600">{{ order.total_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <div class="editorial-empty" style="border:0;padding:2rem 0">
+            <div class="editorial-empty__icon" aria-hidden="true">
+              <svg width="30" height="30"><use href="#icon-cart"/></svg>
+            </div>
+            <p class="editorial-empty__body" style="max-width:40ch">{{ 'customer.account.no_orders' | t }}</p>
+            <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">Start browsing</a>
+          </div>
+        {%- endif -%}
       </div>
     </div>
-
-    <h2 style="margin-top:2rem">{{ 'customer.account.orders_title' | t }}</h2>
-    {%- if customer.orders.size > 0 -%}
-      <table class="cart-items">
-        <thead>
-          <tr>
-            <th>{{ 'customer.orders.order_number' | t: number: '' }}</th>
-            <th>{{ 'customer.orders.date' | t }}</th>
-            <th>{{ 'customer.orders.payment_status' | t }}</th>
-            <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
-            <th>{{ 'customer.orders.total' | t }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {%- for order in customer.orders -%}
-            <tr>
-              <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
-              <td>{{ order.created_at | date: format: 'date' }}</td>
-              <td>{{ order.financial_status_label }}</td>
-              <td>{{ order.fulfillment_status_label }}</td>
-              <td>{{ order.total_price | money }}</td>
-            </tr>
-          {%- endfor -%}
-        </tbody>
-      </table>
-    {%- else -%}
-      <p>{{ 'customer.account.no_orders' | t }}</p>
-    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
-{ "name": "Account", "tag": "section", "settings": [] }
+{
+  "name": "Account",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your account" }
+  ]
+}
 {% endschema %}

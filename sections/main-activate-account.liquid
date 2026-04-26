@@ -1,16 +1,33 @@
-<section class="section">
-  <div class="page-width" style="max-width:460px">
-    <h1>Activate account</h1>
-    <p>Create a password to activate your account.</p>
-    {%- form 'activate_customer_password' -%}
-      {%- if form.errors -%}<p style="color:#c00">{{ form.errors | default_errors }}</p>{%- endif -%}
-      <div class="field"><label class="field__label" for="ActPwd">Password</label><input id="ActPwd" type="password" name="customer[password]" required></div>
-      <div class="field" style="margin-top:0.75rem"><label class="field__label" for="ActPwdC">Confirm password</label><input id="ActPwdC" type="password" name="customer[password_confirmation]" required></div>
-      <div style="display:flex;gap:0.5rem;margin-top:1rem">
-        <button type="submit" class="btn btn--primary">Activate</button>
-        <button type="submit" name="decline" class="btn btn--secondary">Decline</button>
+<section class="section editorial-page" aria-label="Activate account">
+  <div class="page-width">
+    <header class="editorial-page__header editorial-page__header--centered" style="margin-bottom:2rem">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-user"/></svg>
+          <span>Activate account</span>
+        </p>
+        <h1 class="editorial-page__heading" style="margin-bottom:0">Set your password</h1>
+        <p class="editorial-page__subheading" style="margin:0.85rem auto 0">Create a password to activate your account.</p>
       </div>
-    {%- endform -%}
+    </header>
+
+    <div class="editorial-panel">
+      {%- form 'activate_customer_password' -%}
+        {%- if form.errors -%}<p class="editorial-panel__error">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <div class="field">
+          <label class="field__label" for="ActPwd">Password</label>
+          <input id="ActPwd" type="password" name="customer[password]" required autocomplete="new-password">
+        </div>
+        <div class="field">
+          <label class="field__label" for="ActPwdC">Confirm password</label>
+          <input id="ActPwdC" type="password" name="customer[password_confirmation]" required autocomplete="new-password">
+        </div>
+        <div class="editorial-panel__footer">
+          <button type="submit" name="decline" class="button button--outline">Decline</button>
+          <button type="submit" class="button button--primary">Activate</button>
+        </div>
+      {%- endform -%}
+    </div>
   </div>
 </section>
 

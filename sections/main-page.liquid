@@ -1,7 +1,17 @@
-<section class="section" aria-label="Page">
-  <div class="page-width" style="max-width:780px">
-    <h1>{{ page.title }}</h1>
-    <div class="rte">{{ page.content }}</div>
+<section class="section cms-page" aria-label="Page">
+  <div class="page-width cms-page__inner">
+    <header class="editorial-page__header editorial-page__header--centered" style="border-bottom:none;padding-bottom:0;margin-bottom:2rem">
+      <div class="editorial-page__heading-group">
+        {%- if section.settings.show_eyebrow -%}
+          <p class="editorial-page__eyebrow">
+            <svg width="14" height="14" aria-hidden="true"><use href="#icon-leaf"/></svg>
+            <span>{{ section.settings.eyebrow | default: 'ReCircle' }}</span>
+          </p>
+        {%- endif -%}
+        <h1 class="editorial-page__heading" style="margin-bottom:0">{{ page.title }}</h1>
+      </div>
+    </header>
+    <div class="cms-page__body rte">{{ page.content }}</div>
   </div>
 </section>
 
@@ -9,7 +19,10 @@
 {
   "name": "Page",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    { "type": "checkbox", "id": "show_eyebrow", "label": "Show eyebrow", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "ReCircle" }
+  ],
   "enabled_on": { "templates": ["page"] }
 }
 {% endschema %}

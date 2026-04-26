@@ -1,56 +1,71 @@
-<section class="section" aria-label="Collection">
+<section class="section editorial-page collection-page" aria-label="Collection">
   <div class="page-width">
-    <header class="section-heading">
-      <h1 class="section-heading__title">{{ collection.title }}</h1>
-      {%- if collection.description != blank -%}
-        <div class="section-heading__text">{{ collection.description }}</div>
-      {%- endif -%}
+    <header class="editorial-page__header">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true" focusable="false"><use href="#icon-leaf"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Refurbished collection' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="editorial-page__subheading">{{ collection.description }}</div>
+        {%- endif -%}
+        <p class="editorial-page__meta">
+          {{ 'collections.general.showing_count' | t: count: collection.products.size, total: collection.all_products_count }}
+        </p>
+      </div>
     </header>
 
     <div class="facets-wrap">
       <aside class="facets" aria-label="Filters">
         {%- if section.settings.show_condition_filter -%}
-          <h3>Condition</h3>
-          <ul>
-            {%- assign grade_list = 'a,b,c,d' | split: ',' -%}
-            {%- for grade in grade_list -%}
-              <li>
-                <label>
-                  <input type="checkbox" name="filter.p.m.recircle.condition_grade" value="{{ grade }}"
-                    {% if current_tags contains grade %}checked{% endif %}>
-                  Grade {{ grade | upcase }}
-                </label>
-              </li>
-            {%- endfor -%}
-          </ul>
+          <div class="facets__group">
+            <h3>Condition</h3>
+            <ul>
+              {%- assign grade_list = 'a,b,c,d' | split: ',' -%}
+              {%- for grade in grade_list -%}
+                <li>
+                  <label>
+                    <input type="checkbox" name="filter.p.m.recircle.condition_grade" value="{{ grade }}"
+                      {% if current_tags contains grade %}checked{% endif %}>
+                    Grade {{ grade | upcase }}
+                  </label>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
         {%- endif -%}
 
         {%- if collection.all_vendors.size > 1 -%}
-          <h3>Brand</h3>
-          <ul>
-            {%- for vendor in collection.all_vendors limit: 10 -%}
-              <li><label><input type="checkbox" name="filter.p.vendor" value="{{ vendor | escape }}">{{ vendor }}</label></li>
-            {%- endfor -%}
-          </ul>
+          <div class="facets__group">
+            <h3>Brand</h3>
+            <ul>
+              {%- for vendor in collection.all_vendors limit: 10 -%}
+                <li><label><input type="checkbox" name="filter.p.vendor" value="{{ vendor | escape }}">{{ vendor }}</label></li>
+              {%- endfor -%}
+            </ul>
+          </div>
         {%- endif -%}
 
-        <h3>Price</h3>
-        <ul>
-          <li><label><input type="checkbox" name="filter.v.price" value="0-300"> Under €300</label></li>
-          <li><label><input type="checkbox" name="filter.v.price" value="300-600"> €300 – €600</label></li>
-          <li><label><input type="checkbox" name="filter.v.price" value="600-1000"> €600 – €1000</label></li>
-          <li><label><input type="checkbox" name="filter.v.price" value="1000-"> €1000+</label></li>
-        </ul>
+        <div class="facets__group">
+          <h3>Price</h3>
+          <ul>
+            <li><label><input type="checkbox" name="filter.v.price" value="0-300"> Under €300</label></li>
+            <li><label><input type="checkbox" name="filter.v.price" value="300-600"> €300 – €600</label></li>
+            <li><label><input type="checkbox" name="filter.v.price" value="600-1000"> €600 – €1000</label></li>
+            <li><label><input type="checkbox" name="filter.v.price" value="1000-"> €1000+</label></li>
+          </ul>
+        </div>
       </aside>
 
       <div>
-        <div class="flex items-center justify-between mb-2" style="flex-direction:row;gap:1rem">
-          <p style="margin:0;color:var(--color-text-muted);font-size:0.9rem">
+        <div class="collection-toolbar">
+          <p class="collection-toolbar__count">
             {{ 'collections.general.showing_count' | t: count: collection.products.size, total: collection.all_products_count }}
           </p>
-          <label style="font-size:0.9rem">
-            {{ 'collections.general.sort_by' | t }}:
-            <select aria-label="Sort" style="margin-left:0.5rem">
+          <label class="collection-toolbar__sort">
+            <span>{{ 'collections.general.sort_by' | t }}</span>
+            <select aria-label="Sort">
               <option value="manual">Featured</option>
               <option value="price-ascending">Price, low to high</option>
               <option value="price-descending">Price, high to low</option>
@@ -84,7 +99,14 @@
               {%- endif -%}
             {%- endpaginate -%}
           {%- else -%}
-            <p>{{ 'collections.general.no_products' | t }}</p>
+            <div class="editorial-empty" style="grid-column:1/-1">
+              <div class="editorial-empty__icon" aria-hidden="true">
+                <svg width="30" height="30"><use href="#icon-search"/></svg>
+              </div>
+              <h2 class="editorial-empty__title">No matches yet</h2>
+              <p class="editorial-empty__body">{{ 'collections.general.no_products' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">Browse everything</a>
+            </div>
           {%- endif -%}
         </div>
       </div>
@@ -97,6 +119,7 @@
   "name": "Product grid",
   "tag": "section",
   "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Refurbished collection" },
     { "type": "checkbox", "id": "show_condition_filter", "label": "Show condition-grade filter", "default": true },
     { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
   ],
