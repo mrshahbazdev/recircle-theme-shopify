@@ -1,0 +1,16 @@
+{{ shop.name | default: organization.name }}
+BACK IN STOCK
+
+{{ product.title | default: event.extra.product.title }}
+{% if product.metafields.recircle.grade %}Grade {{ product.metafields.recircle.grade }}  ·  {% endif %}{% if product.metafields.recircle.co2_kg %}{{ product.metafields.recircle.co2_kg }} kg CO₂ saved{% endif %}
+
+Price: {{ product.price | money }}{% if product.compare_at_price > product.price %}  (was {{ product.compare_at_price | money }}){% endif %}
+
+You asked us to let you know — and we kept our word. Refurbished, tested, and ready to ship. Stock is limited and we don't restock often — every unit is a one-of-a-kind reclaim.
+
+Shop now: {{ shop.url }}{{ product.url | default: event.extra.product.url }}
+
+----------------------------------------------------------------
+Don't want these alerts? Unsubscribe via the link in the HTML version of this email.
+
+{{ shop.name }}

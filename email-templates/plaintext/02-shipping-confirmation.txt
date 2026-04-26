@@ -1,0 +1,31 @@
+{{ shop.name | default: organization.name }}
+ON ITS WAY
+
+Order #{{ order.order_number }} left us on {{ fulfillment.created_at | date: format: "date" }}.
+{% if fulfillment.estimated_delivery_at %}Expected by {{ fulfillment.estimated_delivery_at | date: format: "date" }}.{% endif %}
+
+{% if fulfillment.tracking_number %}
+TRACKING
+Carrier: {{ fulfillment.tracking_company }}
+Number:  {{ fulfillment.tracking_number }}
+Track:   {{ fulfillment.tracking_url }}
+{% endif %}
+
+----------------------------------------------------------------
+IN THIS SHIPMENT
+----------------------------------------------------------------
+{% for line in fulfillment.line_items %}
+- {{ line.title }} × {{ line.quantity }}{% if line.product.metafields.recircle.grade %}  (Grade {{ line.product.metafields.recircle.grade }}){% endif %}
+{% endfor %}
+
+{% if order.shipping_address %}
+SHIPPING TO
+{{ order.shipping_address.name }}
+{{ order.shipping_address.street }}
+{{ order.shipping_address.city }}, {{ order.shipping_address.zip }}
+{{ order.shipping_address.country }}
+{% endif %}
+
+Questions? Reply to this email.
+
+{{ shop.name }}

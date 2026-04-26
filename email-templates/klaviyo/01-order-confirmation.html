@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>{{ organization.name }} — order #{{ event.extra.order_number|default:event.OrderId }}</title>
+  <!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
+  <style>
+    @media only screen and (max-width: 620px) {
+      .container { width: 100% !important; }
+      .px-32 { padding-left: 20px !important; padding-right: 20px !important; }
+      .py-32 { padding-top: 24px !important; padding-bottom: 24px !important; }
+      .stack-mobile { display: block !important; width: 100% !important; }
+      .h1 { font-size: 26px !important; line-height: 1.2 !important; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .body-bg { background-color: #15201C !important; }
+      .text-deep, .h1 { color: #F2EBDD !important; }
+      .text-mute { color: #B6AFA1 !important; }
+      .card { background-color: #1B2925 !important; }
+      .pill, .eyebrow { background-color: #2A3A35 !important; color: #F2EBDD !important; }
+    }
+  </style>
+</head>
+<body class="body-bg" style="margin:0;padding:0;background-color:#EFE8DA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#1A1A1A;">
+  <div style="display:none;font-size:1px;color:#EFE8DA;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+    Order #{{ event.extra.order_number|default:event.OrderId }} confirmed — refurbished with care.
+  </div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="body-bg" style="background-color:#EFE8DA;">
+    <tr><td align="center" class="px-32" style="padding:32px 16px;">
+      <table role="presentation" class="container" width="600" cellspacing="0" cellpadding="0" border="0" style="width:600px;max-width:600px;">
+        <tr><td align="center" class="text-mute" style="padding:0 0 24px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#5A5A5A;">{{ organization.name }}</td></tr>
+
+        <tr><td class="card" style="background-color:#FBF8F3;border-radius:8px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td class="px-32 py-32" style="padding:40px 44px;">
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr>
+              <td class="eyebrow pill" style="background-color:#E8E0CC;color:#0D211A;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;padding:6px 12px;border-radius:999px;">Order confirmed</td>
+            </tr></table>
+
+            <h1 class="h1 text-deep" style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:600;font-size:32px;line-height:1.18;letter-spacing:-0.01em;color:#0D211A;margin:18px 0 6px;">
+              Thanks{% if person.first_name %}, {{ person.first_name }}{% endif %}.
+            </h1>
+            <p class="text-mute" style="font-size:15px;line-height:1.6;color:#5A5A5A;margin:0 0 28px;">
+              Order <strong style="color:#0D211A;">#{{ event.extra.order_number|default:event.OrderId }}</strong> was placed on
+              {{ event.Date|date:"F j, Y" }}. We're preparing it now.
+            </p>
+
+            <!-- Stat row -->
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 32px;">
+              <tr>
+                <td class="stack-mobile" width="50%" style="text-align:left;padding-right:8px;">
+                  <div class="text-mute" style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7A7A7A;margin-bottom:4px;">Items</div>
+                  <div style="font-family:'Playfair Display',Georgia,serif;font-size:26px;color:#0D211A;line-height:1;">{{ event.extra.line_items|length|default:event.ItemCount }}</div>
+                </td>
+                <td class="stack-mobile" width="50%" style="text-align:left;">
+                  <div class="text-mute" style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7A7A7A;margin-bottom:4px;">Total</div>
+                  <div style="font-family:'Playfair Display',Georgia,serif;font-size:26px;color:#0D211A;line-height:1;">{{ event.extra.total_price|default:event.Value|currency }}</div>
+                </td>
+              </tr>
+            </table>
+
+            <hr style="border:0;border-top:1px solid #E5DDC9;margin:0 0 28px;">
+
+            <!-- Line items -->
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+              {% for line in event.extra.line_items %}
+                <tr>
+                  <td width="84" valign="top" style="padding:0 16px 22px 0;">
+                    {% if line.image %}<img src="{{ line.image }}" alt="{{ line.title|escape }}" width="80" height="80" style="display:block;width:80px;height:80px;border-radius:6px;object-fit:cover;background:#EFE8DA;">{% endif %}
+                  </td>
+                  <td valign="top" style="padding:0 0 22px;">
+                    <div style="font-size:15px;font-weight:600;color:#0D211A;line-height:1.4;margin-bottom:4px;">{{ line.title }}</div>
+                    {% if line.variant_title and line.variant_title != "Default Title" %}
+                      <div class="text-mute" style="font-size:13px;color:#5A5A5A;margin-bottom:6px;">{{ line.variant_title }}</div>
+                    {% endif %}
+                    {% if line.properties.grade %}
+                      <span class="pill" style="display:inline-block;background:#E8E0CC;color:#0D211A;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;padding:3px 10px;border-radius:999px;margin-right:6px;">Grade {{ line.properties.grade }}</span>
+                    {% endif %}
+                    <span class="text-mute" style="font-size:13px;color:#5A5A5A;">× {{ line.quantity }}</span>
+                  </td>
+                  <td valign="top" align="right" style="padding:0 0 22px;font-size:15px;font-weight:600;color:#0D211A;white-space:nowrap;">
+                    {{ line.line_price|currency }}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+
+            <hr style="border:0;border-top:1px solid #E5DDC9;margin:0 0 18px;">
+
+            <!-- Totals -->
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+              <tr><td class="text-mute" style="padding:6px 0;font-size:14px;color:#5A5A5A;">Subtotal</td>
+                  <td align="right" style="padding:6px 0;font-size:14px;color:#0D211A;">{{ event.extra.subtotal_price|default:0|currency }}</td></tr>
+              {% if event.extra.shipping_price %}
+                <tr><td class="text-mute" style="padding:6px 0;font-size:14px;color:#5A5A5A;">Shipping</td>
+                    <td align="right" style="padding:6px 0;font-size:14px;color:#0D211A;">{{ event.extra.shipping_price|currency }}</td></tr>
+              {% endif %}
+              {% if event.extra.tax_price %}
+                <tr><td class="text-mute" style="padding:6px 0;font-size:14px;color:#5A5A5A;">Tax</td>
+                    <td align="right" style="padding:6px 0;font-size:14px;color:#0D211A;">{{ event.extra.tax_price|currency }}</td></tr>
+              {% endif %}
+              <tr>
+                <td style="padding:14px 0 0;font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#0D211A;border-top:1px solid #E5DDC9;">Total</td>
+                <td align="right" style="padding:14px 0 0;font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#0D211A;border-top:1px solid #E5DDC9;font-weight:600;">{{ event.extra.total_price|default:event.Value|currency }}</td>
+              </tr>
+            </table>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:32px 0 0;"><tr>
+              <td align="center" style="border-radius:6px;background-color:#0D211A;">
+                <a href="{{ event.extra.order_status_url|default:organization.url }}" style="display:inline-block;padding:14px 28px;font-size:14px;letter-spacing:0.06em;font-weight:600;color:#FBF8F3;text-decoration:none;border-radius:6px;background-color:#0D211A;">View order</a>
+              </td>
+            </tr></table>
+
+          </td></tr></table>
+        </td></tr>
+
+        <tr><td class="text-mute" align="center" style="padding:28px 24px 0;font-size:12px;line-height:1.7;color:#5A5A5A;">
+          <p style="margin:0 0 6px;">{{ organization.name }} · {{ organization.full_address }}</p>
+          <p style="margin:0;"><a href="{% unsubscribe %}" style="color:#5A5A5A;text-decoration:underline;">Unsubscribe</a></p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

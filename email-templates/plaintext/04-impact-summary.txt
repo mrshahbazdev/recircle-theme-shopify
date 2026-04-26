@@ -1,0 +1,35 @@
+{{ shop.name | default: organization.name }}
+YOUR IMPACT
+
+Hi {{ order.customer.first_name | default: person.first_name | default: "there" }},
+
+Order #{{ order.order_number }} didn't just save you money. It kept this much in circulation:
+
+{% assign co2 = 0 %}
+{% assign units = 0 %}
+{% for line in order.line_items %}
+  {% assign co2_kg = line.product.metafields.recircle.co2_kg | plus: 0 %}
+  {% assign co2 = co2 | plus: co2_kg | times: line.quantity %}
+  {% assign units = units | plus: line.quantity %}
+{% endfor %}
+{% assign water = co2 | times: 7 %}
+{% assign trees = co2 | divided_by: 22.0 | round: 1 %}
+{% assign km_not_driven = co2 | divided_by: 0.18 | round %}
+
+  CO₂ avoided:    {{ co2 }} kg
+  Water saved:    {{ water }} litres
+  Units rescued:  {{ units }}
+
+PUT ANOTHER WAY
+Roughly equivalent to {{ trees }} mature trees absorbing CO₂ for a full year, or {{ km_not_driven }} km not driven in an average petrol car.
+
+----------------------------------------------------------------
+BY PRODUCT
+{% for line in order.line_items %}
+  {% assign line_co2 = line.product.metafields.recircle.co2_kg | plus: 0 | times: line.quantity %}
+  - {{ line.title }} — {{ line_co2 }} kg
+{% endfor %}
+
+See your full impact: {{ shop.url }}/pages/impact
+
+{{ shop.name }} · Refurbished with intention
