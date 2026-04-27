@@ -1,0 +1,30 @@
+{%- comment -%}
+  Phase 30 — robots.txt override.
+
+  Starts from Shopify's default groups (so all good-citizen rules — like
+  blocking /search, /cart, /checkouts, draft-orders etc. — keep working) and
+  adds:
+    - explicit allow for /products & /collections
+    - extra disallow for query-string paginations & filter combos that produce
+      duplicate-content surface area
+    - explicit pointer to the localized sitemap
+{%- endcomment -%}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+
+  {% for rule in group.rules %}
+    {{ rule }}
+  {% endfor %}
+
+  {%- if group.user_agent.value == '*' -%}
+    Disallow: /*?*sort_by=*
+    Disallow: /*?*page=*
+    Disallow: /*?*filter*
+    Allow: /products
+    Allow: /collections
+  {%- endif -%}
+
+  {% if group.sitemap != blank %}
+    {{ group.sitemap }}
+  {% endif %}
+{% endfor %}

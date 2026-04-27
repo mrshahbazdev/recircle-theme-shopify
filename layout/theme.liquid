@@ -34,6 +34,9 @@
 
     {% render 'meta-tags' %}
 
+    {% render 'json-ld-organization' %}
+    {% render 'json-ld-breadcrumb' %}
+
     {% render 'analytics-head' %}
 
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>

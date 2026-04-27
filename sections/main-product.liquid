@@ -185,23 +185,66 @@
   </a>
 </div>
 
-{%- assign structured_price = product.price | divided_by: 100.0 -%}
+{%- liquid
+  assign structured_price = product.price | divided_by: 100.0
+  assign variant = product.selected_or_first_available_variant
+  assign reviews_count = product.metafields.reviews.rating_count.value | default: 0
+  assign reviews_avg   = product.metafields.reviews.rating.value
+  assign condition_grade = product.metafields.recircle.condition_grade.value
+  assign gtin = variant.barcode
+  assign mpn  = variant.sku
+-%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
   "@type": "Product",
   "name": {{ product.title | json }},
-  "image": {{ product.featured_image | image_url: width: 1200 | json }},
-  "description": {{ product.description | strip_html | truncatewords: 50 | json }},
-  "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  "image": [
+    {%- for img in product.images limit: 5 -%}
+      {{ img | image_url: width: 1600 | json }}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ],
+  "description": {{ product.description | strip_html | truncatewords: 60 | json }},
+  "sku": {{ mpn | json }},
+  {%- if gtin != blank -%}"gtin": {{ gtin | json }},{%- endif -%}
+  {%- if mpn  != blank -%}"mpn":  {{ mpn  | json }},{%- endif -%}
   "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
   "itemCondition": "https://schema.org/RefurbishedCondition",
+  {%- if condition_grade != blank -%}
+  "additionalProperty": [
+    { "@type": "PropertyValue", "name": "Condition grade", "value": {{ condition_grade | json }} }
+    {%- if product.metafields.recircle.repair_score.value -%},
+    { "@type": "PropertyValue", "name": "Repairability score", "value": {{ product.metafields.recircle.repair_score.value | json }} }
+    {%- endif -%}
+    {%- if product.metafields.recircle.co2_saved_kg.value -%},
+    { "@type": "PropertyValue", "name": "CO2 saved (kg)", "value": {{ product.metafields.recircle.co2_saved_kg.value | json }} }
+    {%- endif -%}
+  ],
+  {%- endif -%}
+  {%- if reviews_count != 0 and reviews_avg -%}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ reviews_avg | json }},
+    "reviewCount": {{ reviews_count | json }}
+  },
+  {%- endif -%}
   "offers": {
     "@type": "Offer",
     "priceCurrency": {{ cart.currency.iso_code | json }},
     "price": "{{ structured_price }}",
     "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
-    "url": {{ shop.url | append: product.url | json }}
+    "url": {{ shop.url | append: product.url | json }},
+    "itemCondition": "https://schema.org/RefurbishedCondition"
+    {%- if product.metafields.recircle.warranty_months.value -%},
+    "warranty": {
+      "@type": "WarrantyPromise",
+      "durationOfWarranty": {
+        "@type": "QuantitativeValue",
+        "value": {{ product.metafields.recircle.warranty_months.value | json }},
+        "unitCode": "MON"
+      }
+    }
+    {%- endif -%}
   }
 }
 </script>

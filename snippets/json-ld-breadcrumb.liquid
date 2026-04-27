@@ -1,0 +1,38 @@
+{%- comment -%}
+  Phase 30 — BreadcrumbList JSON-LD.
+  Auto-detects template (collection / product / article / page) and emits the
+  appropriate breadcrumb chain. Safe to render on every page.
+{%- endcomment -%}
+
+{%- liquid
+  assign crumbs = ''
+  if template contains 'product'
+    if collection
+      assign crumbs = crumbs | append: shop.url | append: ',' | append: 'Home' | append: '|' | append: shop.url | append: collection.url | append: ',' | append: collection.title | append: '|' | append: shop.url | append: product.url | append: ',' | append: product.title
+    else
+      assign crumbs = crumbs | append: shop.url | append: ',' | append: 'Home' | append: '|' | append: shop.url | append: product.url | append: ',' | append: product.title
+    endif
+  elsif template contains 'collection' and collection.handle != blank
+    assign crumbs = crumbs | append: shop.url | append: ',' | append: 'Home' | append: '|' | append: shop.url | append: collection.url | append: ',' | append: collection.title
+  elsif template contains 'article'
+    assign crumbs = crumbs | append: shop.url | append: ',' | append: 'Home' | append: '|' | append: shop.url | append: blog.url | append: ',' | append: blog.title | append: '|' | append: shop.url | append: article.url | append: ',' | append: article.title
+  elsif template contains 'page' and page.url != blank
+    assign crumbs = crumbs | append: shop.url | append: ',' | append: 'Home' | append: '|' | append: shop.url | append: page.url | append: ',' | append: page.title
+  endif
+  assign crumb_list = crumbs | split: '|'
+-%}
+
+{%- if crumb_list.size > 1 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for c in crumb_list -%}
+      {%- assign parts = c | split: ',' -%}
+      { "@type": "ListItem", "position": {{ forloop.index }}, "name": {{ parts[1] | json }}, "item": {{ parts[0] | json }} }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
