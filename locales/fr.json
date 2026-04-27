@@ -241,6 +241,11 @@
       "free_shipping": "Livraison gratuite",
       "returns": "Retours gratuits",
       "warranty": "Garantie"
+    },
+    "cart_upsell": {
+      "heading": "Vous aimerez aussi",
+      "add": "Ajouter",
+      "sold_out": "Épuisé"
     }
   },
   "collections": {

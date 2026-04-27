@@ -650,5 +650,32 @@
         "content": "Judge.me and Loox auto-detect placeholders; no app key required here. Documented in docs/REVIEWS.md."
       }
     ]
+  },
+  {
+    "name": "Cart upsell",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_enabled",
+        "label": "Enable cart upsell rail",
+        "default": true,
+        "info": "Renders a recommended-products rail inside the cart drawer and on the cart page."
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_handles",
+        "label": "Manual product handles (comma-separated)",
+        "info": "Pin specific products to the rail. Leave blank to use Shopify's automatic recommendations API (requires Search & Discovery)."
+      },
+      {
+        "type": "range",
+        "id": "cart_upsell_limit",
+        "label": "Max items",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 4
+      }
+    ]
   }
 ]

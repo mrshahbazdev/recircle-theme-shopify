@@ -225,6 +225,11 @@
       "free_shipping": "Free shipping",
       "returns": "Free returns",
       "warranty": "Warranty"
+    },
+    "cart_upsell": {
+      "heading": "You may also like",
+      "add": "Add",
+      "sold_out": "Sold out"
     }
   },
   "collections": {

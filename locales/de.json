@@ -241,6 +241,11 @@
       "free_shipping": "Kostenloser Versand",
       "returns": "Kostenlose Retoure",
       "warranty": "Garantie"
+    },
+    "cart_upsell": {
+      "heading": "Das könnte dir auch gefallen",
+      "add": "Hinzufügen",
+      "sold_out": "Ausverkauft"
     }
   },
   "collections": {
