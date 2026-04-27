@@ -230,6 +230,17 @@
     },
     "reviews": {
       "heading": "Klantbeoordelingen"
+    },
+    "bnpl": {
+      "klarna_fallback": "Of 4 renteloze termijnen. Vanaf {{ price }} {{ currency }} per maand."
+    },
+    "size_guide": {
+      "empty": "Maak een Pagina aan in Shopify Admin → Online Store → Pagina's en selecteer deze in het Maattabel-blok."
+    },
+    "delivery": {
+      "free_shipping": "Gratis verzending",
+      "returns": "Gratis retour",
+      "warranty": "Garantie"
     }
   },
   "collections": {

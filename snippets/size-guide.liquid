@@ -1,0 +1,36 @@
+{%- comment -%}
+  Phase 28 — Size guide button + modal. Pulls rich-text body from a Page resource.
+  Required: block
+{%- endcomment -%}
+
+{%- liquid
+  assign label = block.settings.button_label | default: 'Size guide'
+  assign body  = block.settings.page.content
+-%}
+
+<div class="size-guide" data-size-guide>
+  <button type="button" class="size-guide__open" data-size-guide-open
+          aria-haspopup="dialog" aria-controls="SizeGuideModal-{{ section.id }}">
+    <svg width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <path d="M3 17l4-4 4 4 4-4 4 4"/><path d="M3 7h18"/>
+    </svg>
+    <span>{{ label }}</span>
+  </button>
+
+  <dialog id="SizeGuideModal-{{ section.id }}" class="size-guide__modal"
+          aria-label="{{ label }}" data-size-guide-modal>
+    <div class="size-guide__modal-inner">
+      <header class="size-guide__head">
+        <h2 class="size-guide__title">{{ label }}</h2>
+        <button type="button" class="size-guide__close" data-size-guide-close aria-label="{{ 'general.close' | t }}">×</button>
+      </header>
+      <div class="size-guide__body rte">
+        {%- if body != blank -%}
+          {{ body }}
+        {%- else -%}
+          <p>{{ 'recircle.size_guide.empty' | t }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </dialog>
+</div>

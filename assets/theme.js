@@ -25,6 +25,7 @@
     initCompare();
     initConsentBanner();
     initNewsletterForm();
+    initSizeGuide();
   });
 
   /* -------- Accessibility helpers ----------------------------------------- */
@@ -1153,6 +1154,30 @@
           if (errorEl) errorEl.hidden = false;
         } finally {
           if (btn) btn.disabled = false;
+        }
+      });
+    });
+  }
+
+  /* -------- Size guide modal -------------------------------------------- */
+  function initSizeGuide() {
+    document.querySelectorAll('[data-size-guide]').forEach((wrap) => {
+      const open  = wrap.querySelector('[data-size-guide-open]');
+      const modal = wrap.querySelector('[data-size-guide-modal]');
+      const close = wrap.querySelector('[data-size-guide-close]');
+      if (!open || !modal) return;
+      open.addEventListener('click', () => {
+        if (typeof modal.showModal === 'function') modal.showModal();
+        else modal.setAttribute('open', '');
+      });
+      if (close) close.addEventListener('click', () => {
+        if (typeof modal.close === 'function') modal.close();
+        else modal.removeAttribute('open');
+      });
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          if (typeof modal.close === 'function') modal.close();
+          else modal.removeAttribute('open');
         }
       });
     });

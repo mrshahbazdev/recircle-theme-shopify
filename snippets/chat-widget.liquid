@@ -1,0 +1,52 @@
+{%- comment -%}
+  Phase 28 — Optional 3rd-party chat widget loader.
+  Renders the chosen provider's snippet only after consent has been granted
+  (consent banner stores `recircle:consent` in localStorage).
+{%- endcomment -%}
+
+{%- liquid
+  assign provider = settings.chat_provider | default: 'none'
+-%}
+
+{%- if provider != 'none' -%}
+<script>
+  (function () {
+    function injectChat() {
+      if (window.__recircleChatLoaded) return;
+      window.__recircleChatLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      {%- case provider -%}
+        {%- when 'tidio' -%}
+          s.src = 'https://code.tidio.co/{{ settings.chat_tidio_key }}.js';
+        {%- when 'crisp' -%}
+          window.$crisp = []; window.CRISP_WEBSITE_ID = '{{ settings.chat_crisp_website_id }}';
+          s.src = 'https://client.crisp.chat/l.js';
+        {%- when 'gorgias' -%}
+          s.src = 'https://config.gorgias.chat/bundle-loader/{{ settings.chat_gorgias_app_id }}';
+        {%- when 'intercom' -%}
+          window.intercomSettings = { app_id: '{{ settings.chat_intercom_app_id }}' };
+          s.src = 'https://widget.intercom.io/widget/{{ settings.chat_intercom_app_id }}';
+        {%- when 'tawk' -%}
+          s.src = 'https://embed.tawk.to/{{ settings.chat_tawk_id }}/default';
+          s.charset = 'UTF-8'; s.setAttribute('crossorigin', '*');
+      {%- endcase -%}
+      document.body.appendChild(s);
+    }
+
+    var consentRaw = null;
+    try { consentRaw = localStorage.getItem('recircle:consent'); } catch (e) {}
+    var consent = {};
+    try { consent = consentRaw ? JSON.parse(consentRaw) : {}; } catch (e) {}
+
+    if (consent && consent.functional) {
+      injectChat();
+    } else {
+      document.addEventListener('recircle:consent:granted', function (e) {
+        var c = (e && e.detail) || {};
+        if (c.functional) injectChat();
+      });
+    }
+  })();
+</script>
+{%- endif -%}

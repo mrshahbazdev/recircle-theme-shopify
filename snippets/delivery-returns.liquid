@@ -1,0 +1,36 @@
+{%- comment -%}
+  Phase 28 — Delivery & returns quick-info module on the PDP buy card.
+  Required: block
+{%- endcomment -%}
+
+<div class="delivery-returns" data-delivery-returns>
+  <ul class="delivery-returns__list" role="list">
+    {%- if block.settings.shipping_eta != blank -%}
+      <li class="delivery-returns__row">
+        <svg class="delivery-returns__icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+        </svg>
+        <span class="delivery-returns__text">{{ block.settings.shipping_eta }}</span>
+      </li>
+    {%- endif -%}
+    {%- if block.settings.returns_window != blank -%}
+      <li class="delivery-returns__row">
+        <svg class="delivery-returns__icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v6h6"/>
+        </svg>
+        <span class="delivery-returns__text">{{ block.settings.returns_window }}</span>
+      </li>
+    {%- endif -%}
+    {%- if block.settings.warranty_label != blank -%}
+      <li class="delivery-returns__row">
+        <svg class="delivery-returns__icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span class="delivery-returns__text">{{ block.settings.warranty_label }}</span>
+      </li>
+    {%- endif -%}
+  </ul>
+  {%- if block.settings.fineprint != blank -%}
+    <p class="delivery-returns__fineprint">{{ block.settings.fineprint }}</p>
+  {%- endif -%}
+</div>

@@ -230,6 +230,17 @@
     },
     "reviews": {
       "heading": "Kundenbewertungen"
+    },
+    "bnpl": {
+      "klarna_fallback": "Oder 4 zinsfreie Raten. Ab {{ price }} {{ currency }} pro Monat."
+    },
+    "size_guide": {
+      "empty": "Lege im Shopify-Admin unter Online-Shop → Seiten eine Seite an und wähle sie im Größenführer-Block aus."
+    },
+    "delivery": {
+      "free_shipping": "Kostenloser Versand",
+      "returns": "Kostenlose Retoure",
+      "warranty": "Garantie"
     }
   },
   "collections": {
