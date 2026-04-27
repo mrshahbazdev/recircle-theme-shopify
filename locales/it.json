@@ -15,7 +15,13 @@
       "collections": "Categorie",
       "articles": "Articoli",
       "suggestions": "Suggerimenti",
-      "no_results_html": "Nessun risultato per «{{ terms }}». Controlla l'ortografia o prova con un'altra parola."
+      "no_results_html": "Nessun risultato per «{{ terms }}». Controlla l'ortografia o prova con un'altra parola.",
+      "results_label": "Suggerimenti di ricerca",
+      "no_results_title": "Nessun risultato",
+      "suggestion_check_spelling": "Controlla l’ortografia.",
+      "suggestion_fewer_words": "Prova un termine più breve e generico.",
+      "suggestion_browse": "Oppure sfoglia per categoria qui sotto.",
+      "browse_all": "Sfoglia tutto"
     },
     "cart": {
       "title": "Il tuo carrello",

@@ -123,9 +123,16 @@
 
   {% if section.settings.autoplay %}
   if (!reduced && slides.length > 1) {
-    let timer = setInterval(() => go(current + 1), {{ section.settings.autoplay_seconds | default: 6 | times: 1000 }});
-    root.addEventListener('mouseenter', () => clearInterval(timer));
-    root.addEventListener('focusin',   () => clearInterval(timer));
+    const interval = {{ section.settings.autoplay_seconds | default: 6 | times: 1000 }};
+    let timer = null;
+    const start = () => { stop(); timer = setInterval(() => go(current + 1), interval); };
+    const stop  = () => { if (timer) { clearInterval(timer); timer = null; } };
+    start();
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('focusin',    stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusout',   start);
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
   }
   {% endif %}
 })();

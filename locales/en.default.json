@@ -23,7 +23,13 @@
       "products": "Products",
       "collections": "Collections",
       "articles": "Articles",
-      "suggestions": "Suggestions"
+      "suggestions": "Suggestions",
+      "results_label": "Search suggestions",
+      "no_results_title": "No matches yet",
+      "suggestion_check_spelling": "Double-check the spelling.",
+      "suggestion_fewer_words": "Try a shorter, more general term.",
+      "suggestion_browse": "Or browse refurbished by category below.",
+      "browse_all": "Browse everything"
     },
     "cart": {
       "title": "Your cart",

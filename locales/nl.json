@@ -15,7 +15,13 @@
       "collections": "Categorieën",
       "articles": "Artikelen",
       "suggestions": "Suggesties",
-      "no_results_html": "Geen resultaten voor \"{{ terms }}\". Controleer de spelling of probeer een ander woord."
+      "no_results_html": "Geen resultaten voor \"{{ terms }}\". Controleer de spelling of probeer een ander woord.",
+      "results_label": "Zoeksuggesties",
+      "no_results_title": "Nog geen resultaten",
+      "suggestion_check_spelling": "Controleer de spelling.",
+      "suggestion_fewer_words": "Probeer een korter, algemener woord.",
+      "suggestion_browse": "Of blader hieronder op categorie.",
+      "browse_all": "Alles bekijken"
     },
     "cart": {
       "title": "Je winkelwagen",

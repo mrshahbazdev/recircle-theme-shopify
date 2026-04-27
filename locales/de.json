@@ -15,7 +15,13 @@
       "collections": "Kategorien",
       "articles": "Artikel",
       "suggestions": "Vorschläge",
-      "no_results_html": "Keine Ergebnisse für „{{ terms }}\". Bitte überprüfen Sie die Schreibweise oder versuchen Sie ein anderes Wort."
+      "no_results_html": "Keine Ergebnisse für „{{ terms }}\". Bitte überprüfen Sie die Schreibweise oder versuchen Sie ein anderes Wort.",
+      "results_label": "Suchvorschläge",
+      "no_results_title": "Noch keine Treffer",
+      "suggestion_check_spelling": "Prüfe die Schreibweise.",
+      "suggestion_fewer_words": "Probiere einen kürzeren, allgemeineren Begriff.",
+      "suggestion_browse": "Oder stöbere unten nach Kategorie.",
+      "browse_all": "Alles ansehen"
     },
     "cart": {
       "title": "Ihr Warenkorb",

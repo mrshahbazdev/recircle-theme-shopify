@@ -15,7 +15,13 @@
       "collections": "Categorías",
       "articles": "Artículos",
       "suggestions": "Sugerencias",
-      "no_results_html": "No hay resultados para «{{ terms }}». Comprueba la ortografía o prueba con otra palabra."
+      "no_results_html": "No hay resultados para «{{ terms }}». Comprueba la ortografía o prueba con otra palabra.",
+      "results_label": "Sugerencias de búsqueda",
+      "no_results_title": "Sin resultados",
+      "suggestion_check_spelling": "Revisa la ortografía.",
+      "suggestion_fewer_words": "Prueba un término más corto y general.",
+      "suggestion_browse": "O navega por categoría abajo.",
+      "browse_all": "Ver todo"
     },
     "cart": {
       "title": "Tu carrito",

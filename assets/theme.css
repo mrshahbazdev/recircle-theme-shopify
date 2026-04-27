@@ -3831,3 +3831,22 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
 .collection-grid { gap: var(--grid-gap, 24px); }
 
 /* ===== Phase 16 — End ===== */
+
+/* ---- Phase 21: search empty-state suggestions -------------------------- */
+.editorial-empty__suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1rem;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  max-width: 42ch;
+  text-align: left;
+}
+.editorial-empty__suggestions li::before {
+  content: "→";
+  color: var(--color-accent, #C7873B);
+  margin-right: 0.45rem;
+  font-weight: 700;
+}
