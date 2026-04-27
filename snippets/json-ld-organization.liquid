@@ -1,0 +1,42 @@
+{%- comment -%}
+  Phase 30 — Organization + WebSite JSON-LD for the homepage / global head.
+  Renders only on index template to avoid duplicate emissions.
+{%- endcomment -%}
+
+{%- if template == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  {%- if settings.logo != blank -%}
+  "logo": {{ settings.logo | image_url: width: 600 | json }},
+  {%- endif -%}
+  "sameAs": [
+    {%- assign socials = '' -%}
+    {%- if settings.social_facebook_link    != blank -%}{%- assign socials = socials | append: settings.social_facebook_link | append: '|' -%}{%- endif -%}
+    {%- if settings.social_instagram_link   != blank -%}{%- assign socials = socials | append: settings.social_instagram_link | append: '|' -%}{%- endif -%}
+    {%- if settings.social_tiktok_link      != blank -%}{%- assign socials = socials | append: settings.social_tiktok_link | append: '|' -%}{%- endif -%}
+    {%- if settings.social_linkedin_link    != blank -%}{%- assign socials = socials | append: settings.social_linkedin_link | append: '|' -%}{%- endif -%}
+    {%- assign social_list = socials | split: '|' | uniq -%}
+    {%- for s in social_list -%}
+      {%- if s != blank -%}{{ s | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ shop.url }}{{ routes.search_url }}?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
