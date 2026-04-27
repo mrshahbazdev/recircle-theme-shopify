@@ -131,6 +131,16 @@
       "before_after_before": "Voor",
       "before_after_after": "Na",
       "before_after_heading": "Voor &amp; na"
+    },
+    "subscription": {
+      "heading": "Aankoopopties",
+      "one_time": "Eenmalige aankoop",
+      "note": "Pauzeer of stop wanneer je wilt vanuit je account."
+    },
+    "member": {
+      "you_save": "Ledenprijs",
+      "teaser": "Leden besparen",
+      "sign_in": "Inloggen →"
     }
   },
   "recircle": {
@@ -157,6 +167,18 @@
       "bar_label": "Geselecteerde producten om te vergelijken",
       "empty_body": "Voeg producten toe om specificaties naast elkaar te vergelijken.",
       "empty_cta": "Producten bekijken"
+    },
+    "loyalty": {
+      "eyebrow": "ReCircle Credits",
+      "balance_caption": "Inwisselbaar bij afrekenen — 1 credit = 1 eenheid van de winkelvaluta.",
+      "how_heading": "Hoe credits werken",
+      "how_purchase": "Ontvang 5 % van elke bestelling terug in credits.",
+      "how_tradein": "Inruilaanbiedingen worden in credits uitbetaald tegen het hogere tarief.",
+      "how_referral": "Verwijs een vriend — beide krijgen credits bij aankoop.",
+      "recent": "Recente activiteit",
+      "date": "Datum",
+      "note": "Activiteit",
+      "amount": "Bedrag"
     }
   },
   "collections": {

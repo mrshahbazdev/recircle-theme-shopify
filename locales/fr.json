@@ -131,6 +131,16 @@
       "before_after_before": "Avant",
       "before_after_after": "Après",
       "before_after_heading": "Avant &amp; après"
+    },
+    "subscription": {
+      "heading": "Options d’achat",
+      "one_time": "Achat unique",
+      "note": "Mettez en pause ou annulez à tout moment depuis votre compte."
+    },
+    "member": {
+      "you_save": "Tarif membre",
+      "teaser": "Les membres économisent",
+      "sign_in": "Se connecter →"
     }
   },
   "recircle": {
@@ -157,6 +167,18 @@
       "bar_label": "Produits sélectionnés à comparer",
       "empty_body": "Ajoutez des produits pour comparer leurs caractéristiques côte à côte.",
       "empty_cta": "Voir les produits"
+    },
+    "loyalty": {
+      "eyebrow": "ReCircle Crédits",
+      "balance_caption": "À utiliser au paiement — 1 crédit = 1 unité de la devise du shop.",
+      "how_heading": "Comment fonctionnent les crédits",
+      "how_purchase": "Recevez 5 % de chaque commande en crédits.",
+      "how_tradein": "Les reprises sont payées en crédits au taux le plus élevé.",
+      "how_referral": "Parrainez un ami — vous gagnez tous les deux des crédits.",
+      "recent": "Activité récente",
+      "date": "Date",
+      "note": "Activité",
+      "amount": "Montant"
     }
   },
   "collections": {

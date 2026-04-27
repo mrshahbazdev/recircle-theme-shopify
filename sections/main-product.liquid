@@ -66,8 +66,10 @@
 
             {%- when 'buy_buttons' -%}
               {%- assign product_form_id = 'product-form-' | append: section.id -%}
+              {% render 'member-price', product: product %}
               {%- form 'product', product, id: product_form_id, class: 'product-form', novalidate: 'novalidate' -%}
                 <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                {% render 'subscription-options', product: product %}
                 <div class="product-form__quantity-wrap" style="margin-bottom:0.75rem">
                   <label for="Quantity-{{ section.id }}" class="visually-hidden">{{ 'products.product.quantity' | t }}</label>
                   <div class="product-form__quantity" data-quantity>
