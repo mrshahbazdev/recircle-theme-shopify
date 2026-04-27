@@ -14,7 +14,8 @@
       "products": "Produits",
       "collections": "Collections",
       "articles": "Articles",
-      "suggestions": "Suggestions"
+      "suggestions": "Suggestions",
+      "no_results_html": "Aucun résultat pour « {{ terms }} ». Vérifiez l'orthographe ou utilisez un autre mot."
     },
     "cart": {
       "title": "Votre panier",
@@ -32,6 +33,33 @@
       "title": "Page introuvable",
       "subtext": "La page que vous cherchez n'existe pas.",
       "link": "Continuer mes achats"
+    },
+    "password_page": {
+      "opening_soon": "Bientôt disponible",
+      "login_form_heading": "Accéder à la boutique avec le mot de passe :",
+      "login_form_password_label": "Mot de passe",
+      "login_form_password_placeholder": "Votre mot de passe",
+      "login_form_submit": "Entrer",
+      "admin_link_html": "Vous êtes le propriétaire de la boutique ? <a href=\"/admin\">Connectez-vous ici</a>"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "social": {
+      "share_on_facebook": "Partager sur Facebook",
+      "share_on_twitter": "Partager sur Twitter",
+      "share_on_pinterest": "Épingler sur Pinterest"
+    },
+    "newsletter": {
+      "label": "E-mail",
+      "placeholder": "Adresse e-mail",
+      "submit": "S'abonner",
+      "confirmation": "Merci pour votre inscription"
+    },
+    "localization": {
+      "country_label": "Pays/région",
+      "language_label": "Langue"
     }
   },
   "sections": {
@@ -55,7 +83,17 @@
       "add_to_cart": "Ajouter au panier",
       "sold_out": "Épuisé",
       "quantity": "Quantité",
-      "description_title": "Description"
+      "description_title": "Description",
+      "unavailable": "Indisponible",
+      "increase_quantity": "Augmenter la quantité",
+      "decrease_quantity": "Diminuer la quantité",
+      "include_taxes": "TVA incluse.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Livraison</a> calculée au moment du paiement.",
+      "vendor": "Marque",
+      "sku": "Référence",
+      "view_full_details": "Voir tous les détails",
+      "save": "Économisez",
+      "low_stock": "Plus que {{ count }} en stock"
     },
     "refurbished": {
       "condition_title": "État",
@@ -69,7 +107,24 @@
       "price_30day_low": "Prix le plus bas des 30 derniers jours : {{ price }}",
       "msrp_new": "Prix neuf conseillé : {{ price }}",
       "repairability": "Réparabilité",
-      "co2_saved": "{{ value }} {{ unit }}"
+      "co2_saved": "{{ value }} {{ unit }}",
+      "grade_a_desc": "Aucune trace d'utilisation visible. Cosmétiquement impeccable.",
+      "grade_b_desc": "Légères traces dʼusage ; aucun choc ni rayure profonde.",
+      "grade_c_desc": "Traces dʼusure visibles ; pleinement fonctionnel.",
+      "grade_d_desc": "Traces dʼusure marquées ; prix réduit en conséquence.",
+      "repair_score_caption": "Basé sur la disponibilité des pièces, le démontage et la documentation de réparation.",
+      "dpp_materials": "Matériaux",
+      "dpp_origin": "Assemblé en",
+      "dpp_recycled": "Contenu recyclé",
+      "dpp_weight": "Poids",
+      "dpp_battery_health": "État de la batterie",
+      "dpp_serial": "Numéro de série",
+      "dpp_passport_id": "ID Passeport",
+      "dpp_view_full": "Voir le passeport complet",
+      "free_repair": "1 réparation gratuite incluse",
+      "before_after_before": "Avant",
+      "before_after_after": "Après",
+      "before_after_heading": "Avant &amp; après"
     }
   },
   "recircle": {
@@ -96,6 +151,72 @@
       "bar_label": "Produits sélectionnés à comparer",
       "empty_body": "Ajoutez des produits pour comparer leurs caractéristiques côte à côte.",
       "empty_cta": "Voir les produits"
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all": "Tout voir",
+      "sort_by": "Trier par",
+      "filter": "Filtrer",
+      "clear_all": "Tout effacer",
+      "showing_count": "{{ count }} sur {{ total }}",
+      "no_products": "Aucun produit ne correspond à vos filtres."
+    }
+  },
+  "blogs": {
+    "article": {
+      "posted_in": "Publié dans",
+      "comments_count": "{{ count }} commentaires",
+      "by": "par",
+      "read_more": "Lire la suite"
+    },
+    "comments": {
+      "title": "Laisser un commentaire",
+      "name": "Nom",
+      "email": "E-mail",
+      "message": "Message",
+      "post": "Publier le commentaire"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Connexion",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "forgot_password": "Mot de passe oublié ?",
+      "sign_in": "Se connecter",
+      "create_account": "Créer un compte"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "submit": "Créer"
+    },
+    "account": {
+      "title": "Mon compte",
+      "details": "Détails du compte",
+      "logout": "Se déconnecter",
+      "orders_title": "Historique des commandes",
+      "no_orders": "Vous n'avez encore aucune commande"
+    },
+    "orders": {
+      "order_number": "Commande {{ number }}",
+      "date": "Date",
+      "payment_status": "Statut du paiement",
+      "fulfillment_status": "Statut d'expédition",
+      "total": "Total"
+    },
+    "addresses": {
+      "title": "Adresses",
+      "add_new": "Ajouter une adresse",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "reset_password": {
+      "title": "Réinitialiser le mot de passe",
+      "subtext": "Nous vous enverrons un e-mail pour réinitialiser votre mot de passe.",
+      "submit": "Envoyer"
     }
   }
 }

@@ -35,7 +35,7 @@
       "remove": "Remove",
       "view_cart": "View cart",
       "added_to_cart": "Added to cart",
-      "co2_savings_html": "You will save <strong>{{ kg }} kg CO\u2082e</strong> with this basket."
+      "co2_savings_html": "You will save <strong>{{ kg }} kg CO₂e</strong> with this basket."
     },
     "pagination": {
       "previous": "Previous",
@@ -56,6 +56,10 @@
       "title": "Page not found",
       "subtext": "The page you're looking for doesn't exist.",
       "link": "Continue shopping"
+    },
+    "localization": {
+      "country_label": "Country/region",
+      "language_label": "Language"
     }
   },
   "products": {
@@ -163,12 +167,12 @@
       "step_device": "1. What device do you have?",
       "step_age": "2. How old is it? (years)",
       "step_condition": "3. Overall condition",
-      "condition_a": "Like new \u2014 no marks",
-      "condition_b": "Very good \u2014 light wear",
-      "condition_c": "Good \u2014 visible wear, all working",
-      "condition_d": "Fair \u2014 noticeable wear",
+      "condition_a": "Like new — no marks",
+      "condition_b": "Very good — light wear",
+      "condition_c": "Good — visible wear, all working",
+      "condition_d": "Fair — noticeable wear",
       "quote_label": "Estimated trade-in quote",
-      "quote_note": "Instant estimate \u2014 final offer confirmed after device inspection.",
+      "quote_note": "Instant estimate — final offer confirmed after device inspection.",
       "pricing_table": "See full pricing table",
       "device": "Device",
       "base_price": "Base (new-like, 0 yr)"
