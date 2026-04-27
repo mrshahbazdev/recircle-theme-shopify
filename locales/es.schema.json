@@ -1,0 +1,13 @@
+{
+  "settings_schema": {
+    "colors": {
+      "name": "Colores",
+      "headers": {
+        "brand": "Marca"
+      },
+      "labels": {
+        "brand": "Marca"
+      }
+    }
+  }
+}
