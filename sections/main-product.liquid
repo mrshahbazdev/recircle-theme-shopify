@@ -67,16 +67,19 @@
             {%- when 'buy_buttons' -%}
               {%- assign product_form_id = 'product-form-' | append: section.id -%}
               {% render 'member-price', product: product %}
+              {% render 'b2b-tiered-pricing', product: product %}
               {%- form 'product', product, id: product_form_id, class: 'product-form', novalidate: 'novalidate' -%}
                 <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                 {% render 'subscription-options', product: product %}
+                {%- assign moq = product.metafields.recircle.moq.value | default: 1 -%}
                 <div class="product-form__quantity-wrap" style="margin-bottom:0.75rem">
                   <label for="Quantity-{{ section.id }}" class="visually-hidden">{{ 'products.product.quantity' | t }}</label>
                   <div class="product-form__quantity" data-quantity>
                     <button type="button" data-qty-step="-1" aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
-                    <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="1" min="1" inputmode="numeric">
+                    <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="{{ moq }}" min="{{ moq }}" inputmode="numeric">
                     <button type="button" data-qty-step="1" aria-label="{{ 'products.product.increase_quantity' | t }}">+</button>
                   </div>
+                  {% render 'b2b-moq', product: product, product_form_id: product_form_id %}
                 </div>
                 <div class="product-form__buttons">
                   <button type="submit"

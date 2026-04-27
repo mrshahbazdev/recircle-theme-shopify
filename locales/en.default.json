@@ -163,6 +163,30 @@
       "date": "Date",
       "note": "Activity",
       "amount": "Amount"
+    },
+    "b2b": {
+      "eyebrow": "Wholesale",
+      "tiers_label": "Wholesale pricing",
+      "tiers_heading": "Volume discount",
+      "qty": "Quantity",
+      "unit_price": "Unit price",
+      "savings": "Savings",
+      "note": "Tiered pricing is applied automatically at checkout via your wholesale discount.",
+      "moq_label": "Minimum order",
+      "moq_error": "Minimum order is {qty}.",
+      "full_name": "Full name",
+      "work_email": "Work email",
+      "company": "Company",
+      "vat": "VAT / Tax ID",
+      "country": "Country",
+      "phone": "Phone",
+      "products_interest": "Which products are you interested in?",
+      "target_qty": "Estimated annual order volume (units)",
+      "notes": "Anything else we should know?",
+      "submit": "Send request",
+      "legal": "We’ll only use these details to reply about your wholesale enquiry.",
+      "quote_success_title": "Thanks — we’ll be in touch.",
+      "quote_success_body": "A wholesale specialist will reply within one business day."
     }
   },
   "collections": {

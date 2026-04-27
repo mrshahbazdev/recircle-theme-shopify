@@ -11,6 +11,7 @@
     initBeforeAfter();
     initQuantityInputs();
     initSubscriptionPicker();
+    initB2BMOQ();
     initImpactCounter();
     initTradeInCalculator();
     initAnnouncementClose();
@@ -132,6 +133,35 @@
             detail: { sellingPlan: radio.value || null },
           }));
         });
+      });
+    });
+  }
+
+  /* -------- B2B minimum-order-quantity ------------------------------------ */
+  function initB2BMOQ() {
+    document.querySelectorAll('[data-b2b-moq]').forEach((wrap) => {
+      const min = parseInt(wrap.dataset.b2bMoq, 10) || 1;
+      const formId = wrap.dataset.formId;
+      const form = formId ? document.getElementById(formId) : wrap.closest('form');
+      if (!form) return;
+      const qtyInput = form.querySelector('input[name="quantity"]');
+      const errEl = wrap.querySelector('.b2b-moq__error');
+      if (qtyInput) qtyInput.min = String(min);
+      form.addEventListener('submit', (e) => {
+        const v = parseInt(qtyInput && qtyInput.value, 10) || 0;
+        if (v < min) {
+          e.preventDefault();
+          if (errEl) {
+            errEl.textContent = (window.recircleStrings && window.recircleStrings.moqError
+              ? window.recircleStrings.moqError
+              : 'Minimum order is {qty}.').replace('{qty}', String(min));
+            errEl.hidden = false;
+          }
+          if (qtyInput) {
+            qtyInput.value = String(min);
+            qtyInput.focus();
+          }
+        }
       });
     });
   }

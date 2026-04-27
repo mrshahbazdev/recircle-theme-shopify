@@ -179,6 +179,30 @@
       "date": "Fecha",
       "note": "Actividad",
       "amount": "Importe"
+    },
+    "b2b": {
+      "eyebrow": "Mayorista",
+      "tiers_label": "Precios mayoristas",
+      "tiers_heading": "Descuento por volumen",
+      "qty": "Cantidad",
+      "unit_price": "Precio unitario",
+      "savings": "Ahorro",
+      "note": "Los precios por tramos se aplican automáticamente al pagar mediante tu descuento mayorista.",
+      "moq_label": "Pedido mínimo",
+      "moq_error": "El pedido mínimo es {qty}.",
+      "full_name": "Nombre completo",
+      "work_email": "Correo profesional",
+      "company": "Empresa",
+      "vat": "NIF / CIF",
+      "country": "País",
+      "phone": "Teléfono",
+      "products_interest": "¿Qué productos te interesan?",
+      "target_qty": "Volumen anual estimado (unidades)",
+      "notes": "¿Algo más que debamos saber?",
+      "submit": "Enviar solicitud",
+      "legal": "Usaremos estos datos únicamente para responder a tu consulta mayorista.",
+      "quote_success_title": "Gracias — te contactaremos.",
+      "quote_success_body": "Un especialista mayorista responderá en un día laborable."
     }
   },
   "collections": {

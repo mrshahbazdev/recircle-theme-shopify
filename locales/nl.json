@@ -179,6 +179,30 @@
       "date": "Datum",
       "note": "Activiteit",
       "amount": "Bedrag"
+    },
+    "b2b": {
+      "eyebrow": "Groothandel",
+      "tiers_label": "Groothandelsprijzen",
+      "tiers_heading": "Volumekorting",
+      "qty": "Aantal",
+      "unit_price": "Stukprijs",
+      "savings": "Besparing",
+      "note": "Trapsgewijze prijzen worden bij afrekenen automatisch toegepast via je groothandelskorting.",
+      "moq_label": "Minimum bestelling",
+      "moq_error": "Minimum bestelling is {qty}.",
+      "full_name": "Volledige naam",
+      "work_email": "Zakelijk e-mailadres",
+      "company": "Bedrijf",
+      "vat": "Btw-/fiscaal nr.",
+      "country": "Land",
+      "phone": "Telefoon",
+      "products_interest": "Welke producten heb je nodig?",
+      "target_qty": "Geschat jaarvolume (stuks)",
+      "notes": "Iets anders dat we moeten weten?",
+      "submit": "Aanvraag versturen",
+      "legal": "We gebruiken deze gegevens alleen om je groothandelsaanvraag te beantwoorden.",
+      "quote_success_title": "Bedankt — we nemen contact op.",
+      "quote_success_body": "Een groothandelsspecialist reageert binnen één werkdag."
     }
   },
   "collections": {

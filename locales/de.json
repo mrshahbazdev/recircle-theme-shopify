@@ -179,6 +179,30 @@
       "date": "Datum",
       "note": "Aktivität",
       "amount": "Betrag"
+    },
+    "b2b": {
+      "eyebrow": "Großhandel",
+      "tiers_label": "Großhandelspreise",
+      "tiers_heading": "Mengenrabatt",
+      "qty": "Menge",
+      "unit_price": "Stückpreis",
+      "savings": "Ersparnis",
+      "note": "Staffelpreise werden an der Kasse automatisch über deinen Großhandelsrabatt angewandt.",
+      "moq_label": "Mindestbestellmenge",
+      "moq_error": "Mindestbestellmenge ist {qty}.",
+      "full_name": "Vollständiger Name",
+      "work_email": "Geschäftliche E-Mail",
+      "company": "Firma",
+      "vat": "USt-ID",
+      "country": "Land",
+      "phone": "Telefon",
+      "products_interest": "Für welche Produkte interessierst du dich?",
+      "target_qty": "Geschätztes Jahresvolumen (Stück)",
+      "notes": "Etwas Wichtiges, das wir wissen sollten?",
+      "submit": "Anfrage senden",
+      "legal": "Wir nutzen diese Angaben ausschließlich zur Beantwortung deiner Großhandelsanfrage.",
+      "quote_success_title": "Danke — wir melden uns.",
+      "quote_success_body": "Ein Großhandels-Spezialist antwortet innerhalb eines Werktags."
     }
   },
   "collections": {

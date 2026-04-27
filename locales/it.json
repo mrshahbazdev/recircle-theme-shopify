@@ -179,6 +179,30 @@
       "date": "Data",
       "note": "Attività",
       "amount": "Importo"
+    },
+    "b2b": {
+      "eyebrow": "Ingrosso",
+      "tiers_label": "Prezzi all’ingrosso",
+      "tiers_heading": "Sconto quantità",
+      "qty": "Quantità",
+      "unit_price": "Prezzo unitario",
+      "savings": "Risparmio",
+      "note": "I prezzi a scaglioni vengono applicati automaticamente al checkout tramite lo sconto ingrosso.",
+      "moq_label": "Quantità minima",
+      "moq_error": "Quantità minima: {qty}.",
+      "full_name": "Nome e cognome",
+      "work_email": "Email aziendale",
+      "company": "Azienda",
+      "vat": "P.IVA / Cod. Fiscale",
+      "country": "Paese",
+      "phone": "Telefono",
+      "products_interest": "Quali prodotti ti interessano?",
+      "target_qty": "Volume annuo stimato (pezzi)",
+      "notes": "Vuoi aggiungere altro?",
+      "submit": "Invia richiesta",
+      "legal": "Useremo questi dati solo per rispondere alla tua richiesta ingrosso.",
+      "quote_success_title": "Grazie — ti ricontattiamo.",
+      "quote_success_body": "Uno specialista ingrosso risponderà entro un giorno lavorativo."
     }
   },
   "collections": {

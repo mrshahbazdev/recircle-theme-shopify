@@ -1,0 +1,9 @@
+{
+  "name": "Quote request",
+  "sections": {
+    "main": {
+      "type": "quote-request"
+    }
+  },
+  "order": ["main"]
+}

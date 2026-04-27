@@ -1,0 +1,155 @@
+{%- comment -%}
+  Phase 20 — Quote request section.
+
+  Drop into a dedicated page (e.g. /pages/wholesale or /pages/quote) via
+  `templates/page.quote.json`. Submits via Shopify's built-in
+  `{% form 'contact' %}` so it lands in Settings → Notifications and the
+  merchant inbox without any third-party form provider.
+
+  Honours `settings.b2b_enabled` — falls back to a generic message if off.
+{%- endcomment -%}
+
+<section class="section editorial-page quote-request" aria-label="Wholesale quote request">
+  <div class="page-width">
+    <header class="editorial-page__header editorial-page__header--centered">
+      <div class="editorial-page__heading-group">
+        <p class="editorial-page__eyebrow">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-grade"/></svg>
+          <span>{{ section.settings.eyebrow | default: 'Wholesale' }}</span>
+        </p>
+        <h1 class="editorial-page__heading">{{ section.settings.heading | default: 'Request a quote' }}</h1>
+        {%- if section.settings.subheading != blank -%}
+          <p class="editorial-page__sub">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    </header>
+
+    <div class="quote-request__layout">
+      <div class="quote-request__intro">
+        {%- if section.settings.intro_html != blank -%}
+          <div class="rte">{{ section.settings.intro_html }}</div>
+        {%- endif -%}
+
+        <ul class="quote-request__bullets" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'value' -%}
+              <li {{ block.shopify_attributes }}>
+                <strong>{{ block.settings.title }}</strong>
+                <span>{{ block.settings.body }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="quote-request__form-card">
+        {%- form 'contact', id: 'QuoteRequestForm', class: 'quote-request__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="quote-request__success" role="status">
+              <h2>{{ 'recircle.b2b.quote_success_title' | t | default: 'Thanks — we’ll be in touch.' }}</h2>
+              <p>{{ 'recircle.b2b.quote_success_body' | t | default: 'A wholesale specialist will reply within one business day.' }}</p>
+            </div>
+          {%- elsif form.errors -%}
+            <div class="quote-request__error" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <input type="hidden" name="contact[tags]" value="quote-request">
+          <input type="hidden" name="contact[type]" value="b2b-quote">
+
+          <div class="quote-request__row">
+            <label>
+              <span>{{ 'recircle.b2b.full_name' | t | default: 'Full name' }} *</span>
+              <input type="text" name="contact[name]" required autocomplete="name"
+                     value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+            </label>
+            <label>
+              <span>{{ 'recircle.b2b.work_email' | t | default: 'Work email' }} *</span>
+              <input type="email" name="contact[email]" required autocomplete="email"
+                     value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+            </label>
+          </div>
+
+          <div class="quote-request__row">
+            <label>
+              <span>{{ 'recircle.b2b.company' | t | default: 'Company' }} *</span>
+              <input type="text" name="contact[company]" required autocomplete="organization">
+            </label>
+            <label>
+              <span>{{ 'recircle.b2b.vat' | t | default: 'VAT / Tax ID' }}</span>
+              <input type="text" name="contact[vat]">
+            </label>
+          </div>
+
+          <div class="quote-request__row">
+            <label>
+              <span>{{ 'recircle.b2b.country' | t | default: 'Country' }} *</span>
+              <input type="text" name="contact[country]" required autocomplete="country-name">
+            </label>
+            <label>
+              <span>{{ 'recircle.b2b.phone' | t | default: 'Phone' }}</span>
+              <input type="tel" name="contact[phone]" autocomplete="tel">
+            </label>
+          </div>
+
+          <label class="quote-request__full">
+            <span>{{ 'recircle.b2b.products_interest' | t | default: 'Which products are you interested in?' }} *</span>
+            <textarea name="contact[products]" rows="3" required placeholder="iPhone 13 Grade A — qty 50, MacBook Air M2 — qty 20"></textarea>
+          </label>
+
+          <label class="quote-request__full">
+            <span>{{ 'recircle.b2b.target_qty' | t | default: 'Estimated annual order volume (units)' }}</span>
+            <input type="number" name="contact[annual_volume]" min="1" inputmode="numeric">
+          </label>
+
+          <label class="quote-request__full">
+            <span>{{ 'recircle.b2b.notes' | t | default: 'Anything else we should know?' }}</span>
+            <textarea name="contact[body]" rows="4"></textarea>
+          </label>
+
+          <button type="submit" class="btn btn--primary quote-request__submit">
+            {{ 'recircle.b2b.submit' | t | default: 'Send request' }}
+          </button>
+
+          <p class="quote-request__legal">
+            {{ 'recircle.b2b.legal' | t | default: 'We’ll only use these details to reply about your wholesale enquiry.' }}
+          </p>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quote request",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Wholesale" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Request a quote" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Tell us what you need and we’ll send a custom quote within one business day." },
+    { "type": "richtext", "id": "intro_html", "label": "Intro HTML", "default": "<p>We work with retailers, repair shops, schools and businesses who want refurbished hardware in volume.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value bullet",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Tiered pricing" },
+        { "type": "text", "id": "body", "label": "Body", "default": "Volume discounts from 5 units." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "value", "settings": { "title": "Tiered pricing", "body": "Volume discounts from 5 units." } },
+      { "type": "value", "settings": { "title": "Net-30 terms", "body": "Available after the first paid invoice." } },
+      { "type": "value", "settings": { "title": "12-month warranty", "body": "Same warranty across consumer + B2B." } }
+    ]
+  },
+  "presets": [
+    { "name": "Quote request", "category": "Wholesale" }
+  ]
+}
+{% endschema %}

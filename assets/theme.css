@@ -4012,3 +4012,156 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
 .loyalty-credits__pos { color: #2F6E3F; font-weight: 600; }
 .loyalty-credits__neg { color: #8B2F2F; font-weight: 600; }
 
+
+
+
+/* ---- Phase 20: B2B / wholesale ----------------------------------------- */
+.b2b-tiers {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+  background: var(--color-bg-subtle);
+}
+.b2b-tiers__head { margin-bottom: 0.5rem; }
+.b2b-tiers__head h3 {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: 1.05rem;
+  margin: 0.1rem 0 0;
+}
+.b2b-tiers__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.b2b-tiers__table th,
+.b2b-tiers__table td {
+  padding: 0.5rem 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.b2b-tiers__table thead th {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: left;
+  font-weight: 600;
+}
+.b2b-tiers__note { font-size: 0.78rem; color: var(--color-text-muted); margin: 0.5rem 0 0; }
+
+.b2b-moq { margin-top: 0.4rem; }
+.b2b-moq__caption { font-size: 0.8rem; color: var(--color-text-muted); margin: 0; }
+.b2b-moq__error {
+  font-size: 0.85rem;
+  color: #8B2F2F;
+  margin: 0.4rem 0 0;
+  font-weight: 600;
+}
+
+.quote-request__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .quote-request__layout { grid-template-columns: 1fr; }
+}
+.quote-request__intro .rte { color: var(--color-text-muted); }
+.quote-request__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.quote-request__bullets li {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  background: var(--color-bg-subtle);
+}
+.quote-request__bullets strong { font-weight: 600; }
+.quote-request__bullets span { font-size: 0.88rem; color: var(--color-text-muted); }
+
+.quote-request__form-card {
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.quote-request__form { display: grid; gap: 0.85rem; }
+.quote-request__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+@media (max-width: 600px) {
+  .quote-request__row { grid-template-columns: 1fr; }
+}
+.quote-request__form label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+.quote-request__form input,
+.quote-request__form textarea {
+  font: inherit;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+.quote-request__form input:focus,
+.quote-request__form textarea:focus {
+  outline: 3px solid color-mix(in srgb, var(--color-accent, #C7873B) 50%, transparent);
+  outline-offset: 1px;
+}
+.quote-request__full { width: 100%; }
+.quote-request__submit { justify-self: start; padding: 0.7rem 1.4rem; }
+.quote-request__legal { font-size: 0.75rem; color: var(--color-text-muted); margin: 0; }
+.quote-request__success,
+.quote-request__error {
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.quote-request__success {
+  background: color-mix(in srgb, #2F6E3F 14%, transparent);
+  border: 1px solid color-mix(in srgb, #2F6E3F 50%, transparent);
+}
+.quote-request__error {
+  background: color-mix(in srgb, #8B2F2F 14%, transparent);
+  border: 1px solid color-mix(in srgb, #8B2F2F 50%, transparent);
+}
+
+.locked-content--gated .locked-content__gate {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg-subtle);
+}
+.locked-content__icon {
+  width: 56px; height: 56px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  margin-bottom: 0.9rem;
+}
+.locked-content__gate h2 {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: 1.4rem;
+  margin: 0.4rem 0;
+}
+.locked-content__gate p { color: var(--color-text-muted); margin: 0.4rem 0 1rem; }
+.locked-content__cta { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+
+

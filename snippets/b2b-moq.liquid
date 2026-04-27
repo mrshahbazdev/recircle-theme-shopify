@@ -1,0 +1,20 @@
+{%- comment -%}
+  Phase 20 — Minimum order quantity (MOQ).
+
+  Reads product metafield `recircle.moq` (number).
+  Renders a small caption next to the qty input + injects a script that
+  syncs the qty input's `min` attr and shows an inline error if the
+  customer tries to ATC below the threshold.
+
+  No-ops if no MOQ metafield set or value <= 1.
+{%- endcomment -%}
+
+{%- assign moq = product.metafields.recircle.moq.value -%}
+{%- if moq and moq > 1 -%}
+  <div class="b2b-moq" data-b2b-moq="{{ moq }}" data-form-id="{{ product_form_id | default: '' }}">
+    <p class="b2b-moq__caption">
+      {{ 'recircle.b2b.moq_label' | t | default: 'Minimum order' }}: <strong>{{ moq }}</strong>
+    </p>
+    <p class="b2b-moq__error" role="alert" hidden></p>
+  </div>
+{%- endif -%}
