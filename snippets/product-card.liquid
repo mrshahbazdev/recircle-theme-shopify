@@ -53,6 +53,8 @@
     <a href="{{ product.url }}">{{ product.title }}</a>
   </h3>
 
+  {% render 'reviews-stars', product: product, classes: 'product-card__stars' %}
+
   <div class="product-card__meta">
     <div class="product-card__price">
       {{ product.price | money }}

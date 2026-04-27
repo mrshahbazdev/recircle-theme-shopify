@@ -1,0 +1,27 @@
+{%- comment -%}
+  Phase 25 — inline star rating mount for product cards.
+  Renders the placeholder element each provider's app JS auto-detects.
+  Required vars: product. Optional: classes (extra CSS classes).
+{%- endcomment -%}
+{%- assign provider = settings.reviews_provider | default: 'none' -%}
+{%- if settings.reviews_show_on_card and provider != 'none' and product != blank -%}
+  <div class="reviews-stars{% if classes %} {{ classes }}{% endif %}" data-reviews-stars data-product-id="{{ product.id }}">
+    {%- case provider -%}
+      {%- when 'judgeme' -%}
+        <div class="jdgm-widget jdgm-preview-badge"
+             data-id="{{ product.id }}"
+             data-template="index"></div>
+      {%- when 'loox' -%}
+        <div id="looxReviews-{{ product.id }}-mini"
+             class="loox-rating"
+             data-id="{{ product.id }}"></div>
+      {%- when 'yotpo' -%}
+        <div class="yotpo bottomLine"
+             data-yotpo-element-id="2"
+             data-product-id="{{ product.id }}"></div>
+      {%- when 'shopify' -%}
+        <span class="shopify-product-reviews-badge"
+              data-id="{{ product.id }}"></span>
+    {%- endcase -%}
+  </div>
+{%- endif -%}

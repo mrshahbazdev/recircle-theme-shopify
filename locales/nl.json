@@ -227,6 +227,9 @@
       "success": "Bedankt — bevestig in je inbox.",
       "error": "Er ging iets mis. Probeer opnieuw.",
       "legal": "Door je aan te melden ga je akkoord met ons privacybeleid. Op elk moment afmelden."
+    },
+    "reviews": {
+      "heading": "Klantbeoordelingen"
     }
   },
   "collections": {

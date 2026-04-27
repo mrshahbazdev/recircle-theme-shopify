@@ -578,5 +578,50 @@
         "content": "Tiered pricing → product metafield recircle.b2b_tiers (json: [{min_qty, price}, …]). Minimum order quantity → product metafield recircle.moq (number). Documented in docs/B2B-WHOLESALE.md."
       }
     ]
+  },
+  {
+    "name": "Reviews",
+    "settings": [
+      {
+        "type": "select",
+        "id": "reviews_provider",
+        "label": "Reviews provider",
+        "options": [
+          { "value": "none",    "label": "None (hide reviews UI)" },
+          { "value": "judgeme", "label": "Judge.me" },
+          { "value": "loox",    "label": "Loox" },
+          { "value": "yotpo",   "label": "Yotpo" },
+          { "value": "shopify", "label": "Shopify Product Reviews (legacy)" }
+        ],
+        "default": "none",
+        "info": "Install the matching app from the Shopify App Store first; this setting only renders the placeholder mounts the app's JS hooks into."
+      },
+      {
+        "type": "checkbox",
+        "id": "reviews_show_on_card",
+        "label": "Show star rating on product cards",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "reviews_show_on_pdp",
+        "label": "Show full reviews block on product page",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Yotpo (only)"
+      },
+      {
+        "type": "text",
+        "id": "yotpo_app_key",
+        "label": "Yotpo app key",
+        "info": "Yotpo Admin → Settings → General → API Key. Required only when provider is Yotpo."
+      },
+      {
+        "type": "paragraph",
+        "content": "Judge.me and Loox auto-detect placeholders; no app key required here. Documented in docs/REVIEWS.md."
+      }
+    ]
   }
 ]
