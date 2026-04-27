@@ -2,7 +2,9 @@
 
 The first Shopify theme built specifically for **refurbished, pre-owned, and circular** commerce, with EU regulatory features baked in (Digital Product Passport, Right-to-Repair, Price Indication Directive, Accessibility Act).
 
-> **Status:** v1.0 — Theme Store submission candidate. 22 phases of work shipped on a public Shopify development store; preflight checks passing. See [`docs/SUBMISSION.md`](docs/SUBMISSION.md) for the readiness checklist and [`CHANGELOG.md`](CHANGELOG.md) for the phase-by-phase history.
+> **Status:** v1.1 — fully populated demo, Theme Store submission candidate. 35 phases shipped on a public Shopify development store; preflight checks passing. See [`docs/THEME-OVERVIEW.md`](docs/THEME-OVERVIEW.md) for a page-by-page tour, [`docs/SUBMISSION.md`](docs/SUBMISSION.md) for the readiness checklist, and [`CHANGELOG.md`](CHANGELOG.md) for the phase history.
+
+> **Out-of-the-box demo:** every JSON template ships with realistic dummy sections so a fresh install renders as a fully-featured store. Merchants edit, reorder, or remove individual sections from the theme editor — no code required. Full overview: [`docs/THEME-OVERVIEW.md`](docs/THEME-OVERVIEW.md).
 
 ---
 
