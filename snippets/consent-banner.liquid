@@ -1,0 +1,84 @@
+{%- comment -%}
+  Phase 23 — Cookie / GDPR consent banner.
+  Renders only when:
+    - settings.consent_banner_enabled is on, AND
+    - at least one analytics provider is configured (GA4 or Meta Pixel),
+      so we don't ask consent for nothing.
+  Persistence + analytics gating are handled in assets/theme.js (initConsentBanner).
+{%- endcomment -%}
+
+{%- if settings.consent_banner_enabled
+      and (settings.ga4_id != blank or settings.meta_pixel_id != blank)
+-%}
+<div id="ConsentBanner"
+     class="consent-banner"
+     role="dialog"
+     aria-modal="false"
+     aria-labelledby="ConsentBannerTitle"
+     aria-describedby="ConsentBannerBody"
+     data-consent-banner
+     hidden>
+  <div class="consent-banner__inner">
+    <div class="consent-banner__copy">
+      <p id="ConsentBannerTitle" class="consent-banner__title">
+        {{ 'consent.title' | t }}
+      </p>
+      <p id="ConsentBannerBody" class="consent-banner__body">
+        {{ 'consent.body' | t }}
+        {%- if settings.consent_policy_link != blank -%}
+          <a href="{{ settings.consent_policy_link }}" class="consent-banner__link">
+            {{ 'consent.learn_more' | t }}
+          </a>
+        {%- endif -%}
+      </p>
+    </div>
+    <div class="consent-banner__actions" data-consent-actions>
+      <button type="button" class="btn btn--ghost consent-banner__btn"
+              data-consent-action="reject">
+        {{ 'consent.reject' | t }}
+      </button>
+      <button type="button" class="btn btn--ghost consent-banner__btn"
+              data-consent-action="customize"
+              aria-expanded="false"
+              aria-controls="ConsentBannerCustomize">
+        {{ 'consent.customize' | t }}
+      </button>
+      <button type="button" class="btn btn--primary consent-banner__btn"
+              data-consent-action="accept-all">
+        {{ 'consent.accept_all' | t }}
+      </button>
+    </div>
+    <fieldset id="ConsentBannerCustomize"
+              class="consent-banner__customize"
+              data-consent-customize
+              hidden>
+      <legend class="visually-hidden">{{ 'consent.customize' | t }}</legend>
+      <label class="consent-banner__option">
+        <input type="checkbox" disabled checked>
+        <span>
+          <strong>{{ 'consent.necessary' | t }}</strong>
+          <em>{{ 'consent.necessary_desc' | t }}</em>
+        </span>
+      </label>
+      <label class="consent-banner__option">
+        <input type="checkbox" data-consent-toggle="analytics" checked>
+        <span>
+          <strong>{{ 'consent.analytics' | t }}</strong>
+          <em>{{ 'consent.analytics_desc' | t }}</em>
+        </span>
+      </label>
+      <label class="consent-banner__option">
+        <input type="checkbox" data-consent-toggle="marketing">
+        <span>
+          <strong>{{ 'consent.marketing' | t }}</strong>
+          <em>{{ 'consent.marketing_desc' | t }}</em>
+        </span>
+      </label>
+      <button type="button" class="btn btn--primary consent-banner__btn"
+              data-consent-action="save">
+        {{ 'consent.save' | t }}
+      </button>
+    </fieldset>
+  </div>
+</div>
+{%- endif -%}

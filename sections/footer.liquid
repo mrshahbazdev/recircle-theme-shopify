@@ -48,6 +48,11 @@
     <div class="site-footer__bottom">
       <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Refurbished with care. </p>
       <p>
+        {%- if settings.consent_banner_enabled and (settings.ga4_id != blank or settings.meta_pixel_id != blank) -%}
+          <button type="button" class="site-footer__consent-link" data-consent-open>
+            {{ 'recircle.consent.manage' | t }}
+          </button>
+        {%- endif -%}
         {%- if shop.enabled_payment_types.size > 0 -%}
           {%- for type in shop.enabled_payment_types -%}
             <span style="margin-right:0.4rem">{{ type | payment_type_svg_tag: class: 'payment-icon' }}</span>

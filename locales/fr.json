@@ -203,6 +203,22 @@
       "legal": "Nous utiliserons ces informations uniquement pour répondre à votre demande grossiste.",
       "quote_success_title": "Merci — nous vous recontactons.",
       "quote_success_body": "Un spécialiste grossiste répondra sous un jour ouvré."
+    },
+    "consent": {
+      "title": "Votre vie privée compte",
+      "body": "Nous utilisons des cookies pour les fonctions essentielles, des statistiques anonymes et le marketing. Choisissez ce qui vous convient.",
+      "learn_more": "En savoir plus",
+      "accept_all": "Tout accepter",
+      "reject": "Refuser non-essentiels",
+      "customize": "Personnaliser",
+      "save": "Enregistrer mes préférences",
+      "necessary": "Nécessaire",
+      "necessary_desc": "Indispensable au fonctionnement (panier, connexion, langue).",
+      "analytics": "Statistiques",
+      "analytics_desc": "Données d’usage anonymes pour améliorer l’expérience.",
+      "marketing": "Marketing",
+      "marketing_desc": "Publicités personnalisées et remarketing sur des sites tiers.",
+      "manage": "Gérer les cookies"
     }
   },
   "collections": {

@@ -203,6 +203,22 @@
       "legal": "Wir nutzen diese Angaben ausschließlich zur Beantwortung deiner Großhandelsanfrage.",
       "quote_success_title": "Danke — wir melden uns.",
       "quote_success_body": "Ein Großhandels-Spezialist antwortet innerhalb eines Werktags."
+    },
+    "consent": {
+      "title": "Datenschutz ist uns wichtig",
+      "body": "Wir nutzen Cookies für wesentliche Funktionen, anonyme Analytik und Marketing. Wähle aus, womit du einverstanden bist.",
+      "learn_more": "Mehr erfahren",
+      "accept_all": "Alle akzeptieren",
+      "reject": "Nicht-notwendige ablehnen",
+      "customize": "Anpassen",
+      "save": "Auswahl speichern",
+      "necessary": "Notwendig",
+      "necessary_desc": "Für Grundfunktionen erforderlich (Warenkorb, Login, Sprache).",
+      "analytics": "Analytik",
+      "analytics_desc": "Anonyme Nutzungsdaten zur Verbesserung der Erfahrung.",
+      "marketing": "Marketing",
+      "marketing_desc": "Personalisierte Werbung und Remarketing auf Drittanbieter-Seiten.",
+      "manage": "Cookies verwalten"
     }
   },
   "collections": {

@@ -478,6 +478,23 @@
         "label": "Debug mode (log every event to the JS console)",
         "info": "Useful while wiring up. Disable in production.",
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Cookie consent banner"
+      },
+      {
+        "type": "checkbox",
+        "id": "consent_banner_enabled",
+        "label": "Show cookie consent banner",
+        "info": "Renders only when at least one analytics provider is configured above. Persists choice to localStorage and grants/revokes Consent Mode v2 + Meta Pixel accordingly.",
+        "default": true
+      },
+      {
+        "type": "url",
+        "id": "consent_policy_link",
+        "label": "Privacy / cookie policy URL",
+        "info": "Link rendered as 'Learn more' inside the banner. Leave blank to hide."
       }
     ]
   },

@@ -23,6 +23,7 @@
     initRecentlyViewed();
     initQuickView();
     initCompare();
+    initConsentBanner();
   });
 
   /* -------- Accessibility helpers ----------------------------------------- */
@@ -1050,4 +1051,69 @@
   document.addEventListener('click', (e) => {
     if (![...items].some((it) => it.contains(e.target))) closeAll(null);
   });
+
+  /* -------- Cookie / GDPR consent banner --------------------------------- */
+  const CONSENT_KEY = 'recircle:consent';
+
+  function readConsent() {
+    try {
+      const raw = localStorage.getItem(CONSENT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function writeConsent(state) {
+    try { localStorage.setItem(CONSENT_KEY, JSON.stringify(state)); } catch (e) {}
+    const fn = window.recircleAnalytics && window.recircleAnalytics.setConsent;
+    if (typeof fn === 'function') fn(state);
+    document.dispatchEvent(new CustomEvent('recircle:consent:change', { detail: state }));
+  }
+
+  function initConsentBanner() {
+    const banner = document.querySelector('[data-consent-banner]');
+    if (!banner) return;
+
+    const stored = readConsent();
+    if (stored) {
+      const fn = window.recircleAnalytics && window.recircleAnalytics.setConsent;
+      if (typeof fn === 'function') fn(stored);
+    } else {
+      banner.hidden = false;
+    }
+
+    const customizeBtn = banner.querySelector('[data-consent-action="customize"]');
+    const customizeBox = banner.querySelector('[data-consent-customize]');
+
+    banner.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-consent-action]');
+      if (!t) return;
+      const action = t.dataset.consentAction;
+
+      if (action === 'accept-all') {
+        writeConsent({ analytics: true, marketing: true, ts: Date.now() });
+        banner.hidden = true;
+      } else if (action === 'reject') {
+        writeConsent({ analytics: false, marketing: false, ts: Date.now() });
+        banner.hidden = true;
+      } else if (action === 'customize') {
+        const open = customizeBox && customizeBox.hidden === false;
+        if (customizeBox) customizeBox.hidden = open;
+        if (customizeBtn) customizeBtn.setAttribute('aria-expanded', String(!open));
+      } else if (action === 'save') {
+        const analytics = !!banner.querySelector('[data-consent-toggle="analytics"]:checked');
+        const marketing = !!banner.querySelector('[data-consent-toggle="marketing"]:checked');
+        writeConsent({ analytics, marketing, ts: Date.now() });
+        banner.hidden = true;
+      }
+    });
+
+    /* Footer / settings hook — any element with data-consent-open re-opens the banner */
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-consent-open]');
+      if (!t) return;
+      e.preventDefault();
+      banner.hidden = false;
+      const focusBtn = banner.querySelector('[data-consent-action="accept-all"]');
+      if (focusBtn) focusBtn.focus();
+    });
+  }
 })();

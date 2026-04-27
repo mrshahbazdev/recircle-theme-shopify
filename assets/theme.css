@@ -4165,3 +4165,102 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
 .locked-content__cta { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
 
 
+
+
+/* ---- Phase 23: Cookie / GDPR consent banner --------------------------- */
+.consent-banner {
+  position: fixed;
+  inset: auto 1rem 1rem 1rem;
+  z-index: 1100;
+  max-width: 720px;
+  margin-inline: auto;
+  background: var(--color-bg, #FBF8F3);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+  padding: 1.1rem 1.2rem;
+}
+.consent-banner[hidden] { display: none; }
+.consent-banner__inner {
+  display: grid;
+  gap: 0.85rem;
+}
+.consent-banner__title {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: 1.15rem;
+  margin: 0 0 0.15rem;
+  letter-spacing: -0.005em;
+}
+.consent-banner__body {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+.consent-banner__link {
+  margin-left: 0.35rem;
+  text-decoration: underline;
+  color: inherit;
+}
+.consent-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.consent-banner__btn { padding-inline: 1rem; }
+.consent-banner__customize {
+  border: 0;
+  margin: 0;
+  padding: 0.65rem 0;
+  display: grid;
+  gap: 0.55rem;
+  border-top: 1px solid var(--color-border);
+}
+.consent-banner__customize[hidden] { display: none; }
+.consent-banner__option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem;
+  align-items: start;
+  font-size: 0.88rem;
+}
+.consent-banner__option input[type="checkbox"] {
+  margin-top: 0.25rem;
+}
+.consent-banner__option strong { font-weight: 600; display: block; }
+.consent-banner__option em {
+  font-style: normal;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  display: block;
+}
+@media (min-width: 720px) {
+  .consent-banner__inner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .consent-banner__customize {
+    grid-column: 1 / -1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .consent-banner { animation: consent-rise 0.25s ease-out; }
+  @keyframes consent-rise {
+    from { transform: translateY(8px); opacity: 0; }
+    to   { transform: translateY(0);   opacity: 1; }
+  }
+}
+
+.site-footer__consent-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-right: 1rem;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.site-footer__consent-link:hover { opacity: 0.85; }
