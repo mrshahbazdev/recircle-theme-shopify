@@ -203,6 +203,14 @@
       "marketing": "Marketing",
       "marketing_desc": "Personalised ads and remarketing across third-party sites.",
       "manage": "Manage cookies"
+    },
+    "newsletter": {
+      "label": "Email address",
+      "placeholder": "you@example.com",
+      "submit": "Subscribe",
+      "success": "Thanks — check your inbox to confirm.",
+      "error": "Something went wrong. Please try again.",
+      "legal": "By subscribing you agree to our privacy policy. Unsubscribe anytime."
     }
   },
   "collections": {

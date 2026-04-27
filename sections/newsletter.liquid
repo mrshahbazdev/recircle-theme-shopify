@@ -1,0 +1,196 @@
+{%- comment -%}
+  Phase 24 — Newsletter sign-up section.
+  Editorial full-width block with optional image, heading, body, perk list,
+  and email form. Three integration paths (auto-detected, in priority order):
+
+    1. Klaviyo (when block.settings.klaviyo_list_id is set) — posts to
+       https://manage.kmail-lists.com/ajax/subscriptions/subscribe
+    2. Mailchimp (when block.settings.mailchimp_action is a full action URL)
+    3. Shopify customer form (default — adds a customer tagged 'newsletter')
+
+  Success/error UI is handled inline; no JS dependency.
+{%- endcomment -%}
+
+{%- liquid
+  assign use_klaviyo = false
+  assign use_mailchimp = false
+  if section.settings.klaviyo_list_id != blank
+    assign use_klaviyo = true
+  elsif section.settings.mailchimp_action != blank
+    assign use_mailchimp = true
+  endif
+-%}
+
+<section class="newsletter-section{% if section.settings.style == 'card' %} newsletter-section--card{% endif %}"
+         aria-labelledby="Newsletter-{{ section.id }}"
+         data-newsletter>
+  <div class="page-width">
+    <div class="newsletter-section__grid">
+      {%- if section.settings.image != blank -%}
+        <div class="newsletter-section__media">
+          {{ section.settings.image | image_url: width: 1200 | image_tag:
+             loading: 'lazy',
+             widths: '480, 720, 960, 1200',
+             sizes: '(min-width: 960px) 480px, 100vw',
+             alt: section.settings.image.alt | default: section.settings.heading,
+             class: 'newsletter-section__image'
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="newsletter-section__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="newsletter-section__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 id="Newsletter-{{ section.id }}" class="newsletter-section__heading">
+          {{ section.settings.heading }}
+        </h2>
+        {%- if section.settings.body != blank -%}
+          <div class="newsletter-section__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="newsletter-section__perks" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'perk' -%}
+                <li {{ block.shopify_attributes }}>
+                  <span aria-hidden="true">✓</span>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="newsletter-section__form-wrap">
+          {%- if use_klaviyo -%}
+            <form class="newsletter-section__form"
+                  action="https://manage.kmail-lists.com/ajax/subscriptions/subscribe"
+                  method="post"
+                  novalidate
+                  data-klaviyo-form>
+              <input type="hidden" name="g" value="{{ section.settings.klaviyo_list_id }}">
+              <label for="Newsletter-email-{{ section.id }}" class="visually-hidden">
+                {{ 'recircle.newsletter.label' | t }}
+              </label>
+              <input type="email"
+                     id="Newsletter-email-{{ section.id }}"
+                     name="email"
+                     placeholder="{{ 'recircle.newsletter.placeholder' | t }}"
+                     autocomplete="email"
+                     required>
+              <button type="submit" class="btn btn--primary">
+                {{ 'recircle.newsletter.submit' | t }}
+              </button>
+              <p class="newsletter-section__legal">{{ 'recircle.newsletter.legal' | t }}</p>
+              <p class="newsletter-section__feedback" data-newsletter-success hidden>
+                {{ 'recircle.newsletter.success' | t }}
+              </p>
+              <p class="newsletter-section__feedback newsletter-section__feedback--error" data-newsletter-error hidden>
+                {{ 'recircle.newsletter.error' | t }}
+              </p>
+            </form>
+
+          {%- elsif use_mailchimp -%}
+            <form class="newsletter-section__form"
+                  action="{{ section.settings.mailchimp_action }}"
+                  method="post"
+                  target="_blank"
+                  novalidate>
+              <label for="Newsletter-email-{{ section.id }}" class="visually-hidden">
+                {{ 'recircle.newsletter.label' | t }}
+              </label>
+              <input type="email"
+                     id="Newsletter-email-{{ section.id }}"
+                     name="EMAIL"
+                     placeholder="{{ 'recircle.newsletter.placeholder' | t }}"
+                     autocomplete="email"
+                     required>
+              {%- comment -%} Mailchimp anti-bot honeypot — leave name as-is {%- endcomment -%}
+              <div aria-hidden="true" style="position:absolute;left:-5000px;">
+                <input type="text" name="b_0_0" tabindex="-1" value="">
+              </div>
+              <button type="submit" class="btn btn--primary">
+                {{ 'recircle.newsletter.submit' | t }}
+              </button>
+              <p class="newsletter-section__legal">{{ 'recircle.newsletter.legal' | t }}</p>
+            </form>
+
+          {%- else -%}
+            {%- form 'customer', class: 'newsletter-section__form' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label for="Newsletter-email-{{ section.id }}" class="visually-hidden">
+                {{ 'recircle.newsletter.label' | t }}
+              </label>
+              <input type="email"
+                     id="Newsletter-email-{{ section.id }}"
+                     name="contact[email]"
+                     placeholder="{{ 'recircle.newsletter.placeholder' | t }}"
+                     autocomplete="email"
+                     required>
+              <button type="submit" class="btn btn--primary">
+                {{ 'recircle.newsletter.submit' | t }}
+              </button>
+              <p class="newsletter-section__legal">{{ 'recircle.newsletter.legal' | t }}</p>
+              {%- if form.errors -%}
+                <p class="newsletter-section__feedback newsletter-section__feedback--error">
+                  {{ form.errors | default_errors }}
+                </p>
+              {%- endif -%}
+              {%- if form.posted_successfully? -%}
+                <p class="newsletter-section__feedback">{{ 'recircle.newsletter.success' | t }}</p>
+              {%- endif -%}
+            {%- endform -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "section section--newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Stay in the loop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get refurb drops first." },
+    { "type": "richtext", "id": "body", "label": "Body",
+      "default": "<p>One short email a week — new arrivals, restock alerts, and care tips. No spam.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Image (optional)" },
+    { "type": "select", "id": "style", "label": "Style",
+      "options": [
+        { "value": "full", "label": "Full-bleed" },
+        { "value": "card", "label": "Card" }
+      ],
+      "default": "card" },
+    { "type": "header", "content": "Email provider" },
+    { "type": "paragraph",
+      "content": "Choose one. Klaviyo takes priority over Mailchimp; if both are blank the form falls back to a Shopify customer with the tag 'newsletter'." },
+    { "type": "text", "id": "klaviyo_list_id", "label": "Klaviyo list ID",
+      "info": "Found in Klaviyo → Lists & Segments → list URL (e.g. ABCDEF)." },
+    { "type": "url", "id": "mailchimp_action", "label": "Mailchimp form action URL",
+      "info": "Mailchimp → Audience → Signup forms → Embedded forms → copy the form action URL." }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Early access to new arrivals" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "blocks": [
+        { "type": "perk", "settings": { "text": "Early access to new arrivals" } },
+        { "type": "perk", "settings": { "text": "Restock alerts on sold-out grades" } },
+        { "type": "perk", "settings": { "text": "Repair & care guides from our techs" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -16,16 +16,40 @@
             {%- when 'newsletter' -%}
               <h4>{{ block.settings.heading }}</h4>
               <p style="margin:0 0 1rem;font-size:0.9rem;color:var(--color-text-muted)">{{ block.settings.body }}</p>
-              {%- form 'customer', class: 'newsletter-form' -%}
-                <input type="hidden" name="contact[tags]" value="newsletter">
-                <div style="display:flex;gap:0.5rem">
-                  <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required aria-label="{{ 'general.newsletter.label' | t }}" style="flex:1">
-                  <button type="submit" class="btn btn--primary">{{ 'general.newsletter.submit' | t }}</button>
-                </div>
-                {%- if form.posted_successfully? -%}
-                  <p style="color:var(--color-accent);margin-top:0.75rem">{{ 'general.newsletter.confirmation' | t }}</p>
-                {%- endif -%}
-              {%- endform -%}
+              {%- if block.settings.klaviyo_list_id != blank -%}
+                <form class="newsletter-form footer-newsletter-form"
+                      action="https://manage.kmail-lists.com/ajax/subscriptions/subscribe"
+                      method="post"
+                      novalidate
+                      data-klaviyo-form>
+                  <input type="hidden" name="g" value="{{ block.settings.klaviyo_list_id }}">
+                  <div style="display:flex;gap:0.5rem">
+                    <input type="email" name="email" required autocomplete="email"
+                           placeholder="{{ 'recircle.newsletter.placeholder' | t }}"
+                           aria-label="{{ 'recircle.newsletter.label' | t }}" style="flex:1">
+                    <button type="submit" class="btn btn--primary">{{ 'recircle.newsletter.submit' | t }}</button>
+                  </div>
+                  <p data-newsletter-success hidden style="color:var(--color-accent);margin-top:0.75rem">
+                    {{ 'recircle.newsletter.success' | t }}
+                  </p>
+                  <p data-newsletter-error hidden style="color:#8B2F2F;margin-top:0.75rem">
+                    {{ 'recircle.newsletter.error' | t }}
+                  </p>
+                </form>
+              {%- else -%}
+                {%- form 'customer', class: 'newsletter-form footer-newsletter-form' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <div style="display:flex;gap:0.5rem">
+                    <input type="email" name="contact[email]" required autocomplete="email"
+                           placeholder="{{ 'recircle.newsletter.placeholder' | t }}"
+                           aria-label="{{ 'recircle.newsletter.label' | t }}" style="flex:1">
+                    <button type="submit" class="btn btn--primary">{{ 'recircle.newsletter.submit' | t }}</button>
+                  </div>
+                  {%- if form.posted_successfully? -%}
+                    <p style="color:var(--color-accent);margin-top:0.75rem">{{ 'recircle.newsletter.success' | t }}</p>
+                  {%- endif -%}
+                {%- endform -%}
+              {%- endif -%}
 
             {%- when 'text' -%}
               {%- if block.settings.heading != blank -%}<h4>{{ block.settings.heading }}</h4>{%- endif -%}
@@ -82,7 +106,9 @@
       "limit": 1,
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Join the circular economy" },
-        { "type": "text", "id": "body", "label": "Body", "default": "Monthly drops, price alerts, and sustainability news." }
+        { "type": "text", "id": "body", "label": "Body", "default": "Monthly drops, price alerts, and sustainability news." },
+        { "type": "text", "id": "klaviyo_list_id", "label": "Klaviyo list ID (optional)",
+          "info": "Found in Klaviyo → Lists & Segments → list URL. Leave blank to fall back to a Shopify customer with the tag 'newsletter'." }
       ]
     },
     {
