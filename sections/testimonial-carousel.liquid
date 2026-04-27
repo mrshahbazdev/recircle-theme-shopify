@@ -1,0 +1,172 @@
+{%- liquid
+  assign heading_id = 'testi-heading-' | append: section.id
+  assign region_id = 'testi-region-' | append: section.id
+-%}
+
+<section class="section testimonials" aria-labelledby="{{ heading_id }}" data-testimonial-carousel>
+  <div class="page-width">
+    <header class="section-heading testimonials__heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-heading__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="section-heading__title" id="{{ heading_id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-heading__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="testimonials__viewport"
+         id="{{ region_id }}"
+         role="region"
+         aria-roledescription="carousel"
+         aria-labelledby="{{ heading_id }}"
+         tabindex="0"
+         data-testimonial-track>
+      <ol class="testimonials__track" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'quote' -%}
+            <li class="testimonials__slide" {{ block.shopify_attributes }} role="listitem" aria-roledescription="slide" aria-label="{{ forloop.index }} of {{ section.blocks.size }}">
+              <article class="testimonial-card">
+                {%- if block.settings.rating > 0 -%}
+                  <div class="testimonial-card__rating" aria-label="{{ block.settings.rating }} of 5">
+                    {%- for i in (1..5) -%}
+                      {%- if i <= block.settings.rating -%}
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="m7 1 1.85 3.95L13 5.6l-3 3 .8 4.4L7 11l-3.8 2 .8-4.4-3-3 4.15-.65L7 1z"/></svg>
+                      {%- else -%}
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m7 1 1.85 3.95L13 5.6l-3 3 .8 4.4L7 11l-3.8 2 .8-4.4-3-3 4.15-.65L7 1z"/></svg>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                <blockquote class="testimonial-card__quote">
+                  <p>{{ block.settings.quote }}</p>
+                </blockquote>
+
+                <footer class="testimonial-card__footer">
+                  {%- if block.settings.avatar != blank -%}
+                    <img class="testimonial-card__avatar"
+                         src="{{ block.settings.avatar | image_url: width: 96 }}"
+                         alt=""
+                         width="48" height="48"
+                         loading="lazy" decoding="async">
+                  {%- endif -%}
+                  <div class="testimonial-card__meta">
+                    <div class="testimonial-card__name">{{ block.settings.name }}</div>
+                    {%- if block.settings.role != blank -%}
+                      <div class="testimonial-card__role">{{ block.settings.role }}</div>
+                    {%- endif -%}
+                  </div>
+                  {%- if block.settings.product_handle != blank -%}
+                    {%- assign tagged_product = all_products[block.settings.product_handle] -%}
+                    {%- if tagged_product and tagged_product != empty -%}
+                      <a class="testimonial-card__product" href="{{ tagged_product.url }}">
+                        Bought: {{ tagged_product.title | truncate: 28 }}
+                      </a>
+                    {%- endif -%}
+                  {%- endif -%}
+                </footer>
+              </article>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+    </div>
+
+    <div class="testimonials__controls">
+      <button type="button" class="testimonials__btn" data-testimonial-prev aria-label="Previous testimonial" aria-controls="{{ region_id }}">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ol class="testimonials__dots" role="tablist" aria-label="Testimonial slides">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'quote' -%}
+            <li><button type="button" role="tab" data-testimonial-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}" {% if forloop.first %}aria-selected="true"{% endif %}></button></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+      <button type="button" class="testimonials__btn" data-testimonial-next aria-label="Next testimonial" aria-controls="{{ region_id }}">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const root = document.currentScript.previousElementSibling;
+  if (!root) return;
+  const track = root.querySelector('[data-testimonial-track]');
+  const slides = root.querySelectorAll('.testimonials__slide');
+  const dots = root.querySelectorAll('[data-testimonial-dot]');
+  const prev = root.querySelector('[data-testimonial-prev]');
+  const next = root.querySelector('[data-testimonial-next]');
+  if (!track || slides.length === 0) return;
+
+  let current = 0;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const go = (i) => {
+    current = (i + slides.length) % slides.length;
+    const slide = slides[current];
+    track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
+    dots.forEach((d, di) => d.setAttribute('aria-selected', di === current ? 'true' : 'false'));
+  };
+
+  prev && prev.addEventListener('click', () => go(current - 1));
+  next && next.addEventListener('click', () => go(current + 1));
+  dots.forEach((d, di) => d.addEventListener('click', () => go(di)));
+
+  track.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); go(current - 1); }
+  });
+
+  {% if section.settings.autoplay %}
+  if (!reduced && slides.length > 1) {
+    let timer = setInterval(() => go(current + 1), {{ section.settings.autoplay_seconds | default: 6 | times: 1000 }});
+    root.addEventListener('mouseenter', () => clearInterval(timer));
+    root.addEventListener('focusin',   () => clearInterval(timer));
+  }
+  {% endif %}
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial carousel",
+  "tag": "section",
+  "class": "section-testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer stories" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews from real owners" },
+    { "type": "textarea", "id": "text", "label": "Intro text" },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-advance", "default": true, "info": "Pauses on hover/focus and respects prefers-reduced-motion." },
+    { "type": "range", "id": "autoplay_seconds", "label": "Seconds per slide", "min": 4, "max": 12, "step": 1, "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Looks brand new. Saved £400 vs buying from Apple — and arrived in 48 hours." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Sam C." },
+        { "type": "text", "id": "role", "label": "Role / location", "default": "Verified buyer · London" },
+        { "type": "image_picker", "id": "avatar", "label": "Photo" },
+        { "type": "range", "id": "rating", "label": "Rating", "min": 0, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "product_handle", "label": "Product handle (optional)" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Testimonial carousel",
+      "blocks": [
+        { "type": "quote", "settings": { "quote": "Looks brand new. Saved £400 vs buying from Apple — and arrived in 48 hours.", "name": "Sam C.", "role": "Verified buyer · London", "rating": 5 } },
+        { "type": "quote", "settings": { "quote": "Honest grading. The Grade B I bought has tiny scratches — exactly as photographed. Battery is great.", "name": "Aisha R.", "role": "Verified buyer · Manchester", "rating": 5 } },
+        { "type": "quote", "settings": { "quote": "Trade-in was painless. Free label, money in 4 days. Bought a refurbished MacBook with the credit.", "name": "Jonas H.", "role": "Verified buyer · Berlin", "rating": 5 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

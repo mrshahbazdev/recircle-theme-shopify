@@ -1,0 +1,104 @@
+{%- liquid
+  assign heading_id = 'story-timeline-' | append: section.id
+-%}
+
+<section class="section story-timeline" aria-labelledby="{{ heading_id }}">
+  <div class="page-width">
+    <header class="section-heading story-timeline__heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-heading__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="section-heading__title" id="{{ heading_id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-heading__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </header>
+
+    <ol class="story-timeline__list" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+          <li class="story-timeline__item" {{ block.shopify_attributes }}>
+            <div class="story-timeline__marker" aria-hidden="true">
+              <span class="story-timeline__num">{{ forloop.index }}</span>
+              <span class="story-timeline__line"></span>
+            </div>
+            <div class="story-timeline__body">
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="story-timeline__eyebrow">{{ block.settings.eyebrow }}</p>
+              {%- endif -%}
+              <h3 class="story-timeline__title">{{ block.settings.title }}</h3>
+              {%- if block.settings.text != blank -%}
+                <div class="story-timeline__text rte">{{ block.settings.text }}</div>
+              {%- endif -%}
+              {%- if block.settings.image != blank -%}
+                <figure class="story-timeline__figure">
+                  <img src="{{ block.settings.image | image_url: width: 800 }}"
+                       srcset="{{ block.settings.image | image_url: width: 480 }} 480w,
+                               {{ block.settings.image | image_url: width: 800 }} 800w,
+                               {{ block.settings.image | image_url: width: 1200 }} 1200w"
+                       sizes="(min-width: 760px) 480px, 100vw"
+                       alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                       width="{{ block.settings.image.width }}"
+                       height="{{ block.settings.image.height }}"
+                       loading="lazy" decoding="async">
+                  {%- if block.settings.caption != blank -%}
+                    <figcaption>{{ block.settings.caption }}</figcaption>
+                  {%- endif -%}
+                </figure>
+              {%- endif -%}
+              {%- if block.settings.stat_value != blank -%}
+                <div class="story-timeline__stat">
+                  <span class="story-timeline__stat-value">{{ block.settings.stat_value }}</span>
+                  {%- if block.settings.stat_label != blank -%}
+                    <span class="story-timeline__stat-label">{{ block.settings.stat_label }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story timeline",
+  "tag": "section",
+  "class": "section-story-timeline",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Behind the refurb" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From box to your hands — the journey of every device" },
+    { "type": "textarea", "id": "text", "label": "Intro text" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Day 1" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Source" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>We collect pre-owned devices from corporate trade-ins, insurance returns, and individual sellers — never from grey-market liquidators.</p>" },
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "caption", "label": "Caption" },
+        { "type": "text", "id": "stat_value", "label": "Stat value (optional)", "default": "12,400" },
+        { "type": "text", "id": "stat_label", "label": "Stat label (optional)", "default": "devices sourced this year" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Story timeline (refurbishment)",
+      "blocks": [
+        { "type": "step", "settings": { "eyebrow": "Day 1", "title": "Source", "text": "<p>We collect pre-owned devices from corporate trade-ins, insurance returns, and individuals — never grey-market liquidators.</p>" } },
+        { "type": "step", "settings": { "eyebrow": "Days 2–3", "title": "Inspect", "text": "<p>50-point functional + cosmetic inspection by certified technicians. Photographed in detail before any work begins.</p>" } },
+        { "type": "step", "settings": { "eyebrow": "Days 4–7", "title": "Repair", "text": "<p>Genuine parts only. Batteries replaced where they fall below 85% health. Storage securely wiped to ADISA standard.</p>" } },
+        { "type": "step", "settings": { "eyebrow": "Day 8", "title": "Grade", "text": "<p>Transparent A/B/C/D grading with photos of the actual unit you'll receive — never stock images.</p>" } },
+        { "type": "step", "settings": { "eyebrow": "Day 9+", "title": "Ship", "text": "<p>Carbon-neutral courier across the EU + UK. 14-day returns. 12-month warranty starts the day it arrives.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,142 @@
+{%- liquid
+  assign heading_id = 'faq-heading-' | append: section.id
+-%}
+
+<section class="section faq" aria-labelledby="{{ heading_id }}" data-faq>
+  <div class="page-width">
+    <header class="section-heading faq__heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-heading__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="section-heading__title" id="{{ heading_id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="section-heading__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.settings.layout == 'two-col' -%}
+      <div class="faq__layout faq__layout--two">
+    {%- else -%}
+      <div class="faq__layout">
+    {%- endif -%}
+
+      {%- assign current_group = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'group' -%}
+          {%- if current_group != '' -%}</div>{%- endif -%}
+          <div class="faq__group" {{ block.shopify_attributes }}>
+            <h3 class="faq__group-title">{{ block.settings.title }}</h3>
+            <div class="faq__group-items">
+            {%- assign current_group = block.id -%}
+        {%- elsif block.type == 'qa' -%}
+          {%- if current_group == '' -%}
+            <div class="faq__group">
+              <div class="faq__group-items">
+              {%- assign current_group = 'auto' -%}
+          {%- endif -%}
+          <details class="faq__item" {{ block.shopify_attributes }}{% if block.settings.open_by_default %} open{% endif %}>
+            <summary class="faq__q">
+              <span class="faq__q-text">{{ block.settings.question }}</span>
+              <span class="faq__q-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3.5 5.25 7 8.75l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <div class="faq__a rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if current_group != '' -%}</div></div>{%- endif -%}
+
+    </div>
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <div class="faq__cta">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--secondary">{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+(() => {
+  const root = document.currentScript.previousElementSibling;
+  if (!root) return;
+  const items = root.querySelectorAll('.faq__item');
+  items.forEach(item => {
+    const summary = item.querySelector('summary');
+    if (!summary) return;
+    summary.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && item.open) {
+        item.open = false;
+        summary.focus();
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const list = Array.from(items);
+        const idx = list.indexOf(item);
+        const target = e.key === 'ArrowDown' ? list[idx + 1] : list[idx - 1];
+        if (target) target.querySelector('summary').focus();
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ accordion",
+  "tag": "section",
+  "class": "section-faq",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Help" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "textarea", "id": "text", "label": "Intro text" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "one-col", "label": "Single column" },
+        { "value": "two-col", "label": "Two columns" }
+      ],
+      "default": "one-col"
+    },
+    { "type": "text", "id": "cta_label", "label": "Footer CTA label" },
+    { "type": "url", "id": "cta_link", "label": "Footer CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Group title",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Group title", "default": "Refurbished basics" }
+      ]
+    },
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What does refurbished mean?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Every device is professionally inspected, repaired with genuine parts where needed, data-wiped, and graded transparently. You get a near-new product at a fraction of the cost — and one less device in landfill.</p>" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "FAQ accordion",
+      "blocks": [
+        { "type": "group", "settings": { "title": "Refurbished basics" } },
+        { "type": "qa", "settings": { "question": "What does refurbished mean?", "answer": "<p>Every device is professionally inspected, repaired, data-wiped and graded. You get a near-new product at a fraction of the cost.</p>" } },
+        { "type": "qa", "settings": { "question": "How are grades A, B, C, D decided?", "answer": "<p>Grade A is excellent (cosmetic 9/10), B is good (light marks), C shows visible wear but works perfectly, D is heavy use but functional. Photos of the actual unit show condition before you buy.</p>" } },
+        { "type": "group", "settings": { "title": "Warranty &amp; returns" } },
+        { "type": "qa", "settings": { "question": "How long is the warranty?", "answer": "<p>12 months on every device, parts and labour included.</p>" } },
+        { "type": "qa", "settings": { "question": "What's your return policy?", "answer": "<p>14-day no-questions-asked returns. We pay for the return label.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

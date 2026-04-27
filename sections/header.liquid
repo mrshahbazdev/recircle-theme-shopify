@@ -26,7 +26,104 @@
 
     <nav id="SiteNav" class="site-nav" aria-label="Primary" data-site-nav>
       {%- for link in linklists[section.settings.menu].links -%}
-        <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- assign matching_panel = nil -%}
+        {%- for blk in section.blocks -%}
+          {%- if blk.type == 'mega_menu' and blk.settings.linked_link == link.handle -%}
+            {%- assign matching_panel = blk -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if matching_panel -%}
+          <div class="site-nav__item site-nav__item--has-mega" data-mega-item>
+            <a href="{{ link.url }}"
+               class="site-nav__link"
+               {% if link.active %}aria-current="page"{% endif %}
+               aria-haspopup="true"
+               aria-expanded="false"
+               data-mega-trigger>
+              {{ link.title }}
+              <svg class="site-nav__chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <path d="m2.5 3.75 2.5 2.5 2.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <div class="mega-menu" role="region" aria-label="{{ link.title }} menu" hidden data-mega-panel>
+              <div class="page-width mega-menu__inner">
+                {%- if matching_panel.settings.heading != blank -%}
+                  <p class="mega-menu__eyebrow">{{ matching_panel.settings.heading }}</p>
+                {%- endif -%}
+                <div class="mega-menu__grid">
+                  {%- for col_handle in (1..4) -%}
+                    {%- liquid
+                      assign col_title_key = 'col' | append: col_handle | append: '_title'
+                      assign col_link_key  = 'col' | append: col_handle | append: '_linklist'
+                      assign col_title = matching_panel.settings[col_title_key]
+                      assign col_links_handle = matching_panel.settings[col_link_key]
+                      assign col_links = linklists[col_links_handle].links
+                    -%}
+                    {%- if col_title != blank or col_links.size > 0 -%}
+                      <div class="mega-menu__col">
+                        {%- if col_title != blank -%}
+                          <p class="mega-menu__col-title">{{ col_title }}</p>
+                        {%- endif -%}
+                        {%- if col_links.size > 0 -%}
+                          <ul class="mega-menu__col-list">
+                            {%- for sub in col_links -%}
+                              <li><a href="{{ sub.url }}" class="mega-menu__col-link">{{ sub.title }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- if matching_panel.settings.feature_product != blank -%}
+                    {%- assign feat = all_products[matching_panel.settings.feature_product] -%}
+                    {%- if feat and feat != empty -%}
+                      <a href="{{ feat.url }}" class="mega-menu__feature">
+                        {%- if feat.featured_image -%}
+                          <img src="{{ feat.featured_image | image_url: width: 320 }}"
+                               alt="{{ feat.title | escape }}"
+                               width="160" height="160"
+                               loading="lazy" decoding="async">
+                        {%- endif -%}
+                        <span class="mega-menu__feature-meta">
+                          <span class="mega-menu__feature-eyebrow">{{ matching_panel.settings.feature_eyebrow | default: 'Featured' }}</span>
+                          <span class="mega-menu__feature-title">{{ feat.title }}</span>
+                          <span class="mega-menu__feature-price">
+                            {%- if feat.compare_at_price > feat.price -%}
+                              <span class="mega-menu__feature-now">{{ feat.price | money }}</span>
+                              <span class="mega-menu__feature-was">{{ feat.compare_at_price | money }}</span>
+                            {%- else -%}
+                              <span class="mega-menu__feature-now">{{ feat.price | money }}</span>
+                            {%- endif -%}
+                            {%- assign grade = feat.metafields.recircle.grade -%}
+                            {%- if grade -%}<span class="mega-menu__feature-pill">Grade {{ grade }}</span>{%- endif -%}
+                          </span>
+                        </span>
+                      </a>
+                    {%- endif -%}
+                  {%- elsif matching_panel.settings.feature_image != blank -%}
+                    <a href="{{ matching_panel.settings.feature_link | default: '#' }}" class="mega-menu__feature mega-menu__feature--image">
+                      <img src="{{ matching_panel.settings.feature_image | image_url: width: 480 }}"
+                           alt="{{ matching_panel.settings.feature_title | escape }}"
+                           width="240" height="240"
+                           loading="lazy" decoding="async">
+                      {%- if matching_panel.settings.feature_title != blank -%}
+                        <span class="mega-menu__feature-meta">
+                          <span class="mega-menu__feature-eyebrow">{{ matching_panel.settings.feature_eyebrow | default: 'Spotlight' }}</span>
+                          <span class="mega-menu__feature-title">{{ matching_panel.settings.feature_title }}</span>
+                        </span>
+                      {%- endif -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}" class="site-nav__link" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endif -%}
       {%- endfor -%}
     </nav>
 
@@ -131,6 +228,33 @@
     { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true },
     { "type": "checkbox", "id": "show_country_selector", "label": "Show country/currency selector", "default": true }
   ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu panel",
+      "settings": [
+        { "type": "paragraph", "content": "Each panel attaches to one top-level link in your main menu by handle (e.g. shop, refurbished, brands)." },
+        { "type": "text", "id": "linked_link", "label": "Top-level link handle", "info": "Find this in Navigation. e.g. \"shop\" for a link titled Shop." },
+        { "type": "text", "id": "heading", "label": "Panel eyebrow", "default": "Browse" },
+        { "type": "header", "content": "Columns" },
+        { "type": "text", "id": "col1_title", "label": "Column 1 title", "default": "By category" },
+        { "type": "link_list", "id": "col1_linklist", "label": "Column 1 links" },
+        { "type": "text", "id": "col2_title", "label": "Column 2 title", "default": "By brand" },
+        { "type": "link_list", "id": "col2_linklist", "label": "Column 2 links" },
+        { "type": "text", "id": "col3_title", "label": "Column 3 title", "default": "By grade" },
+        { "type": "link_list", "id": "col3_linklist", "label": "Column 3 links" },
+        { "type": "text", "id": "col4_title", "label": "Column 4 title" },
+        { "type": "link_list", "id": "col4_linklist", "label": "Column 4 links" },
+        { "type": "header", "content": "Spotlight" },
+        { "type": "text", "id": "feature_eyebrow", "label": "Spotlight eyebrow", "default": "Featured" },
+        { "type": "product", "id": "feature_product", "label": "Featured product (optional)" },
+        { "type": "image_picker", "id": "feature_image", "label": "Or featured image" },
+        { "type": "text", "id": "feature_title", "label": "Image caption" },
+        { "type": "url", "id": "feature_link", "label": "Image link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
   "enabled_on": { "groups": ["header"] }
 }
 {% endschema %}

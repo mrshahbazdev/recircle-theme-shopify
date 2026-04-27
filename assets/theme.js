@@ -899,3 +899,66 @@
       });
   }
 })();
+
+/* ==========================================================================
+   Phase 15 — Mega menu interaction
+   Hover + focus-within open, click on touch, Esc / outside click close.
+   ========================================================================== */
+(function () {
+  const items = document.querySelectorAll('[data-mega-item]');
+  if (!items.length) return;
+
+  const isCoarse = matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  const setOpen = (item, open) => {
+    item.dataset.open = open ? 'true' : 'false';
+    const trig = item.querySelector('[data-mega-trigger]');
+    const panel = item.querySelector('[data-mega-panel]');
+    if (trig) trig.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (panel) {
+      if (open) panel.removeAttribute('hidden');
+      else panel.setAttribute('hidden', '');
+    }
+  };
+
+  const closeAll = (except) => {
+    items.forEach((it) => { if (it !== except) setOpen(it, false); });
+  };
+
+  items.forEach((item) => {
+    const trigger = item.querySelector('[data-mega-trigger]');
+    if (!trigger) return;
+
+    let hoverTimer;
+    if (!isCoarse) {
+      item.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        closeAll(item);
+        setOpen(item, true);
+      });
+      item.addEventListener('mouseleave', () => {
+        hoverTimer = setTimeout(() => setOpen(item, false), 140);
+      });
+      item.addEventListener('focusin', () => { closeAll(item); setOpen(item, true); });
+      item.addEventListener('focusout', (e) => {
+        if (!item.contains(e.relatedTarget)) setOpen(item, false);
+      });
+    }
+
+    trigger.addEventListener('click', (e) => {
+      const open = item.dataset.open === 'true';
+      if (isCoarse || (!open && trigger.getAttribute('aria-haspopup') === 'true')) {
+        e.preventDefault();
+        closeAll(item);
+        setOpen(item, !open);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll(null);
+  });
+  document.addEventListener('click', (e) => {
+    if (![...items].some((it) => it.contains(e.target))) closeAll(null);
+  });
+})();
