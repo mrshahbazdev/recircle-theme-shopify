@@ -141,15 +141,16 @@
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "value", "settings": { "title": "Tiered pricing", "body": "Volume discounts from 5 units." } },
-      { "type": "value", "settings": { "title": "Net-30 terms", "body": "Available after the first paid invoice." } },
-      { "type": "value", "settings": { "title": "12-month warranty", "body": "Same warranty across consumer + B2B." } }
-    ]
-  },
   "presets": [
-    { "name": "Quote request", "category": "Wholesale" }
+    {
+      "name": "Quote request",
+      "category": "Wholesale",
+      "blocks": [
+        { "type": "value", "settings": { "title": "Tiered pricing", "body": "Volume discounts from 5 units." } },
+        { "type": "value", "settings": { "title": "Net-30 terms", "body": "Available after the first paid invoice." } },
+        { "type": "value", "settings": { "title": "12-month warranty", "body": "Same warranty across consumer + B2B." } }
+      ]
+    }
   ]
 }
 {% endschema %}
