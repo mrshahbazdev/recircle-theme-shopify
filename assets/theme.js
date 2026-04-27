@@ -27,6 +27,7 @@
     initNewsletterForm();
     initSizeGuide();
     initCartUpsell();
+    initLocaleSelector();
   });
   document.addEventListener('recircle:cart:update', initCartUpsell);
 
@@ -1183,7 +1184,6 @@
       });
     });
   }
-
   /* -------- Cart upsell rail --------------------------------------------- */
   async function initCartUpsell() {
     document.querySelectorAll('[data-cart-upsell]').forEach(async (root) => {
@@ -1276,5 +1276,37 @@
       btn.disabled = false;
       btn.textContent = original;
     }
+  }
+
+  /* -------- Locale selector (auto-submit + flag emoji) ------------------ */
+  function initLocaleSelector() {
+    /* Render a flag emoji from the ISO-2 country code on every selector mount. */
+    document.querySelectorAll('[data-locale-flag]').forEach((el) => {
+      const iso = (el.textContent || '').trim().toUpperCase();
+      if (iso.length === 2) {
+        const points = Array.from(iso).map((c) => 0x1f1e6 + (c.charCodeAt(0) - 65));
+        try {
+          el.textContent = String.fromCodePoint.apply(null, points);
+        } catch (e) { /* keep ISO fallback */ }
+      }
+    });
+    /* Submit the locale form as soon as the visitor changes country/language,
+       and update the visible flag without waiting for the page reload. */
+    document.querySelectorAll('[data-locale-selector] [data-locale-form]').forEach((form) => {
+      const select = form.querySelector('select');
+      if (!select) return;
+      select.addEventListener('change', () => {
+        if (form.getAttribute('data-locale-form') === 'country') {
+          const flag = form.querySelector('[data-locale-flag]');
+          const iso = (select.value || '').toUpperCase();
+          if (flag && iso.length === 2) {
+            const points = Array.from(iso).map((c) => 0x1f1e6 + (c.charCodeAt(0) - 65));
+            try { flag.textContent = String.fromCodePoint.apply(null, points); }
+            catch (e) { flag.textContent = iso; }
+          }
+        }
+        form.submit();
+      });
+    });
   }
 })();

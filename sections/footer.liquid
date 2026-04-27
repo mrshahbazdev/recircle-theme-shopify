@@ -69,6 +69,14 @@
       {%- endfor -%}
     </div>
 
+    {%- if section.settings.show_locale_selector -%}
+      <div class="site-footer__locale">
+        {% render 'locale-selector', location: 'footer', layout: 'inline',
+                  show_country: section.settings.show_country_selector,
+                  show_language: section.settings.show_language_selector %}
+      </div>
+    {%- endif -%}
+
     <div class="site-footer__bottom">
       <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Refurbished with care. </p>
       <p>
@@ -90,7 +98,11 @@
 {% schema %}
 {
   "name": "Footer",
-  "settings": [],
+  "settings": [
+    { "type": "checkbox", "id": "show_locale_selector",   "label": "Show country / language selector", "default": true },
+    { "type": "checkbox", "id": "show_country_selector",  "label": "Country & currency",               "default": true },
+    { "type": "checkbox", "id": "show_language_selector", "label": "Language",                          "default": true }
+  ],
   "blocks": [
     {
       "type": "menu",

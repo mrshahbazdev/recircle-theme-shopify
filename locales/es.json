@@ -246,6 +246,11 @@
       "heading": "También te puede gustar",
       "add": "Añadir",
       "sold_out": "Agotado"
+    },
+    "locale": {
+      "shipping_to": "Envío a",
+      "language": "Idioma",
+      "choose": "Cambiar"
     }
   },
   "collections": {

@@ -1,0 +1,79 @@
+{%- comment -%}
+  Phase 27 — unified country / currency / language selector.
+  Reusable across header, footer, and standalone placements.
+
+  Required vars (optional):
+    - location: 'header' | 'footer' | 'standalone' (default: 'standalone')
+    - show_country: bool (default: true)
+    - show_language: bool (default: true)
+    - layout: 'inline' | 'stacked' (default: 'inline')
+{%- endcomment -%}
+
+{%- liquid
+  assign location = location | default: 'standalone'
+  if show_country == nil
+    assign show_country = true
+  endif
+  if show_language == nil
+    assign show_language = true
+  endif
+  assign layout = layout | default: 'inline'
+  assign uid = location | append: '-' | append: section.id
+-%}
+
+<div class="locale-selector locale-selector--{{ location }} locale-selector--{{ layout }}" data-locale-selector>
+  {%- if show_country and localization.available_countries.size > 1 -%}
+    <form method="post" action="/localization" id="LocaleCountryForm-{{ uid }}"
+          accept-charset="UTF-8" enctype="multipart/form-data"
+          class="locale-selector__form"
+          data-locale-form="country">
+      <input type="hidden" name="_method" value="put">
+      <input name="return_to" type="hidden" value="{{ request.path }}">
+      <label for="LocaleCountrySelect-{{ uid }}" class="locale-selector__label">
+        {{ 'recircle.locale.shipping_to' | t }}
+      </label>
+      <div class="locale-selector__field">
+        <span class="locale-selector__flag" aria-hidden="true" data-locale-flag>{{ localization.country.iso_code }}</span>
+        <select id="LocaleCountrySelect-{{ uid }}"
+                name="country_code"
+                class="locale-selector__select"
+                aria-label="{{ 'general.localization.country_label' | t }}">
+          {%- for country in localization.available_countries -%}
+            <option value="{{ country.iso_code }}"
+                    {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+              {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+            </option>
+          {%- endfor -%}
+        </select>
+        <svg width="12" height="12" aria-hidden="true" class="locale-selector__chev"><use href="#icon-chev-down"/></svg>
+      </div>
+    </form>
+  {%- endif -%}
+
+  {%- if show_language and localization.available_languages.size > 1 -%}
+    <form method="post" action="/localization" id="LocaleLanguageForm-{{ uid }}"
+          accept-charset="UTF-8" enctype="multipart/form-data"
+          class="locale-selector__form"
+          data-locale-form="language">
+      <input type="hidden" name="_method" value="put">
+      <input name="return_to" type="hidden" value="{{ request.path }}">
+      <label for="LocaleLanguageSelect-{{ uid }}" class="locale-selector__label">
+        {{ 'recircle.locale.language' | t }}
+      </label>
+      <div class="locale-selector__field">
+        <select id="LocaleLanguageSelect-{{ uid }}"
+                name="locale_code"
+                class="locale-selector__select"
+                aria-label="{{ 'general.localization.language_label' | t }}">
+          {%- for language in localization.available_languages -%}
+            <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}"
+                    {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+              {{ language.endonym_name | capitalize }}
+            </option>
+          {%- endfor -%}
+        </select>
+        <svg width="12" height="12" aria-hidden="true" class="locale-selector__chev"><use href="#icon-chev-down"/></svg>
+      </div>
+    </form>
+  {%- endif -%}
+</div>

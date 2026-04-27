@@ -246,6 +246,11 @@
       "heading": "Misschien vind je dit ook leuk",
       "add": "Toevoegen",
       "sold_out": "Uitverkocht"
+    },
+    "locale": {
+      "shipping_to": "Verzending naar",
+      "language": "Taal",
+      "choose": "Wijzigen"
     }
   },
   "collections": {
