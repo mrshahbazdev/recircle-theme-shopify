@@ -241,6 +241,11 @@
       "free_shipping": "Gratis verzending",
       "returns": "Gratis retour",
       "warranty": "Garantie"
+    },
+    "cart_upsell": {
+      "heading": "Misschien vind je dit ook leuk",
+      "add": "Toevoegen",
+      "sold_out": "Uitverkocht"
     }
   },
   "collections": {

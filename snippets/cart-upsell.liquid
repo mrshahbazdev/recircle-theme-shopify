@@ -1,0 +1,61 @@
+{%- comment -%}
+  Phase 26 — cart upsell / cross-sell rail.
+  Rendered inside cart drawer + cart page when there is at least one line item.
+  Source priority:
+    1. Manual handles from theme settings (settings.cart_upsell_handles)
+    2. /recommendations/products.json for the first cart item (Shopify's
+       built-in product recommendations API; falls back gracefully if
+       Shopify Search & Discovery isn't installed)
+{%- endcomment -%}
+
+{%- if cart.item_count > 0 -%}
+  {%- assign upsell_handles = settings.cart_upsell_handles | default: '' -%}
+  {%- assign first_item = cart.items.first -%}
+
+  <section class="cart-upsell"
+           aria-labelledby="cart-upsell-heading-{{ section.id | default: 'cart' }}"
+           data-cart-upsell
+           data-source-product-id="{{ first_item.product_id }}"
+           data-limit="{{ settings.cart_upsell_limit | default: 4 }}">
+    <h3 id="cart-upsell-heading-{{ section.id | default: 'cart' }}" class="cart-upsell__heading">
+      {{ 'recircle.cart_upsell.heading' | t }}
+    </h3>
+
+    <ul class="cart-upsell__list" role="list" data-cart-upsell-list>
+      {%- if upsell_handles != blank -%}
+        {%- assign handle_list = upsell_handles | split: ',' -%}
+        {%- for raw in handle_list limit: 6 -%}
+          {%- assign handle = raw | strip -%}
+          {%- if handle == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign p = all_products[handle] -%}
+          {%- if p == blank or p.empty? -%}{%- continue -%}{%- endif -%}
+          {%- if p.id == first_item.product_id -%}{%- continue -%}{%- endif -%}
+          <li class="cart-upsell__item" data-upsell-item data-variant-id="{{ p.selected_or_first_available_variant.id }}">
+            <a href="{{ p.url }}" class="cart-upsell__media" tabindex="-1" aria-hidden="true">
+              {%- if p.featured_image -%}
+                {{ p.featured_image | image_url: width: 200 | image_tag:
+                   loading: 'lazy', widths: '120,200,300', sizes: '120px',
+                   alt: p.featured_image.alt | default: p.title }}
+              {%- endif -%}
+            </a>
+            <div class="cart-upsell__body">
+              <a href="{{ p.url }}" class="cart-upsell__title">{{ p.title }}</a>
+              <p class="cart-upsell__price">{{ p.price | money }}</p>
+            </div>
+            <button type="button"
+                    class="btn btn--secondary cart-upsell__add"
+                    data-upsell-add
+                    data-variant-id="{{ p.selected_or_first_available_variant.id }}"
+                    {% unless p.available %}disabled{% endunless %}>
+              {%- if p.available -%}
+                {{ 'recircle.cart_upsell.add' | t }}
+              {%- else -%}
+                {{ 'recircle.cart_upsell.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </section>
+{%- endif -%}

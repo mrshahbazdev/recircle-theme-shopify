@@ -26,7 +26,9 @@
     initConsentBanner();
     initNewsletterForm();
     initSizeGuide();
+    initCartUpsell();
   });
+  document.addEventListener('recircle:cart:update', initCartUpsell);
 
   /* -------- Accessibility helpers ----------------------------------------- */
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -1158,7 +1160,6 @@
       });
     });
   }
-
   /* -------- Size guide modal -------------------------------------------- */
   function initSizeGuide() {
     document.querySelectorAll('[data-size-guide]').forEach((wrap) => {
@@ -1181,5 +1182,99 @@
         }
       });
     });
+  }
+
+  /* -------- Cart upsell rail --------------------------------------------- */
+  async function initCartUpsell() {
+    document.querySelectorAll('[data-cart-upsell]').forEach(async (root) => {
+      const list = root.querySelector('[data-cart-upsell-list]');
+      if (!list) return;
+      /* If manual handles already populated the list, just wire add buttons. */
+      if (list.children.length === 0) {
+        const productId = root.getAttribute('data-source-product-id');
+        const limit = parseInt(root.getAttribute('data-limit'), 10) || 4;
+        if (!productId) {
+          root.hidden = true;
+          return;
+        }
+        try {
+          const url = `${window.routes && window.routes.product_recommendations_url || '/recommendations/products'}?section_id=cart-upsell-fragment&product_id=${productId}&limit=${limit}&intent=related`;
+          /* Fallback: use the JSON endpoint when section fragment isn't available. */
+          const res = await fetch(`/recommendations/products.json?product_id=${productId}&limit=${limit}&intent=related`);
+          if (!res.ok) throw new Error('reco fetch failed');
+          const data = await res.json();
+          const products = data.products || [];
+          if (!products.length) {
+            root.hidden = true;
+            return;
+          }
+          list.innerHTML = products.map((p) => upsellCardHTML(p)).join('');
+        } catch (err) {
+          root.hidden = true;
+          return;
+        }
+      }
+      list.querySelectorAll('[data-upsell-add]').forEach((btn) => {
+        if (btn.__wired) return;
+        btn.__wired = true;
+        btn.addEventListener('click', () => addUpsellToCart(btn));
+      });
+    });
+  }
+
+  function upsellCardHTML(p) {
+    const variant = (p.variants && p.variants[0]) || {};
+    const img = (p.featured_image && (p.featured_image.url || p.featured_image)) || (p.images && p.images[0]) || '';
+    const price = (p.price || (variant.price * 100) || 0);
+    const fmt = window.recircleFormatMoney ? window.recircleFormatMoney(price) : (Math.round(price / 100) + ' ');
+    const available = !!(variant.available !== false && p.available !== false);
+    const handle = p.handle || '';
+    return `
+      <li class="cart-upsell__item" data-upsell-item data-variant-id="${variant.id || ''}">
+        <a href="/products/${handle}" class="cart-upsell__media" tabindex="-1" aria-hidden="true">
+          ${img ? `<img src="${img}" alt="${(p.title || '').replace(/"/g, '&quot;')}" loading="lazy" width="120" height="120">` : ''}
+        </a>
+        <div class="cart-upsell__body">
+          <a href="/products/${handle}" class="cart-upsell__title">${p.title || ''}</a>
+          <p class="cart-upsell__price">${fmt}</p>
+        </div>
+        <button type="button" class="btn btn--secondary cart-upsell__add"
+                data-upsell-add data-variant-id="${variant.id || ''}" ${available ? '' : 'disabled'}>
+          ${available ? 'Add' : 'Sold out'}
+        </button>
+      </li>`;
+  }
+
+  async function addUpsellToCart(btn) {
+    const id = btn.getAttribute('data-variant-id');
+    if (!id) return;
+    btn.disabled = true;
+    const original = btn.textContent;
+    try {
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] }),
+      });
+      if (!res.ok) throw new Error('cart add failed');
+      document.dispatchEvent(new CustomEvent('recircle:cart:update', { detail: { source: 'cart-upsell', variantId: id } }));
+      /* Re-render the cart drawer to reflect the new line + refreshed upsell. */
+      try {
+        const html = await fetch('/?section_id=cart-drawer').then((r) => r.text());
+        const drawer = document.querySelector('[data-cart-drawer]');
+        if (drawer && html) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = html;
+          const next = tmp.querySelector('[data-cart-drawer]');
+          if (next) drawer.innerHTML = next.innerHTML;
+          if (typeof window.recircleOpenCartDrawer === 'function') window.recircleOpenCartDrawer();
+        }
+      } catch (e) { /* ignore — refresh is best-effort */ }
+      btn.textContent = '✓';
+      setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 1200);
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
   }
 })();

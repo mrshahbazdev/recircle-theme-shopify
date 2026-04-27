@@ -34,6 +34,8 @@
         <span>{{ 'general.cart.co2_savings_html' | t: kg: total_co2 | default: 'You will save <strong>' | append: total_co2 | append: ' kg CO₂e</strong> with this basket.' }}</span>
       </div>
     {%- endif -%}
+
+    {% render 'cart-upsell' %}
   {%- else -%}
     <div class="cart-drawer__empty">
       <p>{{ 'general.cart.empty' | t }}</p>
