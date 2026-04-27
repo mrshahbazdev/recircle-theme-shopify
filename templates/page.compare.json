@@ -3,10 +3,35 @@
     "main": {
       "type": "compare-table",
       "settings": {
+        "eyebrow": "Side by side",
         "heading": "Compare refurbished products",
-        "subheading": "<p>Side-by-side specs, condition grade, CO\u2082 savings and warranty.</p>"
+        "subheading": "<p>Specs, condition grades, CO₂ savings, warranty — pick up to four products and we'll line them up so you can decide with confidence.</p>"
+      }
+    },
+    "popular": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Need something to compare?",
+        "heading": "Popular refurbished picks",
+        "product_limit": 4,
+        "show_vendor": true
+      }
+    },
+    "grades": {
+      "type": "condition-grade-explainer",
+      "blocks": {
+        "a": { "type": "grade", "settings": { "grade": "a", "title": "A · Like new", "description": "Cosmetically pristine, fully tested." } },
+        "b": { "type": "grade", "settings": { "grade": "b", "title": "B · Very good", "description": "Light signs of use only on close inspection." } },
+        "c": { "type": "grade", "settings": { "grade": "c", "title": "C · Good", "description": "Visible marks, all features fully working." } },
+        "d": { "type": "grade", "settings": { "grade": "d", "title": "D · Fair", "description": "Noticeable wear. Best-price tier, fully tested." } }
+      },
+      "block_order": ["a", "b", "c", "d"],
+      "settings": {
+        "eyebrow": "Grades made simple",
+        "heading": "What every condition really means",
+        "text": ""
       }
     }
   },
-  "order": ["main"]
+  "order": ["main", "popular", "grades"]
 }

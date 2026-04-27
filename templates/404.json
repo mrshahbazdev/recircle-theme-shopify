@@ -1,4 +1,31 @@
 {
-  "sections": { "main": { "type": "main-404", "settings": {} } },
-  "order": ["main"]
+  "sections": {
+    "main": { "type": "main-404", "settings": {} },
+    "popular": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "While you're here",
+        "heading": "Most-loved refurbished picks",
+        "product_limit": 4,
+        "show_vendor": true
+      }
+    },
+    "process": {
+      "type": "how-refurbishment-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Source", "description": "Trade-ins, corporate fleets, insurance returns." } },
+        "s2": { "type": "step", "settings": { "title": "Inspect", "description": "50-point check by certified technicians." } },
+        "s3": { "type": "step", "settings": { "title": "Repair", "description": "Genuine parts, fresh batteries, full data wipe." } },
+        "s4": { "type": "step", "settings": { "title": "Grade", "description": "Transparent A/B/C/D grading with real photos." } },
+        "s5": { "type": "step", "settings": { "title": "Ship", "description": "Carbon-neutral shipping, 14-day EU returns, 12-month warranty." } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": {
+        "eyebrow": "Our process",
+        "heading": "From sourced to shipped — five careful steps",
+        "text": ""
+      }
+    }
+  },
+  "order": ["main", "popular", "process"]
 }

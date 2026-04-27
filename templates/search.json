@@ -1,4 +1,30 @@
 {
-  "sections": { "main": { "type": "main-search", "settings": {} } },
-  "order": ["main"]
+  "sections": {
+    "main": { "type": "main-search", "settings": {} },
+    "popular": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Popular right now",
+        "heading": "Top refurbished picks",
+        "product_limit": 4,
+        "show_vendor": true
+      }
+    },
+    "grades": {
+      "type": "condition-grade-explainer",
+      "blocks": {
+        "a": { "type": "grade", "settings": { "grade": "a", "title": "A · Like new", "description": "No visible wear. Cosmetically pristine; fully tested." } },
+        "b": { "type": "grade", "settings": { "grade": "b", "title": "B · Very good", "description": "Light signs of use only visible on close inspection." } },
+        "c": { "type": "grade", "settings": { "grade": "c", "title": "C · Good", "description": "Visible marks, all features fully working." } },
+        "d": { "type": "grade", "settings": { "grade": "d", "title": "D · Fair", "description": "Noticeable wear. Best-price tier, tested and warrantied." } }
+      },
+      "block_order": ["a", "b", "c", "d"],
+      "settings": {
+        "eyebrow": "Buy with confidence",
+        "heading": "Four clear condition grades",
+        "text": ""
+      }
+    }
+  },
+  "order": ["main", "popular", "grades"]
 }

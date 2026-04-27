@@ -2,11 +2,13 @@
   {
     "handle": "about",
     "title": "About ReCircle",
+    "template": "page.about",
     "body_html": "<h1>Circular commerce, beautifully done</h1><p>ReCircle is a refurbishment workshop and marketplace. We take pre-loved electronics, fashion and furniture, restore them to near-new condition, and give them a second life \u2014 with a proper warranty and a transparent condition grade.</p><h2>Our standards</h2><ul><li>Every device data-wiped to DoD 5220.22-M standard</li><li>Every item graded A\u2013D by an independent technician</li><li>12-month minimum warranty</li><li>14-day EU-wide returns</li></ul><h2>Why refurbished?</h2><p>Building a new phone emits ~80 kg of CO\u2082e before it even reaches a shelf. Refurbishing one emits less than 5 kg. Every ReCircle purchase is a small vote for slower, smarter consumption.</p>"
   },
   {
     "handle": "sustainability",
     "title": "Sustainability report",
+    "template": "page.sustainability",
     "body_html": "<h1>Sustainability report</h1><p>We publish our impact numbers every quarter. No greenwashing \u2014 just the maths.</p><h2>2024 at a glance</h2><ul><li><strong>482 tonnes</strong> of CO\u2082e avoided</li><li><strong>18,000+</strong> products saved from landfill</li><li><strong>96%</strong> of incoming devices successfully refurbished</li><li><strong>4%</strong> recycled for parts</li></ul><h2>Methodology</h2><p>CO\u2082 figures follow <a href=\"https://www.ademe.fr/\">ADEME</a> lifecycle assessments for each product category. We take the <em>lower bound</em> of published estimates and subtract our refurbishment energy use, parts, and shipping.</p><h2>Supply chain</h2><p>Primary sources: trade-ins (62%), corporate refresh programmes (24%), certified recyclers (14%). No products sourced from landfill-diversion brokers.</p><h2>Third-party verification</h2><p>Our annual report is audited by Cl\u00e9rance Solutions (B Corp certification pending 2025).</p>"
   },
   {
@@ -18,21 +20,25 @@
   {
     "handle": "faq",
     "title": "FAQ",
+    "template": "page.faq",
     "body_html": "<h1>Frequently asked</h1><h2>Is \u201crefurbished\u201d the same as \u201cused\u201d?</h2><p>No. Used means \u201cas-is.\u201d Refurbished means an independent technician has tested, repaired, cleaned and certified the product. Every ReCircle item comes with a warranty.</p><h2>What warranty do you offer?</h2><p>Electronics: 12 months. Appliances: 24 months. Fashion: 30-day authenticity guarantee. Furniture: 12\u201324 months structural.</p><h2>Can I return if I change my mind?</h2><p>Yes \u2014 14-day EU returns on all items. No questions asked.</p><h2>How do I trade in my device?</h2><p>Use our <a href=\"/pages/trade-in\">trade-in calculator</a>. Instant quote, free shipping label, credit in 48h.</p><h2>Do you ship outside the EU?</h2><p>We ship to UK, Switzerland and Norway. Shipping times 3\u20137 business days.</p><h2>How is CO\u2082 calculated?</h2><p>See our <a href=\"/pages/sustainability\">Sustainability report</a> for the full methodology.</p>"
   },
   {
     "handle": "wishlist",
     "title": "Your wishlist",
+    "template": "page.wishlist",
     "body_html": "<p>Items you have hearted appear here. Sign in to sync across devices.</p>"
   },
   {
     "handle": "compare",
     "title": "Compare products",
+    "template": "page.compare",
     "body_html": "<p>Add up to four products to compare specs side by side.</p>"
   },
   {
     "handle": "quote",
     "title": "Request a B2B quote",
+    "template": "page.quote",
     "body_html": "<p>Tell us about your bulk requirements. We respond within one business day.</p>"
   },
   {

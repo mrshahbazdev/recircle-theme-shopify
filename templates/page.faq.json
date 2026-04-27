@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_eyebrow": true,
+        "eyebrow": "Help & FAQ"
+      }
+    },
+    "faq": {
+      "type": "faq-accordion",
+      "blocks": {
+        "g1": { "type": "group", "settings": { "title": "Refurbished basics" } },
+        "q1": { "type": "question", "settings": { "question": "Is refurbished the same as used?", "answer": "<p>No. Used means \"as-is\". Refurbished means an independent technician has tested, repaired, cleaned and graded the product. Every ReCircle item ships with a warranty.</p>" } },
+        "q2": { "type": "question", "settings": { "question": "What does the A/B/C/D grade mean?", "answer": "<p>A is cosmetically pristine. B has light marks visible only on close inspection. C has visible scratches but full functionality. D has noticeable wear at the lowest price tier — fully tested and warrantied.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "Are batteries replaced?", "answer": "<p>Yes — any battery below 85% health is replaced with a genuine new unit before resale. The actual battery health is shown in the product specs.</p>" } },
+        "g2": { "type": "group", "settings": { "title": "Warranty & returns" } },
+        "q4": { "type": "question", "settings": { "question": "How long is the warranty?", "answer": "<p>Electronics: 12 months. Appliances: 24 months. Fashion: 30-day authenticity guarantee. Furniture: 12–24 months structural.</p>" } },
+        "q5": { "type": "question", "settings": { "question": "Can I return if I change my mind?", "answer": "<p>Yes — 14-day EU returns on every order. No restocking fee. Free return label included.</p>" } },
+        "q6": { "type": "question", "settings": { "question": "Do you ship outside the EU?", "answer": "<p>We ship to the UK, Switzerland and Norway. Standard delivery 3–7 business days. Customs handled by us, no surprises at the door.</p>" } },
+        "g3": { "type": "group", "settings": { "title": "Trade-in & sustainability" } },
+        "q7": { "type": "question", "settings": { "question": "How do I trade in my old device?", "answer": "<p>Use our <a href=\"/pages/trade-in\">trade-in calculator</a>: instant quote, free shipping label, store credit within 48 hours of receipt.</p>" } },
+        "q8": { "type": "question", "settings": { "question": "How do you calculate CO₂ savings?", "answer": "<p>We use Fraunhofer IZM and ADEME lifecycle data, take the lower bound, then subtract our refurbishment energy, parts and shipping. Methodology published in our <a href=\"/pages/sustainability\">sustainability report</a>.</p>" } }
+      },
+      "block_order": ["g1", "q1", "q2", "q3", "g2", "q4", "q5", "q6", "g3", "q7", "q8"],
+      "settings": {
+        "eyebrow": "Help centre",
+        "heading": "Frequently asked",
+        "text": "Can't find your answer? Email <a href=\"mailto:hello@recircle.example\">hello@recircle.example</a> — we reply within one business day."
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "p1": { "type": "perk", "settings": { "text": "Restock alerts for your wishlist" } },
+        "p2": { "type": "perk", "settings": { "text": "Subscriber-only deals" } },
+        "p3": { "type": "perk", "settings": { "text": "Quarterly impact report" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Stay informed",
+        "heading": "Want updates as we restock?",
+        "body": "<p>We'll only ping you when something genuinely good comes back into stock.</p>"
+      }
+    }
+  },
+  "order": ["main", "faq", "newsletter"]
+}

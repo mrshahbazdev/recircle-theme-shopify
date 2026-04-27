@@ -1,4 +1,26 @@
 {
-  "sections": { "main": { "type": "main-blog", "settings": {} } },
-  "order": ["main"]
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "eyebrow": "ReCircle journal",
+        "subheading": "<p>Notes on circular commerce, refurbishment craft, and the people keeping things in use a little longer.</p>"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "p1": { "type": "perk", "settings": { "text": "Monthly stories from the workshop" } },
+        "p2": { "type": "perk", "settings": { "text": "Sustainability data, no greenwashing" } },
+        "p3": { "type": "perk", "settings": { "text": "Subscriber-only deals" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Read more",
+        "heading": "Get the journal in your inbox",
+        "body": "<p>One email a month. Honest writing, no spam.</p>"
+      }
+    }
+  },
+  "order": ["main", "newsletter"]
 }
