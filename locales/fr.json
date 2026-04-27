@@ -15,7 +15,13 @@
       "collections": "Collections",
       "articles": "Articles",
       "suggestions": "Suggestions",
-      "no_results_html": "Aucun résultat pour « {{ terms }} ». Vérifiez l'orthographe ou utilisez un autre mot."
+      "no_results_html": "Aucun résultat pour « {{ terms }} ». Vérifiez l'orthographe ou utilisez un autre mot.",
+      "results_label": "Suggestions de recherche",
+      "no_results_title": "Aucun résultat",
+      "suggestion_check_spelling": "Vérifiez l’orthographe.",
+      "suggestion_fewer_words": "Essayez un terme plus court et plus général.",
+      "suggestion_browse": "Ou parcourez par catégorie ci-dessous.",
+      "browse_all": "Tout parcourir"
     },
     "cart": {
       "title": "Votre panier",

@@ -35,9 +35,14 @@
           <div class="editorial-empty__icon" aria-hidden="true">
             <svg width="30" height="30"><use href="#icon-search"/></svg>
           </div>
-          <h2 class="editorial-empty__title">No matches yet</h2>
+          <h2 class="editorial-empty__title">{{ 'general.search.no_results_title' | t | default: 'No matches yet' }}</h2>
           <p class="editorial-empty__body">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
-          <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">Browse everything</a>
+          <ul class="editorial-empty__suggestions" role="list">
+            <li>{{ 'general.search.suggestion_check_spelling' | t | default: 'Double-check the spelling.' }}</li>
+            <li>{{ 'general.search.suggestion_fewer_words' | t | default: 'Try a shorter, more general term.' }}</li>
+            <li>{{ 'general.search.suggestion_browse' | t | default: 'Or browse refurbished by category below.' }}</li>
+          </ul>
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary editorial-empty__cta">{{ 'general.search.browse_all' | t | default: 'Browse everything' }}</a>
         </div>
       {%- else -%}
         <div class="collection-grid">
