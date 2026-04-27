@@ -1,0 +1,54 @@
+{%- comment -%}
+  Phase 28 — Buy-now-pay-later on-site messaging.
+
+  Required:
+    - product
+    - block (PDP block with provider + provider-specific settings)
+{%- endcomment -%}
+
+{%- liquid
+  assign provider = block.settings.provider | default: 'shopify'
+  assign price_amount = product.price | money_without_currency | strip_html
+  assign currency_iso = cart.currency.iso_code
+-%}
+
+{%- case provider -%}
+  {%- when 'shopify' -%}
+    {%- if product.selected_or_first_available_variant.available -%}
+      <shopify-payment-terms variant-id="{{ product.selected_or_first_available_variant.id }}">
+        {{ product | payment_terms }}
+      </shopify-payment-terms>
+    {%- endif -%}
+
+  {%- when 'klarna' -%}
+    {%- if block.settings.klarna_client_id != blank -%}
+      <klarna-placement
+        data-key="credit-promotion-auto-size"
+        data-locale="{{ block.settings.klarna_locale | default: 'en-GB' }}"
+        data-purchase-amount="{{ product.price }}">
+      </klarna-placement>
+      <script async src="https://js.klarna.com/web-sdk/v1/klarna.js"
+              data-client-id="{{ block.settings.klarna_client_id }}"></script>
+    {%- else -%}
+      <p class="bnpl-msg bnpl-msg--klarna">
+        {{ 'recircle.bnpl.klarna_fallback' | t: price: price_amount, currency: currency_iso }}
+      </p>
+    {%- endif -%}
+
+  {%- when 'afterpay' -%}
+    <afterpay-placement
+      data-locale="en_GB"
+      data-currency="{{ currency_iso }}"
+      data-amount="{{ price_amount }}"
+      data-size="md"></afterpay-placement>
+    <script async src="https://js.afterpay.com/afterpay-1.x.js"></script>
+
+  {%- when 'paypal' -%}
+    <div data-pp-message
+         data-pp-amount="{{ price_amount }}"
+         data-pp-layout="text"
+         data-pp-text-color="black"
+         data-pp-logo-type="primary"></div>
+
+  {%- else -%}
+{%- endcase -%}

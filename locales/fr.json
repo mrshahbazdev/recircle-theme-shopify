@@ -230,6 +230,17 @@
     },
     "reviews": {
       "heading": "Avis clients"
+    },
+    "bnpl": {
+      "klarna_fallback": "Ou 4 paiements sans frais. À partir de {{ price }} {{ currency }} par mois."
+    },
+    "size_guide": {
+      "empty": "Créez une page dans l'admin Shopify → Boutique en ligne → Pages et sélectionnez-la dans le bloc Guide des tailles."
+    },
+    "delivery": {
+      "free_shipping": "Livraison gratuite",
+      "returns": "Retours gratuits",
+      "warranty": "Garantie"
     }
   },
   "collections": {

@@ -4399,3 +4399,58 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
   min-height: 120px;
 }
 
+
+
+/* ---- Phase 28: PDP delivery & returns / BNPL / size guide ----------- */
+.product-bnpl { margin: 0.5rem 0 0.75rem; min-height: 1.1rem; }
+.product-bnpl klarna-placement,
+.product-bnpl afterpay-placement { display: block; }
+.bnpl-msg { margin: 0; font-size: 0.85rem; color: var(--color-text-muted); }
+
+.delivery-returns {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.delivery-returns__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+.delivery-returns__row  { display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; }
+.delivery-returns__icon { flex: 0 0 auto; color: var(--color-accent, #1f4d3f); }
+.delivery-returns__fineprint { margin: 0.65rem 0 0; font-size: 0.78rem; color: var(--color-text-muted); }
+
+.size-guide__open {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.75rem; margin-top: 0.75rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.85rem; color: var(--color-text);
+  cursor: pointer;
+}
+.size-guide__open:hover { border-color: var(--color-text); }
+.size-guide__modal {
+  border: 0; padding: 0; background: var(--color-bg, #FBF8F3);
+  border-radius: calc(var(--radius) + 4px);
+  max-width: min(720px, 92vw);
+  width: 100%;
+  max-height: 86vh;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+}
+.size-guide__modal::backdrop { background: rgba(20,30,25,0.55); backdrop-filter: blur(2px); }
+.size-guide__modal-inner { padding: 1.5rem 1.75rem 1.75rem; max-height: 86vh; overflow-y: auto; }
+.size-guide__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.size-guide__title { font-family: var(--font-display, "Playfair Display", Georgia, serif); font-size: clamp(1.35rem, 2.4vw, 1.7rem); margin: 0; letter-spacing: -0.01em; }
+.size-guide__close {
+  background: transparent; border: 0; font-size: 1.6rem; line-height: 1;
+  width: 2.25rem; height: 2.25rem; border-radius: 50%; cursor: pointer;
+  color: var(--color-text-muted);
+}
+.size-guide__close:hover { background: rgba(0,0,0,0.06); color: var(--color-text); }
+.size-guide__body table { width: 100%; border-collapse: collapse; }
+.size-guide__body th, .size-guide__body td { padding: 0.55rem 0.65rem; border-bottom: 1px solid var(--color-border); text-align: left; }
+.size-guide__body th { font-weight: 600; }
+
+@media (max-width: 720px) {
+  .size-guide__modal-inner { padding: 1.1rem 1.1rem 1.4rem; }
+}

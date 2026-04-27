@@ -214,6 +214,17 @@
     },
     "reviews": {
       "heading": "Customer reviews"
+    },
+    "bnpl": {
+      "klarna_fallback": "Or 4 interest-free payments. From {{ price }} {{ currency }} per month."
+    },
+    "size_guide": {
+      "empty": "Add a Page in Shopify Admin → Online Store → Pages and select it in the Size guide block."
+    },
+    "delivery": {
+      "free_shipping": "Free shipping",
+      "returns": "Free returns",
+      "warranty": "Warranty"
     }
   },
   "collections": {

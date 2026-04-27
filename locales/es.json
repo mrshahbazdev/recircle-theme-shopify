@@ -230,6 +230,17 @@
     },
     "reviews": {
       "heading": "Reseñas de clientes"
+    },
+    "bnpl": {
+      "klarna_fallback": "O 4 pagos sin intereses. Desde {{ price }} {{ currency }} al mes."
+    },
+    "size_guide": {
+      "empty": "Crea una Página en Shopify Admin → Tienda online → Páginas y selecciónala en el bloque Guía de tallas."
+    },
+    "delivery": {
+      "free_shipping": "Envío gratis",
+      "returns": "Devoluciones gratis",
+      "warranty": "Garantía"
     }
   },
   "collections": {

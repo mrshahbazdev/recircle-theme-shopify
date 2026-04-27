@@ -10,7 +10,7 @@
       <span aria-current="page">{{ product.title }}</span>
     </nav>
 
-    {%- assign buy_card_types = 'vendor,title,badges,price,variant_picker,buy_buttons,warranty_bar,wishlist,share' | split: ',' -%}
+    {%- assign buy_card_types = 'vendor,title,badges,price,variant_picker,buy_buttons,bnpl,warranty_bar,delivery_returns,size_guide,wishlist,share' | split: ',' -%}
     {%- assign details_types  = 'repairability,dpp,description,before_after' | split: ',' -%}
 
     <div class="product-main" data-product-form-wrap data-product-handle="{{ product.handle }}">
@@ -95,9 +95,24 @@
                 </div>
               {%- endform -%}
 
+            {%- when 'bnpl' -%}
+              <div {{ block.shopify_attributes }} class="product-bnpl">
+                {% render 'bnpl-messaging', product: product, block: block %}
+              </div>
+
             {%- when 'warranty_bar' -%}
               <div {{ block.shopify_attributes }}>
                 {% render 'warranty-bar', product: product %}
+              </div>
+
+            {%- when 'delivery_returns' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'delivery-returns', block: block %}
+              </div>
+
+            {%- when 'size_guide' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'size-guide', block: block %}
               </div>
 
             {%- when 'repairability' -%}
@@ -264,7 +279,49 @@
     { "type": "price",   "name": "Price (dual EU-compliant)", "limit": 1 },
     { "type": "variant_picker", "name": "Variant picker", "limit": 1 },
     { "type": "buy_buttons",    "name": "Buy buttons", "limit": 1 },
+    {
+      "type": "bnpl",
+      "name": "Buy now / pay later messaging",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "provider",
+          "label": "Provider",
+          "options": [
+            { "value": "shopify",  "label": "Shop Pay Installments" },
+            { "value": "klarna",   "label": "Klarna On-Site Messaging" },
+            { "value": "afterpay", "label": "Afterpay / Clearpay messaging" },
+            { "value": "paypal",   "label": "PayPal Pay Later" },
+            { "value": "none",     "label": "None" }
+          ],
+          "default": "shopify"
+        },
+        { "type": "text", "id": "klarna_client_id", "label": "Klarna client ID", "info": "From Klarna Merchant Portal → Configuration → On-site messaging." },
+        { "type": "text", "id": "klarna_locale",    "label": "Klarna locale",    "default": "en-GB" }
+      ]
+    },
     { "type": "warranty_bar",   "name": "Warranty bar", "limit": 1 },
+    {
+      "type": "delivery_returns",
+      "name": "Delivery & returns",
+      "limit": 1,
+      "settings": [
+        { "type": "text",     "id": "shipping_eta",   "label": "Delivery ETA",    "default": "Free delivery in 2–4 business days" },
+        { "type": "text",     "id": "returns_window", "label": "Returns window",  "default": "30-day free returns" },
+        { "type": "text",     "id": "warranty_label", "label": "Warranty label",  "default": "12-month warranty" },
+        { "type": "richtext", "id": "fineprint",      "label": "Optional fine print" }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Size guide",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Size guide" },
+        { "type": "page", "id": "page",         "label": "Pull content from page", "info": "Pick a Page (e.g. /pages/size-guide). Its rich-text body renders inside the modal." }
+      ]
+    },
     { "type": "repairability",  "name": "Repairability score", "limit": 1 },
     { "type": "dpp",            "name": "Digital Product Passport", "limit": 1 },
     { "type": "description",    "name": "Description", "limit": 1 },

@@ -495,7 +495,34 @@
         "id": "consent_policy_link",
         "label": "Privacy / cookie policy URL",
         "info": "Link rendered as 'Learn more' inside the banner. Leave blank to hide."
-      }
+      },
+      {
+        "type": "header",
+        "content": "Live chat widget"
+      },
+      {
+        "type": "paragraph",
+        "content": "The chosen provider's script is injected only after the visitor grants 'functional' consent in the cookie banner."
+      },
+      {
+        "type": "select",
+        "id": "chat_provider",
+        "label": "Chat provider",
+        "options": [
+          { "value": "none",     "label": "None" },
+          { "value": "tidio",    "label": "Tidio" },
+          { "value": "crisp",    "label": "Crisp" },
+          { "value": "gorgias",  "label": "Gorgias" },
+          { "value": "intercom", "label": "Intercom" },
+          { "value": "tawk",     "label": "Tawk.to" }
+        ],
+        "default": "none"
+      },
+      { "type": "text", "id": "chat_tidio_key",          "label": "Tidio public key",       "info": "From Tidio → Settings → Channels → Live chat → Installation." },
+      { "type": "text", "id": "chat_crisp_website_id",   "label": "Crisp website ID",       "info": "From Crisp dashboard → Website settings → Setup instructions." },
+      { "type": "text", "id": "chat_gorgias_app_id",     "label": "Gorgias app ID" },
+      { "type": "text", "id": "chat_intercom_app_id",    "label": "Intercom app ID" },
+      { "type": "text", "id": "chat_tawk_id",            "label": "Tawk widget ID",         "info": "The path segment after /embed/tawk.to/ in the embed URL." }
     ]
   },
   {
