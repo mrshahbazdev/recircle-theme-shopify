@@ -201,7 +201,24 @@
           ? 'Instant quote — final offer confirmed after device inspection.'
           : 'Select your device to see an estimated trade-in quote.';
       }
+      document.dispatchEvent(new CustomEvent('recircle:trade-in:quote', { detail: {
+        brand, grade: condition, age_years: age, value: quote, currency: T.currency
+      }}));
     }
+
+    form.addEventListener('submit', () => {
+      const fd = new FormData(form);
+      const brand = (fd.get('brand') || 'default').toLowerCase();
+      const condition = (fd.get('condition') || 'b').toLowerCase();
+      const age = parseInt(fd.get('age'), 10) || 1;
+      const yearFactor = Math.max(T.min_age_factor, 1 - age * T.age_decay_per_year);
+      const b = T.brands[brand] || T.brands.default;
+      const m = T.condition_multipliers[condition] || 0.5;
+      const value = Math.round(b.base * m * yearFactor);
+      document.dispatchEvent(new CustomEvent('recircle:trade-in:submit', { detail: {
+        brand, grade: condition, age_years: age, value, currency: T.currency
+      }}));
+    });
   }
 
   /* -------- Announcement bar close --------------------------------------- */
@@ -393,6 +410,15 @@
           const fd = new FormData(form);
           const res = await fetch('/cart/add.js', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
           if (!res.ok) throw new Error('add failed');
+          const added = await res.clone().json().catch(() => null);
+          if (added) {
+            const item = Array.isArray(added.items) ? added.items[0] : added;
+            document.dispatchEvent(new CustomEvent('recircle:atc', { detail: {
+              id: item.product_id, variant_id: item.variant_id || item.id,
+              name: item.product_title || item.title, price: (item.price || 0) / 100,
+              quantity: item.quantity || 1, currency: (window.recircleAnalytics || {}).currency
+            }}));
+          }
           await window.ReCircle.refreshCartDrawer();
           window.ReCircle.openCartDrawer();
           announce('Added to cart');
@@ -484,6 +510,15 @@
           headers: { 'Accept': 'application/json' }
         });
         if (!res.ok) throw new Error('add failed');
+        const added = await res.clone().json().catch(() => null);
+        if (added) {
+          const item = Array.isArray(added.items) ? added.items[0] : added;
+          document.dispatchEvent(new CustomEvent('recircle:atc', { detail: {
+            id: item.product_id, variant_id: item.variant_id || item.id,
+            name: item.product_title || item.title, price: (item.price || 0) / 100,
+            quantity: 1, currency: (window.recircleAnalytics || {}).currency
+          }}));
+        }
         if (window.ReCircle && window.ReCircle.refreshCartDrawer) {
           await window.ReCircle.refreshCartDrawer();
           if (window.ReCircle.openCartDrawer) window.ReCircle.openCartDrawer();
@@ -509,9 +544,11 @@
     if (idx === -1) {
       list.push(handle);
       announce('Saved to wishlist');
+      document.dispatchEvent(new CustomEvent('recircle:wishlist:add', { detail: { id: handle } }));
     } else {
       list.splice(idx, 1);
       announce('Removed from wishlist');
+      document.dispatchEvent(new CustomEvent('recircle:wishlist:remove', { detail: { id: handle } }));
     }
     writeList(WL_KEY, list);
     document.dispatchEvent(new CustomEvent('recircle:wishlist:change', { detail: { list } }));
@@ -719,6 +756,7 @@
       requestAnimationFrame(() => modal.classList.add('is-open'));
       document.body.classList.add('modal-open');
       body.innerHTML = `<div class="modal__loader">Loading…</div>`;
+      document.dispatchEvent(new CustomEvent('recircle:quick-view:open', { detail: { id: handle } }));
       try {
         const html = await fetch(`/products/${encodeURIComponent(handle)}?section_id=main-quick-view`, { credentials: 'same-origin' }).then((r) => r.text());
         const wrapper = document.createElement('div');
@@ -785,6 +823,7 @@
     if (i !== -1) {
       list.splice(i, 1);
       announce('Removed from compare');
+      document.dispatchEvent(new CustomEvent('recircle:compare:remove', { detail: { id: handle } }));
     } else {
       if (list.length >= max) {
         announce(`You can compare up to ${max} products`);
@@ -792,6 +831,7 @@
       }
       list.push(handle);
       announce('Added to compare');
+      document.dispatchEvent(new CustomEvent('recircle:compare:add', { detail: { id: handle } }));
     }
     writeList(CMP_KEY, list);
   }

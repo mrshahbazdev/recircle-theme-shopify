@@ -1,0 +1,78 @@
+{%- comment -%}
+  Phase 17 — Page-context analytics events.
+  Rendered just before </body>. Fires page-type-aware GA4 + Meta Pixel events
+  using the actual product / collection / order data Liquid has at render time.
+{%- endcomment -%}
+
+{%- if settings.ga4_id != blank or settings.meta_pixel_id != blank -%}
+  <script id="recircle-page-events" type="application/json">
+    {
+      "template": {{ template | json }},
+      "currency": {{ cart.currency.iso_code | json }},
+
+      {%- case template -%}
+      {%- when 'product' -%}
+        "page_type": "product",
+        "product": {
+          "id": {{ product.id | json }},
+          "name": {{ product.title | json }},
+          "vendor": {{ product.vendor | json }},
+          "price": {{ product.selected_or_first_available_variant.price | money_without_currency | replace: ',', '' | json }},
+          "variant_id": {{ product.selected_or_first_available_variant.id | json }},
+          "category": {{ product.type | json }},
+          "grade": {{ product.metafields.recircle.condition_grade.value | json }},
+          "co2_kg": {{ product.metafields.recircle.co2_savings_kg.value | json }}
+        }
+
+      {%- when 'collection' -%}
+        "page_type": "collection",
+        "collection": {
+          "id": {{ collection.id | json }},
+          "name": {{ collection.title | json }},
+          "handle": {{ collection.handle | json }}
+        },
+        "items": [
+          {%- for product in collection.products limit: 12 -%}
+          {
+            "id": {{ product.id | json }},
+            "name": {{ product.title | json }},
+            "price": {{ product.price | money_without_currency | replace: ',', '' | json }},
+            "vendor": {{ product.vendor | json }},
+            "category": {{ product.type | json }},
+            "index": {{ forloop.index0 }}
+          }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+
+      {%- when 'search' -%}
+        "page_type": "search",
+        "search_term": {{ search.terms | json }},
+        "results_count": {{ search.results_count | json }}
+
+      {%- when 'cart' -%}
+        "page_type": "cart",
+        "cart": {
+          "total_value": {{ cart.total_price | divided_by: 100.00 | json }},
+          "items": [
+            {%- for item in cart.items -%}
+            {
+              "id": {{ item.product_id | json }},
+              "variant_id": {{ item.variant_id | json }},
+              "name": {{ item.title | json }},
+              "price": {{ item.price | divided_by: 100.00 | json }},
+              "quantity": {{ item.quantity | json }}
+            }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        }
+
+      {%- when 'page' -%}
+        "page_type": "page",
+        "handle": {{ page.handle | json }}
+
+      {%- else -%}
+        "page_type": {{ template | json }}
+      {%- endcase -%}
+    }
+  </script>
+{%- endif -%}

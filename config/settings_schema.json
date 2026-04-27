@@ -431,5 +431,54 @@
         "label": "Favicon"
       }
     ]
+  },
+  {
+    "name": "Analytics",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Plug-and-play GA4 + Meta Pixel. Both are optional — leave blank to disable. Custom storefront events (wishlist add, compare, trade-in quote, quick-view) fire automatically when the matching feature is enabled."
+      },
+      {
+        "type": "header",
+        "content": "Google Analytics 4"
+      },
+      {
+        "type": "text",
+        "id": "ga4_id",
+        "label": "GA4 Measurement ID",
+        "info": "e.g. G-XXXXXXXXXX. Leave blank to disable.",
+        "default": ""
+      },
+      {
+        "type": "header",
+        "content": "Meta (Facebook) Pixel"
+      },
+      {
+        "type": "text",
+        "id": "meta_pixel_id",
+        "label": "Meta Pixel ID",
+        "info": "Numeric pixel ID from Meta Events Manager. Leave blank to disable.",
+        "default": ""
+      },
+      {
+        "type": "header",
+        "content": "Privacy & consent"
+      },
+      {
+        "type": "checkbox",
+        "id": "consent_mode_default_denied",
+        "label": "Default consent to denied (GA4 Consent Mode v2)",
+        "info": "Recommended for EU markets. Storefront calls window.recircleAnalytics.grantConsent() after the visitor accepts your cookie banner.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "analytics_debug",
+        "label": "Debug mode (log every event to the JS console)",
+        "info": "Useful while wiring up. Disable in production.",
+        "default": false
+      }
+    ]
   }
 ]
