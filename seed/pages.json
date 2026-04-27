@@ -19,5 +19,25 @@
     "handle": "faq",
     "title": "FAQ",
     "body_html": "<h1>Frequently asked</h1><h2>Is \u201crefurbished\u201d the same as \u201cused\u201d?</h2><p>No. Used means \u201cas-is.\u201d Refurbished means an independent technician has tested, repaired, cleaned and certified the product. Every ReCircle item comes with a warranty.</p><h2>What warranty do you offer?</h2><p>Electronics: 12 months. Appliances: 24 months. Fashion: 30-day authenticity guarantee. Furniture: 12\u201324 months structural.</p><h2>Can I return if I change my mind?</h2><p>Yes \u2014 14-day EU returns on all items. No questions asked.</p><h2>How do I trade in my device?</h2><p>Use our <a href=\"/pages/trade-in\">trade-in calculator</a>. Instant quote, free shipping label, credit in 48h.</p><h2>Do you ship outside the EU?</h2><p>We ship to UK, Switzerland and Norway. Shipping times 3\u20137 business days.</p><h2>How is CO\u2082 calculated?</h2><p>See our <a href=\"/pages/sustainability\">Sustainability report</a> for the full methodology.</p>"
+  },
+  {
+    "handle": "wishlist",
+    "title": "Your wishlist",
+    "body_html": "<p>Items you have hearted appear here. Sign in to sync across devices.</p>"
+  },
+  {
+    "handle": "compare",
+    "title": "Compare products",
+    "body_html": "<p>Add up to four products to compare specs side by side.</p>"
+  },
+  {
+    "handle": "quote",
+    "title": "Request a B2B quote",
+    "body_html": "<p>Tell us about your bulk requirements. We respond within one business day.</p>"
+  },
+  {
+    "handle": "size-guide",
+    "title": "Size guide",
+    "body_html": "<h2>How to measure</h2><p>Lay the garment flat. Measure across the chest 2 cm below the armpit.</p><table><thead><tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th></tr></thead><tbody><tr><td>S</td><td>50</td><td>68</td></tr><tr><td>M</td><td>54</td><td>71</td></tr><tr><td>L</td><td>58</td><td>74</td></tr><tr><td>XL</td><td>62</td><td>76</td></tr></tbody></table><p><em>Refurbished garments may vary by \u00b11 cm. Returns are free if a different size suits you better.</em></p>"
   }
 ]
