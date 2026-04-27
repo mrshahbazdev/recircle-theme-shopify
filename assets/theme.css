@@ -4373,3 +4373,29 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
     padding: 2.25rem;
   }
 }
+
+
+/* ---- Phase 25: Reviews integration ----------------------------------- */
+.reviews-stars { margin: 0.4rem 0; min-height: 1.1rem; }
+.product-card__stars { margin: 0.25rem 0; min-height: 1rem; }
+.product-info__stars { margin: 0.5rem 0 0.75rem; }
+.product-reviews {
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+}
+.product-reviews__heading {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  margin: 0 0 1rem;
+  letter-spacing: -0.01em;
+}
+/* Provider-specific safe defaults — apps inject their own styling, but we
+   reserve a sensible min-height to avoid CLS while their JS hydrates. */
+.jdgm-widget.jdgm-review-widget,
+#looxReviews,
+.yotpo.yotpo-main-widget,
+#shopify-product-reviews {
+  min-height: 120px;
+}
+

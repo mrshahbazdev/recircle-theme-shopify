@@ -227,6 +227,9 @@
       "success": "Grazie — controlla la posta per confermare.",
       "error": "Qualcosa è andato storto. Riprova.",
       "legal": "Iscrivendoti accetti la nostra privacy policy. Cancellazione in ogni momento."
+    },
+    "reviews": {
+      "heading": "Recensioni clienti"
     }
   },
   "collections": {

@@ -211,6 +211,9 @@
       "success": "Thanks — check your inbox to confirm.",
       "error": "Something went wrong. Please try again.",
       "legal": "By subscribing you agree to our privacy policy. Unsubscribe anytime."
+    },
+    "reviews": {
+      "heading": "Customer reviews"
     }
   },
   "collections": {

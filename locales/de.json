@@ -227,6 +227,9 @@
       "success": "Danke — bitte bestätige in deinem Posteingang.",
       "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
       "legal": "Mit dem Abo stimmst du unserer Datenschutzerklärung zu. Jederzeit kündbar."
+    },
+    "reviews": {
+      "heading": "Kundenbewertungen"
     }
   },
   "collections": {

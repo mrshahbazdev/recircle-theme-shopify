@@ -1,0 +1,33 @@
+{%- comment -%}
+  Phase 25 — full reviews block for the product page.
+  Renders the provider's mount point and a fallback heading.
+  Required vars: product.
+{%- endcomment -%}
+{%- assign provider = settings.reviews_provider | default: 'none' -%}
+{%- if settings.reviews_show_on_pdp and provider != 'none' and product != blank -%}
+  <section class="product-reviews" data-reviews-widget data-product-id="{{ product.id }}" aria-labelledby="reviews-heading-{{ product.id }}">
+    <h2 id="reviews-heading-{{ product.id }}" class="product-reviews__heading">
+      {{ 'recircle.reviews.heading' | t }}
+    </h2>
+    {%- case provider -%}
+      {%- when 'judgeme' -%}
+        <div class="jdgm-widget jdgm-review-widget"
+             data-id="{{ product.id }}"
+             data-product-title="{{ product.title | escape }}"
+             data-product-handle="{{ product.handle }}"></div>
+      {%- when 'loox' -%}
+        <div id="looxReviews"
+             data-product-id="{{ product.id }}"></div>
+      {%- when 'yotpo' -%}
+        <div class="yotpo yotpo-main-widget"
+             data-product-id="{{ product.id }}"
+             data-name="{{ product.title | escape }}"
+             data-url="{{ shop.url }}{{ product.url }}"
+             data-image-url="{{ product.featured_image | image_url: width: 600 }}"
+             data-description="{{ product.description | strip_html | truncatewords: 40 | escape }}"></div>
+      {%- when 'shopify' -%}
+        <div id="shopify-product-reviews"
+             data-id="{{ product.id }}"></div>
+    {%- endcase -%}
+  </section>
+{%- endif -%}

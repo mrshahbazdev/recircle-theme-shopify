@@ -227,6 +227,9 @@
       "success": "Merci — vérifiez votre boîte mail pour confirmer.",
       "error": "Une erreur est survenue. Réessayez.",
       "legal": "En vous abonnant, vous acceptez notre politique de confidentialité. Désabonnement à tout moment."
+    },
+    "reviews": {
+      "heading": "Avis clients"
     }
   },
   "collections": {

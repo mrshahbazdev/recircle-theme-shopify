@@ -30,6 +30,7 @@
 
             {%- when 'title' -%}
               <h1 class="product-info__title" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+              {% render 'reviews-stars', product: product, classes: 'product-info__stars' %}
 
             {%- when 'badges' -%}
               <div class="product-info__badges" {{ block.shopify_attributes }}>
@@ -173,6 +174,8 @@
 
           {%- endcase -%}
         {%- endfor -%}
+
+        {% render 'reviews-widget', product: product %}
       </div>
     </div>
   </div>

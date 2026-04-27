@@ -227,6 +227,9 @@
       "success": "Gracias — revisa tu bandeja para confirmar.",
       "error": "Algo salió mal. Inténtalo de nuevo.",
       "legal": "Al suscribirte aceptas nuestra política de privacidad. Cancela cuando quieras."
+    },
+    "reviews": {
+      "heading": "Reseñas de clientes"
     }
   },
   "collections": {
