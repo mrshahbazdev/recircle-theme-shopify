@@ -97,6 +97,20 @@ async function setProductMetafield(productId, namespace, key, type, value) {
   }
 }
 
+let SHOP_CURRENCY = "EUR";
+
+async function detectShopCurrency() {
+  try {
+    const { shop } = await gql(`{ shop { currencyCode } }`);
+    if (shop?.currencyCode) {
+      SHOP_CURRENCY = shop.currencyCode;
+      console.log(`  shop currency: ${SHOP_CURRENCY}`);
+    }
+  } catch (e) {
+    console.warn(`  ‼ could not detect shop currency, defaulting to EUR (${e.message})`);
+  }
+}
+
 async function seedB2BAndMember() {
   const products = await listProducts(limit);
   if (!products.length) {
@@ -108,7 +122,7 @@ async function seedB2BAndMember() {
     /* 10% off MSRP for member tier (rough — owner can edit later in admin). */
     await setProductMetafield(p.id, "recircle", "member_price",
       "money",
-      JSON.stringify({ amount: (49.0 + i * 7).toFixed(2), currency_code: process.env.SHOPIFY_CURRENCY || "EUR" })
+      JSON.stringify({ amount: (49.0 + i * 7).toFixed(2), currency_code: process.env.SHOPIFY_CURRENCY || SHOP_CURRENCY })
     );
     /* Three-tier wholesale ladder. */
     await setProductMetafield(p.id, "recircle", "b2b_tiers",
@@ -129,6 +143,7 @@ async function seedB2BAndMember() {
 
 (async () => {
   console.log(`▶ Ops seed — ${store}`);
+  await detectShopCurrency();
   await ensureDefinitions();
   await seedB2BAndMember();
   console.log("✔ ops seed complete.");

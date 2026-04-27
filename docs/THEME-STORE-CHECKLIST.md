@@ -1,6 +1,6 @@
 # Theme Store Requirements (TSR) — compliance checklist
 
-Last reviewed: Phase 31. Mirrors Shopify's [Theme Store Requirements](https://shopify.dev/docs/storefronts/themes/store/requirements) for paid + free theme submissions.
+Last reviewed: Phase 32. Mirrors Shopify's [Theme Store Requirements](https://shopify.dev/docs/storefronts/themes/store/requirements) for paid + free theme submissions.
 
 ## A. Architecture
 
@@ -22,7 +22,7 @@ Last reviewed: Phase 31. Mirrors Shopify's [Theme Store Requirements](https://sh
 | # | Requirement | Status | Evidence |
 |---|---|---|---|
 | B11 | ≥3 named theme presets in `settings_data.json` | PASS | Ships `Editorial cream` (default), `Forest boutique`, `Tech charcoal` — each with distinct palette, fonts, density, page width and corner radius. |
-| B12 | Demo store seeded with content | PENDING | Phase 32 — runs `scripts/seed.mjs` + `scripts/seed-ops.mjs` against the prodevnns demo store. |
+| B12 | Demo store seeded with content | PASS | `seed/seed.mjs` ran idempotently against `prodevnns.myshopify.com` (15 products, 5 collections, 8 pages, 3 articles, all `recircle.*` metafield definitions). `seed/seed-ops.mjs` filled `member_price` / `b2b_tiers` / `moq` on 6 products (auto-detects shop currency). |
 
 ## C. Performance & accessibility
 
@@ -36,8 +36,8 @@ Last reviewed: Phase 31. Mirrors Shopify's [Theme Store Requirements](https://sh
 
 | # | Requirement | Status | Evidence |
 |---|---|---|---|
-| D16 | 14 listing screenshots (1600×1000 lossless PNG) | PENDING | Phase 32 — runs `scripts/screenshots.mjs` against the seeded demo store. |
-| D17 | Demo store URL (password-protected with reviewer code) | PENDING | Phase 32 — captured in `docs/DEMO-STORE.md`. |
+| D16 | 14 listing screenshots | PASS | `scripts/screenshots.mjs` captured all 14 assets (cover, thumbnail, 8 desktop features, 3 mobile, OG default) against the seeded prodevnns store. Run `SHOPIFY_STORE=... THEME_ID=... STOREFRONT_PASSWORD=... node scripts/screenshots.mjs` to regenerate. Output is git-ignored under `screenshots/` — the merchant uploads the files directly to the Partner Dashboard. |
+| D17 | Demo store URL (password-protected with reviewer code) | PASS | `docs/DEMO-STORE.md` §6 documents the prodevnns demo URL, the storefront password lookup path, and the two reviewer customer accounts. |
 | D18 | Listing copy in Partner Dashboard | DRAFT | `docs/THEME-STORE-LISTING.md` ready — merchant pastes during submission. |
 | D19 | Theme docs / changelog / support email | PASS | `README.md`, `CHANGELOG.md`, `docs/*.md`, support email in `settings_schema.json` `theme_info`. |
 | D20 | Pricing decision (free vs paid) | MERCHANT | Decided at Partner Dashboard submission. |
@@ -53,8 +53,8 @@ Last reviewed: Phase 31. Mirrors Shopify's [Theme Store Requirements](https://sh
 
 ## Phase mapping
 
-- **Phase 31** — closes A1–A10, B11, D19 (this PR)
-- **Phase 32** — closes B12, D16, D17
+- **Phase 31** — closes A1–A10, B11, D19
+- **Phase 32** — closes B12, D16, D17 (this PR)
 - **Phase 33** — closes C13–C15
 
 Once Phase 33 lands, the theme is submission-ready. Merchant fills the Partner Dashboard listing form using `docs/THEME-STORE-LISTING.md`, attaches the 14 screenshots from Phase 32, supplies the demo store URL + reviewer password, and submits.
