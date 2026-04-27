@@ -24,6 +24,7 @@
     initQuickView();
     initCompare();
     initConsentBanner();
+    initNewsletterForm();
   });
 
   /* -------- Accessibility helpers ----------------------------------------- */
@@ -1114,6 +1115,46 @@
       banner.hidden = false;
       const focusBtn = banner.querySelector('[data-consent-action="accept-all"]');
       if (focusBtn) focusBtn.focus();
+    });
+  }
+
+  /* -------- Newsletter form (Klaviyo AJAX submission) -------------------- */
+  function initNewsletterForm() {
+    document.querySelectorAll('[data-klaviyo-form]').forEach((form) => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const successEl = form.querySelector('[data-newsletter-success]');
+        const errorEl = form.querySelector('[data-newsletter-error]');
+        const btn = form.querySelector('button[type="submit"]');
+        if (successEl) successEl.hidden = true;
+        if (errorEl) errorEl.hidden = true;
+        if (btn) btn.disabled = true;
+
+        try {
+          const fd = new FormData(form);
+          const body = new URLSearchParams();
+          for (const [k, v] of fd.entries()) body.append(k, v);
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body,
+          });
+          const data = await res.json().catch(() => ({}));
+          if (data && data.success) {
+            if (successEl) successEl.hidden = false;
+            form.reset();
+            document.dispatchEvent(new CustomEvent('recircle:newsletter:subscribe', {
+              detail: { provider: 'klaviyo', email: fd.get('email') },
+            }));
+          } else {
+            if (errorEl) errorEl.hidden = false;
+          }
+        } catch (err) {
+          if (errorEl) errorEl.hidden = false;
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
     });
   }
 })();

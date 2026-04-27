@@ -219,6 +219,14 @@
       "marketing": "Marketing",
       "marketing_desc": "Annunci personalizzati e remarketing su siti di terze parti.",
       "manage": "Gestisci cookie"
+    },
+    "newsletter": {
+      "label": "Indirizzo email",
+      "placeholder": "tu@esempio.it",
+      "submit": "Iscriviti",
+      "success": "Grazie — controlla la posta per confermare.",
+      "error": "Qualcosa è andato storto. Riprova.",
+      "legal": "Iscrivendoti accetti la nostra privacy policy. Cancellazione in ogni momento."
     }
   },
   "collections": {

@@ -219,6 +219,14 @@
       "marketing": "Marketing",
       "marketing_desc": "Personalisierte Werbung und Remarketing auf Drittanbieter-Seiten.",
       "manage": "Cookies verwalten"
+    },
+    "newsletter": {
+      "label": "E-Mail-Adresse",
+      "placeholder": "du@beispiel.de",
+      "submit": "Abonnieren",
+      "success": "Danke — bitte bestätige in deinem Posteingang.",
+      "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "legal": "Mit dem Abo stimmst du unserer Datenschutzerklärung zu. Jederzeit kündbar."
     }
   },
   "collections": {
