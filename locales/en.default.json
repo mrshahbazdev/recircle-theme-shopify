@@ -187,6 +187,22 @@
       "legal": "We’ll only use these details to reply about your wholesale enquiry.",
       "quote_success_title": "Thanks — we’ll be in touch.",
       "quote_success_body": "A wholesale specialist will reply within one business day."
+    },
+    "consent": {
+      "title": "We value your privacy",
+      "body": "We use cookies for essential site features, anonymous analytics, and marketing. Choose what you’re comfortable with.",
+      "learn_more": "Learn more",
+      "accept_all": "Accept all",
+      "reject": "Reject non-essential",
+      "customize": "Customize",
+      "save": "Save preferences",
+      "necessary": "Necessary",
+      "necessary_desc": "Required for the site to function (cart, login, language).",
+      "analytics": "Analytics",
+      "analytics_desc": "Anonymous usage data so we can improve the experience.",
+      "marketing": "Marketing",
+      "marketing_desc": "Personalised ads and remarketing across third-party sites.",
+      "manage": "Manage cookies"
     }
   },
   "collections": {

@@ -189,16 +189,31 @@
       ga('generate_lead', { value: parseFloat(d.value) || 0, currency: cfg.currency, lead_type: 'trade_in' });
     });
 
-    /* Optional consent grant — call window.recircleAnalytics.grantConsent() after a banner accept */
+    /* Consent helpers — driven by snippets/consent-banner.liquid + initConsentBanner() */
     window.recircleAnalytics = window.recircleAnalytics || {};
-    window.recircleAnalytics.grantConsent = function () {
+    window.recircleAnalytics.setConsent = function (state) {
+      var s = state || {};
+      var analytics = s.analytics ? 'granted' : 'denied';
+      var marketing = s.marketing ? 'granted' : 'denied';
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
-          ad_storage: 'granted', ad_user_data: 'granted',
-          ad_personalization: 'granted', analytics_storage: 'granted'
+          analytics_storage: analytics,
+          ad_storage: marketing,
+          ad_user_data: marketing,
+          ad_personalization: marketing
         });
       }
-      log('consent granted');
+      if (typeof window.fbq === 'function') {
+        window.fbq('consent', marketing === 'granted' ? 'grant' : 'revoke');
+      }
+      log('consent set', s);
+    };
+    /* Backward-compatible: grant everything */
+    window.recircleAnalytics.grantConsent = function () {
+      window.recircleAnalytics.setConsent({ analytics: true, marketing: true });
+    };
+    window.recircleAnalytics.revokeConsent = function () {
+      window.recircleAnalytics.setConsent({ analytics: false, marketing: false });
     };
   }
 

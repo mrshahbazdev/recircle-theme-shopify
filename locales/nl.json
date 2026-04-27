@@ -203,6 +203,22 @@
       "legal": "We gebruiken deze gegevens alleen om je groothandelsaanvraag te beantwoorden.",
       "quote_success_title": "Bedankt — we nemen contact op.",
       "quote_success_body": "Een groothandelsspecialist reageert binnen één werkdag."
+    },
+    "consent": {
+      "title": "Privacy vinden we belangrijk",
+      "body": "We gebruiken cookies voor essentiële functies, anonieme statistieken en marketing. Kies waar je je comfortabel bij voelt.",
+      "learn_more": "Meer info",
+      "accept_all": "Alles accepteren",
+      "reject": "Niet-essentiële weigeren",
+      "customize": "Aanpassen",
+      "save": "Voorkeuren opslaan",
+      "necessary": "Noodzakelijk",
+      "necessary_desc": "Vereist voor basisfuncties (winkelwagen, login, taal).",
+      "analytics": "Statistieken",
+      "analytics_desc": "Anonieme gebruiksdata om de ervaring te verbeteren.",
+      "marketing": "Marketing",
+      "marketing_desc": "Gepersonaliseerde advertenties en remarketing op externe sites.",
+      "manage": "Cookies beheren"
     }
   },
   "collections": {

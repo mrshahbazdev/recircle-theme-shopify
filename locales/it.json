@@ -203,6 +203,22 @@
       "legal": "Useremo questi dati solo per rispondere alla tua richiesta ingrosso.",
       "quote_success_title": "Grazie — ti ricontattiamo.",
       "quote_success_body": "Uno specialista ingrosso risponderà entro un giorno lavorativo."
+    },
+    "consent": {
+      "title": "La tua privacy è importante",
+      "body": "Usiamo cookie per funzioni essenziali, statistiche anonime e marketing. Scegli ciò con cui ti senti a tuo agio.",
+      "learn_more": "Scopri di più",
+      "accept_all": "Accetta tutto",
+      "reject": "Rifiuta non essenziali",
+      "customize": "Personalizza",
+      "save": "Salva preferenze",
+      "necessary": "Necessari",
+      "necessary_desc": "Indispensabili al funzionamento (carrello, login, lingua).",
+      "analytics": "Analitici",
+      "analytics_desc": "Dati d’uso anonimi per migliorare l’esperienza.",
+      "marketing": "Marketing",
+      "marketing_desc": "Annunci personalizzati e remarketing su siti di terze parti.",
+      "manage": "Gestisci cookie"
     }
   },
   "collections": {

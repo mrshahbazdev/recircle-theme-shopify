@@ -203,6 +203,22 @@
       "legal": "Usaremos estos datos únicamente para responder a tu consulta mayorista.",
       "quote_success_title": "Gracias — te contactaremos.",
       "quote_success_body": "Un especialista mayorista responderá en un día laborable."
+    },
+    "consent": {
+      "title": "Valoramos tu privacidad",
+      "body": "Usamos cookies para funciones esenciales, analítica anónima y marketing. Elige con qué te sientes cómodo.",
+      "learn_more": "Más información",
+      "accept_all": "Aceptar todo",
+      "reject": "Rechazar no esenciales",
+      "customize": "Personalizar",
+      "save": "Guardar preferencias",
+      "necessary": "Necesarias",
+      "necessary_desc": "Imprescindibles para el funcionamiento (carrito, login, idioma).",
+      "analytics": "Analítica",
+      "analytics_desc": "Datos de uso anónimos para mejorar la experiencia.",
+      "marketing": "Marketing",
+      "marketing_desc": "Anuncios personalizados y remarketing en sitios de terceros.",
+      "manage": "Gestionar cookies"
     }
   },
   "collections": {
