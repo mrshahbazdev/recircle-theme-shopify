@@ -246,6 +246,11 @@
       "heading": "Vous aimerez aussi",
       "add": "Ajouter",
       "sold_out": "Épuisé"
+    },
+    "locale": {
+      "shipping_to": "Livraison vers",
+      "language": "Langue",
+      "choose": "Modifier"
     }
   },
   "collections": {

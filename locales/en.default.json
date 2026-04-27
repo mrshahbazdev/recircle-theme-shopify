@@ -230,6 +230,11 @@
       "heading": "You may also like",
       "add": "Add",
       "sold_out": "Sold out"
+    },
+    "locale": {
+      "shipping_to": "Shipping to",
+      "language": "Language",
+      "choose": "Change"
     }
   },
   "collections": {

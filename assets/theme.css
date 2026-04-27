@@ -4514,3 +4514,76 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
 }
 .section--cart .cart-upsell__item { grid-template-columns: 80px 1fr auto; }
 .section--cart .cart-upsell__media { width: 80px; height: 80px; }
+
+
+/* ---- Phase 27: Locale selector --------------------------------------- */
+.locale-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+}
+.locale-selector--stacked { flex-direction: column; align-items: stretch; }
+.locale-selector__form { display: flex; flex-direction: column; gap: 0.25rem; }
+.locale-selector__label {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.locale-selector__field {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  background: var(--color-bg, #FBF8F3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  min-width: 12rem;
+}
+.locale-selector__flag {
+  font-size: 1.05rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.4rem;
+}
+.locale-selector__select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  flex: 1;
+  cursor: pointer;
+  outline: none;
+}
+.locale-selector__select:focus-visible { box-shadow: none; }
+.locale-selector__field:focus-within {
+  outline: 3px solid var(--color-accent, #B8860B);
+  outline-offset: 2px;
+}
+.locale-selector__chev {
+  position: absolute;
+  right: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+/* Footer placement */
+.site-footer__locale {
+  margin: 1.5rem 0 1rem;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 720px) {
+  .locale-selector { flex-direction: column; align-items: stretch; }
+  .locale-selector__field { min-width: 0; width: 100%; }
+}
