@@ -85,7 +85,11 @@
     <script>document.documentElement.classList.remove('no-js'); document.documentElement.classList.add('js');</script>
   </head>
 
-  <body class="template-{{ template | split: '.' | first }} template-page-{{ page.handle }}">
+  <body class="template-{{ template | split: '.' | first }} template-page-{{ page.handle }}"
+        data-palette="{{ settings.palette_preset | default: 'cream' }}"
+        data-fonts="{{ settings.font_preset | default: 'editorial' }}"
+        data-density="{{ settings.density_preset | default: 'comfortable' }}"
+        data-honour-dark="{% if settings.honour_dark_mode %}true{% else %}false{% endif %}">
     <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
     {% sections 'header-group' %}
