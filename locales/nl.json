@@ -14,7 +14,8 @@
       "products": "Producten",
       "collections": "Categorieën",
       "articles": "Artikelen",
-      "suggestions": "Suggesties"
+      "suggestions": "Suggesties",
+      "no_results_html": "Geen resultaten voor \"{{ terms }}\". Controleer de spelling of probeer een ander woord."
     },
     "cart": {
       "title": "Je winkelwagen",
@@ -32,6 +33,33 @@
       "title": "Pagina niet gevonden",
       "subtext": "De pagina die je zoekt bestaat niet.",
       "link": "Verder winkelen"
+    },
+    "password_page": {
+      "opening_soon": "Binnenkort open",
+      "login_form_heading": "Toegang tot de winkel met wachtwoord:",
+      "login_form_password_label": "Wachtwoord",
+      "login_form_password_placeholder": "Uw wachtwoord",
+      "login_form_submit": "Binnen",
+      "admin_link_html": "Bent u de eigenaar van de winkel? <a href=\"/admin\">Log hier in</a>"
+    },
+    "pagination": {
+      "previous": "Vorige",
+      "next": "Volgende"
+    },
+    "social": {
+      "share_on_facebook": "Delen op Facebook",
+      "share_on_twitter": "Delen op Twitter",
+      "share_on_pinterest": "Pinnen op Pinterest"
+    },
+    "newsletter": {
+      "label": "E-mail",
+      "placeholder": "E-mailadres",
+      "submit": "Abonneren",
+      "confirmation": "Bedankt voor het abonneren"
+    },
+    "localization": {
+      "country_label": "Land/regio",
+      "language_label": "Taal"
     }
   },
   "sections": {
@@ -55,7 +83,17 @@
       "add_to_cart": "In winkelwagen",
       "sold_out": "Uitverkocht",
       "quantity": "Aantal",
-      "description_title": "Omschrijving"
+      "description_title": "Omschrijving",
+      "unavailable": "Niet beschikbaar",
+      "increase_quantity": "Aantal verhogen",
+      "decrease_quantity": "Aantal verlagen",
+      "include_taxes": "Incl. btw.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Verzending</a> wordt berekend bij het afrekenen.",
+      "vendor": "Merk",
+      "sku": "Artikelnummer",
+      "view_full_details": "Bekijk alle details",
+      "save": "Bespaar",
+      "low_stock": "Nog maar {{ count }} op voorraad"
     },
     "refurbished": {
       "condition_title": "Staat",
@@ -69,7 +107,24 @@
       "price_30day_low": "Laagste prijs afgelopen 30 dagen: {{ price }}",
       "msrp_new": "Nieuwprijs (MSRP): {{ price }}",
       "repairability": "Repareerbaarheid",
-      "co2_saved": "{{ value }} {{ unit }}"
+      "co2_saved": "{{ value }} {{ unit }}",
+      "grade_a_desc": "Geen zichtbare gebruikssporen. Cosmetisch onberispelijk.",
+      "grade_b_desc": "Lichte gebruikssporen; geen deuken of diepe krassen.",
+      "grade_c_desc": "Zichtbare gebruikssporen; volledig functioneel.",
+      "grade_d_desc": "Duidelijke gebruikssporen; lagere prijs.",
+      "repair_score_caption": "Gebaseerd op beschikbaarheid van onderdelen, demontage en reparatiedocumentatie.",
+      "dpp_materials": "Materialen",
+      "dpp_origin": "Gemonteerd in",
+      "dpp_recycled": "Gerecycled aandeel",
+      "dpp_weight": "Gewicht",
+      "dpp_battery_health": "Accugezondheid",
+      "dpp_serial": "Serienummer",
+      "dpp_passport_id": "Paspoort-ID",
+      "dpp_view_full": "Volledig paspoort bekijken",
+      "free_repair": "1 gratis reparatie inbegrepen",
+      "before_after_before": "Voor",
+      "before_after_after": "Na",
+      "before_after_heading": "Voor &amp; na"
     }
   },
   "recircle": {
@@ -96,6 +151,72 @@
       "bar_label": "Geselecteerde producten om te vergelijken",
       "empty_body": "Voeg producten toe om specificaties naast elkaar te vergelijken.",
       "empty_cta": "Producten bekijken"
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all": "Alles bekijken",
+      "sort_by": "Sorteer op",
+      "filter": "Filteren",
+      "clear_all": "Alles wissen",
+      "showing_count": "{{ count }} van {{ total }}",
+      "no_products": "Geen producten gevonden voor uw filters."
+    }
+  },
+  "blogs": {
+    "article": {
+      "posted_in": "Geplaatst in",
+      "comments_count": "{{ count }} reacties",
+      "by": "door",
+      "read_more": "Lees meer"
+    },
+    "comments": {
+      "title": "Reactie achterlaten",
+      "name": "Naam",
+      "email": "E-mail",
+      "message": "Bericht",
+      "post": "Reactie plaatsen"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Inloggen",
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "forgot_password": "Wachtwoord vergeten?",
+      "sign_in": "Aanmelden",
+      "create_account": "Account aanmaken"
+    },
+    "register": {
+      "title": "Account aanmaken",
+      "first_name": "Voornaam",
+      "last_name": "Achternaam",
+      "submit": "Aanmaken"
+    },
+    "account": {
+      "title": "Mijn account",
+      "details": "Accountgegevens",
+      "logout": "Uitloggen",
+      "orders_title": "Bestelgeschiedenis",
+      "no_orders": "U heeft nog geen bestellingen"
+    },
+    "orders": {
+      "order_number": "Bestelling {{ number }}",
+      "date": "Datum",
+      "payment_status": "Betalingsstatus",
+      "fulfillment_status": "Verzendstatus",
+      "total": "Totaal"
+    },
+    "addresses": {
+      "title": "Adressen",
+      "add_new": "Nieuw adres toevoegen",
+      "edit": "Bewerken",
+      "delete": "Verwijderen"
+    },
+    "reset_password": {
+      "title": "Wachtwoord opnieuw instellen",
+      "subtext": "We sturen u een e-mail om uw wachtwoord opnieuw in te stellen.",
+      "submit": "Versturen"
     }
   }
 }

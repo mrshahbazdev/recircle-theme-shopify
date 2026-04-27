@@ -140,15 +140,31 @@
       {%- endif -%}
 
       {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
-        <form method="post" action="/localization" id="HeaderCountryForm" accept-charset="UTF-8" enctype="multipart/form-data">
+        <form method="post" action="/localization" id="HeaderCountryForm" accept-charset="UTF-8" enctype="multipart/form-data" class="site-header__loc-form">
           <input type="hidden" name="_method" value="put">
           <input name="return_to" type="hidden" value="{{ request.path }}">
-          <label for="HeaderCountrySelect" class="visually-hidden">Country/region</label>
-          <select id="HeaderCountrySelect" name="country_code" class="site-header__country" onchange="this.form.submit()">
+          <label for="HeaderCountrySelect" class="visually-hidden">{{ 'general.localization.country_label' | t }}</label>
+          <select id="HeaderCountrySelect" name="country_code" class="site-header__country" onchange="this.form.submit()" aria-label="{{ 'general.localization.country_label' | t }}">
             {%- for country in localization.available_countries -%}
               <option value="{{ country.iso_code }}"
                       {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
                 {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+              </option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+
+      {%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+        <form method="post" action="/localization" id="HeaderLanguageForm" accept-charset="UTF-8" enctype="multipart/form-data" class="site-header__loc-form">
+          <input type="hidden" name="_method" value="put">
+          <input name="return_to" type="hidden" value="{{ request.path }}">
+          <label for="HeaderLanguageSelect" class="visually-hidden">{{ 'general.localization.language_label' | t }}</label>
+          <select id="HeaderLanguageSelect" name="locale_code" class="site-header__language" onchange="this.form.submit()" aria-label="{{ 'general.localization.language_label' | t }}">
+            {%- for language in localization.available_languages -%}
+              <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}"
+                      {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                {{ language.endonym_name | capitalize }}
               </option>
             {%- endfor -%}
           </select>
@@ -226,7 +242,8 @@
     { "type": "checkbox", "id": "show_account", "label": "Show account icon", "default": true },
     { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist icon", "default": true },
     { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true },
-    { "type": "checkbox", "id": "show_country_selector", "label": "Show country/currency selector", "default": true }
+    { "type": "checkbox", "id": "show_country_selector", "label": "Show country/currency selector", "default": true },
+    { "type": "checkbox", "id": "show_language_selector", "label": "Show language selector", "default": true }
   ],
   "blocks": [
     {
