@@ -1,0 +1,67 @@
+{%- comment -%}
+  Phase 20 — B2B tiered pricing.
+
+  Reads product metafield `recircle.b2b_tiers` (json):
+    [
+      { "min_qty": 5,  "price": 1349.10 },
+      { "min_qty": 10, "price": 1199.00 },
+      { "min_qty": 25, "price": 1049.00 }
+    ]
+  All prices in major currency units; rendered with `money` filter.
+
+  Visible only when:
+    - settings.b2b_enabled is on, AND
+    - the logged-in customer has any of settings.b2b_tags (comma-separated)
+{%- endcomment -%}
+
+{%- if settings.b2b_enabled and customer -%}
+  {%- assign tags_csv = settings.b2b_tags | default: 'b2b,wholesale' -%}
+  {%- assign tags = tags_csv | split: ',' -%}
+  {%- assign is_b2b = false -%}
+  {%- for t in tags -%}
+    {%- assign tag = t | strip -%}
+    {%- if customer.tags contains tag -%}{%- assign is_b2b = true -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+
+  {%- if is_b2b -%}
+    {%- assign tiers = product.metafields.recircle.b2b_tiers.value -%}
+    {%- if tiers and tiers.size > 0 -%}
+      <section class="b2b-tiers" aria-label="{{ 'recircle.b2b.tiers_label' | t | default: 'Wholesale pricing' }}">
+        <header class="b2b-tiers__head">
+          <span class="eyebrow">{{ 'recircle.b2b.eyebrow' | t | default: 'Wholesale' }}</span>
+          <h3>{{ 'recircle.b2b.tiers_heading' | t | default: 'Volume discount' }}</h3>
+        </header>
+        <table class="b2b-tiers__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ 'recircle.b2b.qty' | t | default: 'Quantity' }}</th>
+              <th scope="col" style="text-align:right">{{ 'recircle.b2b.unit_price' | t | default: 'Unit price' }}</th>
+              <th scope="col" style="text-align:right">{{ 'recircle.b2b.savings' | t | default: 'Savings' }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- assign base_cents = product.selected_or_first_available_variant.price -%}
+            {%- for tier in tiers -%}
+              {%- assign cents = tier.price | times: 100 -%}
+              {%- assign delta = base_cents | minus: cents -%}
+              <tr>
+                <th scope="row">{{ tier.min_qty }}+</th>
+                <td style="text-align:right;font-weight:600">{{ cents | money }}</td>
+                <td style="text-align:right;color:var(--color-text-muted)">
+                  {%- if delta > 0 -%}
+                    −{{ delta | money }}
+                  {%- else -%}
+                    —
+                  {%- endif -%}
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+        <p class="b2b-tiers__note">
+          {{ 'recircle.b2b.note' | t | default: 'Tiered pricing is applied automatically at checkout via your wholesale discount.' }}
+        </p>
+      </section>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}

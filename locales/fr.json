@@ -179,6 +179,30 @@
       "date": "Date",
       "note": "Activité",
       "amount": "Montant"
+    },
+    "b2b": {
+      "eyebrow": "Grossiste",
+      "tiers_label": "Tarifs grossiste",
+      "tiers_heading": "Remise sur volume",
+      "qty": "Quantité",
+      "unit_price": "Prix unitaire",
+      "savings": "Économies",
+      "note": "Les tarifs dégressifs sont appliqués automatiquement au paiement via votre remise grossiste.",
+      "moq_label": "Quantité minimum",
+      "moq_error": "Quantité minimum : {qty}.",
+      "full_name": "Nom complet",
+      "work_email": "E-mail professionnel",
+      "company": "Société",
+      "vat": "TVA / N° fiscal",
+      "country": "Pays",
+      "phone": "Téléphone",
+      "products_interest": "Quels produits vous intéressent ?",
+      "target_qty": "Volume annuel estimé (unités)",
+      "notes": "Autre chose à signaler ?",
+      "submit": "Envoyer la demande",
+      "legal": "Nous utiliserons ces informations uniquement pour répondre à votre demande grossiste.",
+      "quote_success_title": "Merci — nous vous recontactons.",
+      "quote_success_body": "Un spécialiste grossiste répondra sous un jour ouvré."
     }
   },
   "collections": {

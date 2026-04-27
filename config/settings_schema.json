@@ -534,5 +534,32 @@
         "content": "Credits balances are read from the customer metafield recircle.credits_balance (number). History is read from recircle.credits_history (json: [{date,type,amount,note}]). Wire your loyalty app or Shopify Flow to keep these up to date."
       }
     ]
+  },
+  {
+    "name": "B2B / wholesale",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "b2b_enabled",
+        "label": "Enable B2B features",
+        "info": "When on, B2B-tagged customers see tiered pricing on PDPs and tag-locked sections unlock for them.",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "b2b_tags",
+        "label": "B2B customer tags (comma-separated)",
+        "info": "Any one of these tags grants B2B access. Add tags to customers in Shopify Admin → Customers.",
+        "default": "b2b,wholesale"
+      },
+      {
+        "type": "header",
+        "content": "Per-product overrides"
+      },
+      {
+        "type": "paragraph",
+        "content": "Tiered pricing → product metafield recircle.b2b_tiers (json: [{min_qty, price}, …]). Minimum order quantity → product metafield recircle.moq (number). Documented in docs/B2B-WHOLESALE.md."
+      }
+    ]
   }
 ]

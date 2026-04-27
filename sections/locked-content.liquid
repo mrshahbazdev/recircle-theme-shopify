@@ -1,0 +1,62 @@
+{%- comment -%}
+  Phase 20 — Tag-locked content.
+
+  Render any rich block of content only when the logged-in customer has
+  one of the configured tags. Otherwise render a sign-in / request-access
+  card. Drop into any page / collection / template via the theme editor.
+{%- endcomment -%}
+
+{%- assign tags_csv = section.settings.required_tags | default: 'b2b,wholesale' -%}
+{%- assign tags = tags_csv | split: ',' -%}
+{%- assign granted = false -%}
+{%- if customer -%}
+  {%- for t in tags -%}
+    {%- assign tag = t | strip -%}
+    {%- if customer.tags contains tag -%}{%- assign granted = true -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+<section class="section locked-content {% if granted %}locked-content--granted{% else %}locked-content--gated{% endif %}">
+  <div class="page-width">
+    {%- if granted -%}
+      <div class="locked-content__body rte">
+        {{ section.settings.unlocked_html }}
+      </div>
+    {%- else -%}
+      <div class="locked-content__gate">
+        <div class="locked-content__icon" aria-hidden="true">
+          <svg width="32" height="32"><use href="#icon-shield"/></svg>
+        </div>
+        <p class="eyebrow">{{ section.settings.eyebrow | default: 'Wholesale only' }}</p>
+        <h2>{{ section.settings.gate_heading | default: 'This area is for approved wholesale partners.' }}</h2>
+        <p>{{ section.settings.gate_body | default: 'Sign in with your wholesale account or request access to see pricing and place an order.' }}</p>
+        <div class="locked-content__cta">
+          <a class="btn btn--primary" href="{{ routes.account_login_url }}">{{ 'customer.login.sign_in' | t | default: 'Sign in' }}</a>
+          {%- if section.settings.request_url != blank -%}
+            <a class="btn btn--outline" href="{{ section.settings.request_url }}">{{ section.settings.request_label | default: 'Request access' }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tag-locked content",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "required_tags", "label": "Required customer tags (comma-separated)", "default": "b2b,wholesale" },
+    { "type": "richtext", "id": "unlocked_html", "label": "Unlocked content (rich text)", "default": "<h2>Welcome back.</h2><p>Your tier-2 wholesale catalog is below.</p>" },
+    { "type": "header", "content": "Gate (shown when access is denied)" },
+    { "type": "text", "id": "eyebrow", "label": "Gate eyebrow", "default": "Wholesale only" },
+    { "type": "text", "id": "gate_heading", "label": "Gate heading", "default": "This area is for approved wholesale partners." },
+    { "type": "textarea", "id": "gate_body", "label": "Gate body", "default": "Sign in with your wholesale account or request access to see pricing and place an order." },
+    { "type": "url", "id": "request_url", "label": "Request access URL" },
+    { "type": "text", "id": "request_label", "label": "Request access button label", "default": "Request access" }
+  ],
+  "presets": [
+    { "name": "Tag-locked content", "category": "Wholesale" }
+  ]
+}
+{% endschema %}
