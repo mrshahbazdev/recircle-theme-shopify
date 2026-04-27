@@ -77,10 +77,14 @@
       </div>
     {%- endif -%}
 
+    {%- assign has_tracking = false -%}
+    {%- if settings.ga4_id != blank or settings.meta_pixel_id != blank -%}
+      {%- assign has_tracking = true -%}
+    {%- endif -%}
     <div class="site-footer__bottom">
       <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Refurbished with care. </p>
       <p>
-        {%- if settings.consent_banner_enabled and (settings.ga4_id != blank or settings.meta_pixel_id != blank) -%}
+        {%- if settings.consent_banner_enabled and has_tracking -%}
           <button type="button" class="site-footer__consent-link" data-consent-open>
             {{ 'recircle.consent.manage' | t }}
           </button>

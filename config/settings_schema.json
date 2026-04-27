@@ -447,8 +447,7 @@
         "type": "text",
         "id": "ga4_id",
         "label": "GA4 Measurement ID",
-        "info": "e.g. G-XXXXXXXXXX. Leave blank to disable.",
-        "default": ""
+        "info": "e.g. G-XXXXXXXXXX. Leave blank to disable."
       },
       {
         "type": "header",
@@ -458,8 +457,7 @@
         "type": "text",
         "id": "meta_pixel_id",
         "label": "Meta Pixel ID",
-        "info": "Numeric pixel ID from Meta Events Manager. Leave blank to disable.",
-        "default": ""
+        "info": "Numeric pixel ID from Meta Events Manager. Leave blank to disable."
       },
       {
         "type": "header",
