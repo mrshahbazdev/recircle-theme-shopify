@@ -128,3 +128,14 @@ Product images in `products.csv` reference `placehold.co` URLs so imports work o
 - **Token 401** — regenerate in Settings → Apps; make sure the app is **installed** after scope changes.
 - **CSV import stalls on images** — placehold.co occasionally rate-limits; wait and re-import, or drop the `Image Src` column and upload images manually.
 - **Money metafield column** — `recircle.msrp_new` is intentionally absent from the CSV (Shopify CSV money encoding is cumbersome). Fill it manually in admin, or extend `seed.mjs` to set it via `productUpdate`.
+
+---
+
+## Phase 29 ops scripts
+
+Two helpers for bringing a fresh store up to v1.x feature parity:
+
+- `node seed/seed-ops.mjs --limit=6` — ensures Phase 19/20/28 metafield defs exist (`member_price`, `b2b_tiers`, `moq`, `size_chart_html`) and seeds sample values on the first N products so member pricing + B2B tier table + MOQ guard light up immediately.
+- `node seed/publish-locales.mjs` — enables + publishes `de, fr, it, es, nl` so the language switcher works on the storefront.
+
+End-to-end deploy checklist: [`../docs/OPS-CHECKLIST.md`](../docs/OPS-CHECKLIST.md).

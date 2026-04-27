@@ -6,7 +6,12 @@
     "description": "Overall condition: A (like new), B (excellent), C (very good), D (good/project).",
     "type": "single_line_text_field",
     "ownerType": "PRODUCT",
-    "validations": [{ "name": "choices", "value": "[\"A\",\"B\",\"C\",\"D\"]" }]
+    "validations": [
+      {
+        "name": "choices",
+        "value": "[\"A\",\"B\",\"C\",\"D\"]"
+      }
+    ]
   },
   {
     "namespace": "recircle",
@@ -40,8 +45,14 @@
     "type": "number_integer",
     "ownerType": "PRODUCT",
     "validations": [
-      { "name": "min", "value": "0" },
-      { "name": "max", "value": "10" }
+      {
+        "name": "min",
+        "value": "0"
+      },
+      {
+        "name": "max",
+        "value": "10"
+      }
     ]
   },
   {
@@ -68,8 +79,14 @@
     "type": "number_integer",
     "ownerType": "PRODUCT",
     "validations": [
-      { "name": "min", "value": "0" },
-      { "name": "max", "value": "100" }
+      {
+        "name": "min",
+        "value": "0"
+      },
+      {
+        "name": "max",
+        "value": "100"
+      }
     ]
   },
   {
@@ -127,7 +144,12 @@
     "description": "Photo before refurbishment (before/after slider).",
     "type": "file_reference",
     "ownerType": "PRODUCT",
-    "validations": [{ "name": "file_type_options", "value": "[\"Image\"]" }]
+    "validations": [
+      {
+        "name": "file_type_options",
+        "value": "[\"Image\"]"
+      }
+    ]
   },
   {
     "namespace": "recircle",
@@ -136,7 +158,12 @@
     "description": "Photo after refurbishment (before/after slider).",
     "type": "file_reference",
     "ownerType": "PRODUCT",
-    "validations": [{ "name": "file_type_options", "value": "[\"Image\"]" }]
+    "validations": [
+      {
+        "name": "file_type_options",
+        "value": "[\"Image\"]"
+      }
+    ]
   },
   {
     "namespace": "recircle",
@@ -144,6 +171,38 @@
     "name": "Serial hash",
     "description": "SHA-256 of the device serial (traceability).",
     "type": "single_line_text_field",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "member_price",
+    "name": "Member price",
+    "description": "Discounted price for tag-locked customers (loyalty / member tier).",
+    "type": "money",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "b2b_tiers",
+    "name": "B2B tiered pricing",
+    "description": "JSON array of {min_qty, price_pct_off} tiers. e.g. [{\"min_qty\":5,\"price_pct_off\":10}].",
+    "type": "json",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "moq",
+    "name": "Minimum order quantity",
+    "description": "B2B minimum order quantity per variant.",
+    "type": "number_integer",
+    "ownerType": "PRODUCT"
+  },
+  {
+    "namespace": "recircle",
+    "key": "size_chart_html",
+    "name": "Size chart HTML",
+    "description": "Optional per-product size chart override (otherwise pulls from size-guide page).",
+    "type": "multi_line_text_field",
     "ownerType": "PRODUCT"
   }
 ]
