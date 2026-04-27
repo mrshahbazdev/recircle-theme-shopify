@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_eyebrow": true,
+        "eyebrow": "About ReCircle"
+      }
+    },
+    "process": {
+      "type": "story-timeline",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "eyebrow": "Day 1", "title": "Source", "text": "<p>We collect pre-owned devices from corporate trade-ins, insurance returns and individuals — never grey-market liquidators.</p>" } },
+        "s2": { "type": "step", "settings": { "eyebrow": "Day 2", "title": "Inspect", "text": "<p>Every item runs a 50-point diagnostic by a certified technician. Functionality, battery health, screen, ports, sensors — all logged.</p>" } },
+        "s3": { "type": "step", "settings": { "eyebrow": "Day 3", "title": "Repair", "text": "<p>Genuine parts only. Batteries replaced when health falls below 85%. Components swapped, not glued. Data wiped to NIST 800-88 standard.</p>" } },
+        "s4": { "type": "step", "settings": { "eyebrow": "Day 4", "title": "Grade", "text": "<p>An independent technician assigns the final grade (A/B/C/D) using real photographs and a written condition note.</p>" } },
+        "s5": { "type": "step", "settings": { "eyebrow": "Day 5", "title": "Ship", "text": "<p>Packaged in 100% recycled materials, shipped carbon-neutral, backed by a 14-day return window and 12-month warranty.</p>" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": {
+        "eyebrow": "How we work",
+        "heading": "Five careful days, every device"
+      }
+    },
+    "stats": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "50,000+", "label": "Devices refurbished" } },
+        "s2": { "type": "stat", "settings": { "value": "482 t", "label": "CO₂e avoided" } },
+        "s3": { "type": "stat", "settings": { "value": "2.1 M kg", "label": "E-waste diverted" } },
+        "s4": { "type": "stat", "settings": { "value": "99.2%", "label": "Reliability rate" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Our impact",
+        "heading": "Numbers that matter"
+      }
+    },
+    "testimonials": {
+      "type": "testimonial-carousel",
+      "blocks": {
+        "q1": { "type": "quote", "settings": { "quote": "Looks brand new. Saved £400 vs buying from Apple — and arrived in 48 hours.", "name": "Sam C.", "role": "Verified buyer · London", "rating": 5 } },
+        "q2": { "type": "quote", "settings": { "quote": "Genuinely couldn't tell it was refurbished. The grading is honest, the packaging is beautiful.", "name": "Mira P.", "role": "Verified buyer · Berlin", "rating": 5 } },
+        "q3": { "type": "quote", "settings": { "quote": "Fourth device I've bought from ReCircle. Zero issues, every time. Cheaper and better for the planet.", "name": "Dan O.", "role": "Repeat customer · Amsterdam", "rating": 5 } }
+      },
+      "block_order": ["q1", "q2", "q3"],
+      "settings": {
+        "eyebrow": "Customer love",
+        "heading": "Trusted by 18,000+ buyers"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "p1": { "type": "perk", "settings": { "text": "Quarterly impact report" } },
+        "p2": { "type": "perk", "settings": { "text": "Subscriber-only restocks" } },
+        "p3": { "type": "perk", "settings": { "text": "10% off your first order" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Stay close",
+        "heading": "Join the journey",
+        "body": "<p>We'll send you our quarterly impact report and the occasional restock alert. Nothing else.</p>"
+      }
+    }
+  },
+  "order": ["main", "process", "stats", "testimonials", "newsletter"]
+}

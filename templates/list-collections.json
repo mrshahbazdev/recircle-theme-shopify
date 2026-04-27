@@ -3,10 +3,26 @@
     "main": {
       "type": "main-list-collections",
       "settings": {
-        "heading": "All collections",
+        "eyebrow": "Shop by category",
+        "heading": "Every collection in the workshop",
+        "subheading": "<p>Explore refurbished electronics, fashion and furniture — all with transparent grading and 12-month warranties.</p>",
         "sort": "alphabetical"
+      }
+    },
+    "stats": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "50,000+", "label": "Devices refurbished" } },
+        "s2": { "type": "stat", "settings": { "value": "482 t", "label": "CO₂e avoided" } },
+        "s3": { "type": "stat", "settings": { "value": "2.1 M kg", "label": "E-waste diverted" } },
+        "s4": { "type": "stat", "settings": { "value": "99.2%", "label": "Reliability rate" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Across every collection",
+        "heading": "Numbers that move the needle"
       }
     }
   },
-  "order": ["main"]
+  "order": ["main", "stats"]
 }

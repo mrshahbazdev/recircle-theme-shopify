@@ -1,4 +1,32 @@
 {
-  "sections": { "main": { "type": "main-cart", "settings": {} } },
-  "order": ["main"]
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "reassurance": {
+      "type": "sustainability-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "12m", "label": "Warranty included" } },
+        "s2": { "type": "stat", "settings": { "value": "14d", "label": "EU returns" } },
+        "s3": { "type": "stat", "settings": { "value": "100%", "label": "Data wiped" } },
+        "s4": { "type": "stat", "settings": { "value": "Free", "label": "Carbon-neutral shipping" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Why shop ReCircle",
+        "heading": "Every order, the same promise"
+      }
+    },
+    "you-may-like": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Pair it with",
+        "heading": "Customers who bought these also added",
+        "product_limit": 4,
+        "show_vendor": true
+      }
+    }
+  },
+  "order": ["main", "reassurance", "you-may-like"]
 }

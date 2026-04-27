@@ -1,4 +1,34 @@
 {
-  "sections": { "main": { "type": "main-article", "settings": {} } },
-  "order": ["main"]
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "eyebrow": "ReCircle journal"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "p1": { "type": "perk", "settings": { "text": "Monthly stories from the workshop" } },
+        "p2": { "type": "perk", "settings": { "text": "Sustainability data, no greenwashing" } },
+        "p3": { "type": "perk", "settings": { "text": "Subscriber-only deals" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Keep reading",
+        "heading": "Get the journal in your inbox",
+        "body": "<p>One thoughtful email per month. Unsubscribe any time.</p>"
+      }
+    },
+    "popular": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Featured products",
+        "heading": "Mentioned in our journal",
+        "product_limit": 4,
+        "show_vendor": true
+      }
+    }
+  },
+  "order": ["main", "newsletter", "popular"]
 }

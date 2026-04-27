@@ -2,8 +2,40 @@
   "sections": {
     "main": {
       "type": "main-collection-product-grid",
-      "settings": { "show_condition_filter": true, "products_per_page": 24 }
+      "settings": {
+        "show_condition_filter": true,
+        "products_per_page": 24
+      }
+    },
+    "grades": {
+      "type": "condition-grade-explainer",
+      "blocks": {
+        "a": { "type": "grade", "settings": { "grade": "a", "title": "A · Like new", "description": "No visible wear. Cosmetically pristine; fully tested; 100% functional." } },
+        "b": { "type": "grade", "settings": { "grade": "b", "title": "B · Very good", "description": "Light signs of use only visible on close inspection." } },
+        "c": { "type": "grade", "settings": { "grade": "c", "title": "C · Good", "description": "Visible scratches or marks, all features fully working." } },
+        "d": { "type": "grade", "settings": { "grade": "d", "title": "D · Fair", "description": "Noticeable cosmetic wear. Best-price tier, tested and warrantied." } }
+      },
+      "block_order": ["a", "b", "c", "d"],
+      "settings": {
+        "eyebrow": "How we grade",
+        "heading": "Pick the condition that fits your budget",
+        "text": "Every device is inspected by certified technicians. The price matches the condition — no surprises, no markdowns dressed up as deals."
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "p1": { "type": "perk", "settings": { "text": "Early access to new arrivals" } },
+        "p2": { "type": "perk", "settings": { "text": "10% off your first order" } },
+        "p3": { "type": "perk", "settings": { "text": "Restock alerts for your wishlist" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Stay in the loop",
+        "heading": "New refurbished drops, every Friday",
+        "body": "<p>Join 18,000+ shoppers who get first dibs on the best-graded stock.</p>"
+      }
     }
   },
-  "order": ["main"]
+  "order": ["main", "grades", "newsletter"]
 }
