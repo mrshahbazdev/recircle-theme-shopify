@@ -1,0 +1,68 @@
+{%- comment -%}
+  Phase 19 — Loyalty / ReCircle Credits ledger.
+
+  Reads two customer metafields (namespace `recircle`):
+    - credits_balance  (number)        current spendable balance in store currency
+    - credits_history  (json)          array of { date, type, amount, note }
+
+  Renders a card on /account showing the balance, a "How credits work"
+  blurb, and a small recent-activity table (last 5 entries).
+
+  Merchants populate these metafields via:
+    - Shopify Admin → Customers → metafields editor
+    - Shopify Flow (e.g. on order paid → +5% credits)
+    - Public Customer Account API / Admin API integrations
+{%- endcomment -%}
+
+{%- if customer -%}
+  {%- assign balance = customer.metafields.recircle.credits_balance.value -%}
+  {%- assign history = customer.metafields.recircle.credits_history.value -%}
+  {%- unless balance -%}{%- assign balance = 0 -%}{%- endunless -%}
+  {%- assign balance_money = balance | times: 100 | money -%}
+
+  <section class="loyalty-credits" data-loyalty-credits>
+    <div class="loyalty-credits__head">
+      <span class="eyebrow">{{ 'recircle.loyalty.eyebrow' | t | default: 'ReCircle Credits' }}</span>
+      <h2 class="loyalty-credits__balance">{{ balance_money }}</h2>
+      <p class="loyalty-credits__caption">
+        {{ 'recircle.loyalty.balance_caption' | t | default: 'Apply credits at checkout — 1 credit = 1 unit of store currency.' }}
+      </p>
+    </div>
+
+    <div class="loyalty-credits__how">
+      <h3>{{ 'recircle.loyalty.how_heading' | t | default: 'How credits work' }}</h3>
+      <ul>
+        <li>{{ 'recircle.loyalty.how_purchase' | t | default: 'Earn 5% of every order back as credits.' }}</li>
+        <li>{{ 'recircle.loyalty.how_tradein' | t | default: 'Trade-in offers are paid in credits at the higher rate.' }}</li>
+        <li>{{ 'recircle.loyalty.how_referral' | t | default: 'Refer a friend — both get credits when they buy.' }}</li>
+      </ul>
+    </div>
+
+    {%- if history and history.size > 0 -%}
+      <div class="loyalty-credits__history">
+        <h3>{{ 'recircle.loyalty.recent' | t | default: 'Recent activity' }}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">{{ 'recircle.loyalty.date' | t | default: 'Date' }}</th>
+              <th scope="col">{{ 'recircle.loyalty.note' | t | default: 'Activity' }}</th>
+              <th scope="col" style="text-align:right">{{ 'recircle.loyalty.amount' | t | default: 'Amount' }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for entry in history limit: 5 -%}
+              {%- assign cents = entry.amount | times: 100 -%}
+              <tr>
+                <td><time datetime="{{ entry.date }}">{{ entry.date | date: '%b %-d, %Y' }}</time></td>
+                <td>{{ entry.note | default: entry.type }}</td>
+                <td style="text-align:right" class="{% if entry.amount >= 0 %}loyalty-credits__pos{% else %}loyalty-credits__neg{% endif %}">
+                  {%- if entry.amount >= 0 -%}+{%- endif -%}{{ cents | money }}
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+  </section>
+{%- endif -%}

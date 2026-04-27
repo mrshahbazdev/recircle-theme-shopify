@@ -10,6 +10,7 @@
     initProductGallery();
     initBeforeAfter();
     initQuantityInputs();
+    initSubscriptionPicker();
     initImpactCounter();
     initTradeInCalculator();
     initAnnouncementClose();
@@ -112,6 +113,24 @@
           const min = parseInt(input.min, 10) || 1;
           input.value = Math.max(min, current + step);
           input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+    });
+  }
+
+  /* -------- Subscription picker ------------------------------------------- */
+  function initSubscriptionPicker() {
+    document.querySelectorAll('[data-subscription-picker]').forEach((picker) => {
+      const hidden = picker.querySelector('[data-selling-plan-input]');
+      if (!hidden) return;
+      picker.querySelectorAll('[data-selling-plan-radio]').forEach((radio) => {
+        radio.addEventListener('change', () => {
+          if (!radio.checked) return;
+          hidden.value = radio.value || '';
+          picker.dispatchEvent(new CustomEvent('recircle:selling-plan:change', {
+            bubbles: true,
+            detail: { sellingPlan: radio.value || null },
+          }));
         });
       });
     });

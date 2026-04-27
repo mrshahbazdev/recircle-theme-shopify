@@ -1,0 +1,66 @@
+{%- comment -%}
+  Phase 19 — Subscription / selling-plan picker for the PDP buy form.
+
+  Renders nothing if the product has no selling_plan_groups attached.
+  Otherwise emits a fieldset with one radio per option:
+    [ ] One-time purchase                    € 1,499.00
+    [x] Subscribe & save 10% — every 30 days € 1,349.10
+    [ ] Repair-care plan — every 12 months   € 49.00
+
+  When a selling-plan radio is selected, the form's hidden
+  `selling_plan` input is updated so `/cart/add.js` attaches the plan
+  to the line item. Empty `selling_plan` value means "one-time".
+
+  Required: a `<input type="hidden" name="selling_plan" value="">` is
+  injected on render — paste this snippet INSIDE the {% form 'product' %}
+  block so the input becomes part of the cart-add payload.
+{%- endcomment -%}
+
+{%- if product.selling_plan_groups.size > 0 -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign allocations = current_variant.selling_plan_allocations -%}
+
+  <fieldset class="subscription-options" data-subscription-picker>
+    <legend class="subscription-options__legend">
+      {{ 'products.subscription.heading' | t | default: 'Purchase options' }}
+    </legend>
+
+    <input type="hidden" name="selling_plan" value="" data-selling-plan-input>
+
+    <label class="subscription-options__row">
+      <input type="radio" name="recircle_selling_plan" value="" checked data-selling-plan-radio>
+      <span class="subscription-options__label">
+        <span class="subscription-options__name">{{ 'products.subscription.one_time' | t | default: 'One-time purchase' }}</span>
+        <span class="subscription-options__price">{{ current_variant.price | money }}</span>
+      </span>
+    </label>
+
+    {%- for group in product.selling_plan_groups -%}
+      {%- for plan in group.selling_plans -%}
+        {%- assign alloc = nil -%}
+        {%- for a in allocations -%}
+          {%- if a.selling_plan.id == plan.id -%}{%- assign alloc = a -%}{%- break -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if alloc -%}
+          <label class="subscription-options__row">
+            <input type="radio" name="recircle_selling_plan" value="{{ plan.id }}" data-selling-plan-radio>
+            <span class="subscription-options__label">
+              <span class="subscription-options__name">{{ plan.name }}</span>
+              <span class="subscription-options__price">
+                <span class="subscription-options__compare">{{ current_variant.price | money }}</span>
+                <strong>{{ alloc.price | money }}</strong>
+              </span>
+            </span>
+            {%- if plan.description != blank -%}
+              <span class="subscription-options__desc">{{ plan.description }}</span>
+            {%- endif -%}
+          </label>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+
+    <p class="subscription-options__note">
+      {{ 'products.subscription.note' | t | default: 'Cancel or pause any time from your account.' }}
+    </p>
+  </fieldset>
+{%- endif -%}

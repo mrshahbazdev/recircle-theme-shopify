@@ -480,5 +480,59 @@
         "default": false
       }
     ]
+  },
+  {
+    "name": "Subscription & loyalty",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Subscriptions"
+      },
+      {
+        "type": "paragraph",
+        "content": "Connect a subscription app (Shopify Subscriptions, Recharge, Skio, Loop, etc.) and attach a Selling Plan group to your products. The PDP picker auto-renders when at least one selling-plan allocation is present."
+      },
+      {
+        "type": "header",
+        "content": "Member pricing"
+      },
+      {
+        "type": "checkbox",
+        "id": "member_pricing_enabled",
+        "label": "Enable member pricing",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "member_tag",
+        "label": "Member customer tag",
+        "info": "Customers tagged with this value see member pricing.",
+        "default": "member"
+      },
+      {
+        "type": "range",
+        "id": "member_discount_percent",
+        "label": "Default member discount %",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "default": 10,
+        "info": "Per-product overrides via product metafield recircle.member_price (number) take precedence."
+      },
+      {
+        "type": "checkbox",
+        "id": "member_pricing_teaser",
+        "label": "Show teaser pill to non-members on PDP",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "ReCircle Credits (loyalty)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Credits balances are read from the customer metafield recircle.credits_balance (number). History is read from recircle.credits_history (json: [{date,type,amount,note}]). Wire your loyalty app or Shopify Flow to keep these up to date."
+      }
+    ]
   }
 ]

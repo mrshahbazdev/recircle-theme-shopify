@@ -3850,3 +3850,165 @@ section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bot
   margin-right: 0.45rem;
   font-weight: 700;
 }
+
+
+/* ---- Phase 19: Subscription / Member pricing / Loyalty credits ---------- */
+.subscription-options {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.85rem 0.5rem;
+  margin-bottom: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--color-bg-subtle);
+}
+.subscription-options__legend {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 0;
+  margin-bottom: 0.15rem;
+}
+.subscription-options__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.subscription-options__row:hover { border-color: var(--color-text); }
+.subscription-options__row:has(input:checked) {
+  border-color: var(--color-text);
+  box-shadow: inset 0 0 0 1px var(--color-text);
+}
+.subscription-options__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.subscription-options__name { font-weight: 600; }
+.subscription-options__price strong { font-weight: 700; }
+.subscription-options__compare {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+  font-size: 0.85em;
+  margin-right: 0.3rem;
+}
+.subscription-options__desc {
+  grid-column: 2;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+.subscription-options__note {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0.25rem 0 0;
+}
+
+.member-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin-bottom: 0.7rem;
+}
+.member-price--active {
+  background: color-mix(in srgb, var(--color-accent, #C7873B) 14%, transparent);
+  color: var(--color-text);
+}
+.member-price--active .member-price__value { font-weight: 700; }
+.member-price--active .member-price__compare {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+  font-size: 0.85em;
+}
+.member-price--teaser {
+  background: var(--color-bg-subtle);
+  border: 1px dashed var(--color-border);
+  color: var(--color-text);
+  text-decoration: none;
+}
+.member-price__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.member-price__login {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.account-main { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+.loyalty-credits {
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: grid;
+  gap: 1.25rem;
+}
+.loyalty-credits__balance {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: 2.4rem;
+  margin: 0.15rem 0 0.25rem;
+  letter-spacing: -0.01em;
+}
+.loyalty-credits__caption { color: var(--color-text-muted); margin: 0; }
+.loyalty-credits__how h3,
+.loyalty-credits__history h3 {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 0.55rem;
+  color: var(--color-text-muted);
+}
+.loyalty-credits__how ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+}
+.loyalty-credits__how li::before {
+  content: "→";
+  color: var(--color-text-muted);
+  margin-right: 0.45rem;
+}
+.loyalty-credits__history table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.loyalty-credits__history th,
+.loyalty-credits__history td {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.55rem 0.4rem;
+  text-align: left;
+}
+.loyalty-credits__history th {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+.loyalty-credits__pos { color: #2F6E3F; font-weight: 600; }
+.loyalty-credits__neg { color: #8B2F2F; font-weight: 600; }
+

@@ -21,9 +21,17 @@
           <li><a href="{{ routes.account_url }}">Order history</a></li>
           <li><a href="{{ routes.account_addresses_url }}">{{ 'customer.addresses.title' | t }}</a></li>
           <li><a href="/pages/wishlist">Wishlist</a></li>
+          {%- if section.settings.show_credits -%}<li><a href="#recircle-credits">Credits</a></li>{%- endif -%}
           <li><a href="{{ routes.account_logout_url }}">{{ 'customer.account.logout' | t }}</a></li>
         </ul>
       </aside>
+
+      <div class="account-main">
+        {%- if section.settings.show_credits -%}
+          <div id="recircle-credits">
+            {% render 'loyalty-credits' %}
+          </div>
+        {%- endif -%}
 
       <div class="account-orders-card">
         <h2>{{ 'customer.account.orders_title' | t }}</h2>
@@ -60,6 +68,7 @@
           </div>
         {%- endif -%}
       </div>
+      </div>
     </div>
   </div>
 </section>
@@ -69,7 +78,8 @@
   "name": "Account",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your account" }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your account" },
+    { "type": "checkbox", "id": "show_credits", "label": "Show ReCircle Credits panel", "default": true }
   ]
 }
 {% endschema %}

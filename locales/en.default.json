@@ -115,6 +115,16 @@
       "before_after_before": "Before",
       "before_after_after": "After",
       "before_after_heading": "Before &amp; after refurbishment"
+    },
+    "subscription": {
+      "heading": "Purchase options",
+      "one_time": "One-time purchase",
+      "note": "Cancel or pause any time from your account."
+    },
+    "member": {
+      "you_save": "Member price",
+      "teaser": "Members save",
+      "sign_in": "Sign in →"
     }
   },
   "recircle": {
@@ -141,6 +151,18 @@
       "bar_label": "Selected products to compare",
       "empty_body": "Add products from any collection or product page to compare specs side-by-side.",
       "empty_cta": "Browse products"
+    },
+    "loyalty": {
+      "eyebrow": "ReCircle Credits",
+      "balance_caption": "Apply credits at checkout — 1 credit = 1 unit of store currency.",
+      "how_heading": "How credits work",
+      "how_purchase": "Earn 5% of every order back as credits.",
+      "how_tradein": "Trade-in offers are paid in credits at the higher rate.",
+      "how_referral": "Refer a friend — both get credits when they buy.",
+      "recent": "Recent activity",
+      "date": "Date",
+      "note": "Activity",
+      "amount": "Amount"
     }
   },
   "collections": {

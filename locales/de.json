@@ -131,6 +131,16 @@
       "before_after_before": "Vorher",
       "before_after_after": "Nachher",
       "before_after_heading": "Vorher &amp; nachher"
+    },
+    "subscription": {
+      "heading": "Kaufoptionen",
+      "one_time": "Einmalkauf",
+      "note": "Jederzeit im Konto pausieren oder kündigen."
+    },
+    "member": {
+      "you_save": "Mitgliederpreis",
+      "teaser": "Mitglieder sparen",
+      "sign_in": "Anmelden →"
     }
   },
   "recircle": {
@@ -157,6 +167,18 @@
       "bar_label": "Ausgewählte Produkte zum Vergleich",
       "empty_body": "Fügen Sie Produkte hinzu, um Spezifikationen Seite an Seite zu vergleichen.",
       "empty_cta": "Produkte ansehen"
+    },
+    "loyalty": {
+      "eyebrow": "ReCircle Guthaben",
+      "balance_caption": "An der Kasse einlösen — 1 Punkt = 1 Einheit der Shopwährung.",
+      "how_heading": "So funktioniert das Guthaben",
+      "how_purchase": "Erhalte 5 % jeder Bestellung als Guthaben zurück.",
+      "how_tradein": "Inzahlungnahmen werden in Guthaben zum höheren Satz ausgezahlt.",
+      "how_referral": "Empfehle einen Freund — beide erhalten Guthaben beim Kauf.",
+      "recent": "Letzte Aktivität",
+      "date": "Datum",
+      "note": "Aktivität",
+      "amount": "Betrag"
     }
   },
   "collections": {

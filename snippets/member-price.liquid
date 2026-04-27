@@ -1,0 +1,45 @@
+{%- comment -%}
+  Phase 19 — Member pricing badge.
+
+  Reads:
+    - settings.member_pricing_enabled  (checkbox)
+    - settings.member_tag              (text — default "member")
+    - settings.member_discount_percent (range 0–50, default 10)
+    - product.metafields.recircle.member_price.value (number, optional override)
+
+  Behaviour:
+    - If logged-in customer has the configured tag, show member price + badge
+    - Otherwise show a teaser pill linking to /account/login when teaser_enabled
+    - If a per-product override metafield is set, use that exact price
+    - Otherwise apply the percent discount to current variant price
+{%- endcomment -%}
+
+{%- if settings.member_pricing_enabled -%}
+  {%- assign member_tag = settings.member_tag | default: 'member' -%}
+  {%- assign discount = settings.member_discount_percent | default: 10 -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign override = product.metafields.recircle.member_price.value -%}
+
+  {%- if override and override > 0 -%}
+    {%- assign member_price = override | times: 100 -%}
+  {%- else -%}
+    {%- assign factor = 100 | minus: discount | divided_by: 100.0 -%}
+    {%- assign member_price = current_variant.price | times: factor | round -%}
+  {%- endif -%}
+
+  {%- if customer and customer.tags contains member_tag -%}
+    <div class="member-price member-price--active" data-member-price>
+      <span class="member-price__badge">
+        <svg width="14" height="14" aria-hidden="true"><use href="#icon-grade"/></svg>
+        {{ 'products.member.you_save' | t | default: 'Member price' }}
+      </span>
+      <span class="member-price__value">{{ member_price | money }}</span>
+      <span class="member-price__compare">{{ current_variant.price | money }}</span>
+    </div>
+  {%- elsif settings.member_pricing_teaser -%}
+    <a class="member-price member-price--teaser" href="{{ routes.account_login_url }}" data-member-price-teaser>
+      <span class="member-price__badge">{{ 'products.member.teaser' | t | default: 'Members save' }} {{ discount }}%</span>
+      <span class="member-price__login">{{ 'products.member.sign_in' | t | default: 'Sign in →' }}</span>
+    </a>
+  {%- endif -%}
+{%- endif -%}
