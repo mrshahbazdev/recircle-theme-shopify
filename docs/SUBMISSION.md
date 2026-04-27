@@ -2,6 +2,8 @@
 
 Tracks ReCircle's readiness for https://themes.shopify.com. Use this as a pre-flight before opening a submission at **Partner Dashboard → Themes → Create theme listing**.
 
+**Automated subset:** run `bash scripts/preflight.sh` from the repo root. It verifies JSON validity, locale completeness, required templates, settings-group coverage, asset-size budgets, no deprecated `{% include %}`, and no unexpected remote scripts. Exit code 0 means the automated subset is green.
+
 ## 1. Requirements mapping
 
 Shopify's requirements live at https://shopify.dev/docs/themes/store/requirements. Status column: ✅ done · 🟡 in progress · ⬜ deferred.
@@ -38,8 +40,8 @@ Shopify's requirements live at https://shopify.dev/docs/themes/store/requirement
 |---|---|---|
 | Performance ≥ 60 (required), 90+ (goal) | Preload theme.css & theme.js, defer JS, responsive srcsets, decoding=async, fetchpriority on LCP images | 🟡 run Lighthouse on live dev store |
 | First product page LCP < 2.5s | `product-gallery.liquid` eager+high priority on featured image | 🟡 verify |
-| Total JS < 100 KB | Vanilla JS, no framework | ✅ |
-| Total CSS < 150 KB | Single `theme.css`, ~40 KB unminified | ✅ |
+| Total JS < 100 KB | Vanilla JS, no framework | ✅ (49 KB) |
+| Total CSS < 200 KB | Single `theme.css` | ✅ (110 KB) |
 | No render-blocking | `media="print" onload="this.media='all'"` on CSS | ✅ |
 
 Run Lighthouse:
@@ -57,15 +59,17 @@ npx lighthouse https://your-dev-store.myshopify.com/products/demo --view
 | ARIA on modals | ✅ | Cart drawer + predictive search: role=dialog, aria-modal, focus-trap |
 | ARIA live regions | ✅ | `[data-a11y-announce]` on cart/search updates |
 | `aria-current` on active nav | ✅ | `header.liquid` + `main-product.liquid` |
-| Colour contrast ≥ 4.5:1 | 🟡 | Defaults pass; merchants can override — document |
-| Form labels on every input | ✅ | Including trade-in, search, newsletter |
-| Heading hierarchy (one h1 per page) | 🟡 | Audit on live preview |
-| Reduced-motion animations | ✅ | Respected |
+| Colour contrast ≥ 4.5:1 | ✅ | Defaults verified; merchants can override (call out in DESCRIPTION) |
+| Form labels on every input | ✅ | Including trade-in, search, newsletter, quote-request |
+| Heading hierarchy (one h1 per page) | ✅ | Audited Phase 13; cards use h3 |
+| Reduced-motion animations | ✅ | Respected; testimonial autoplay also pauses on hover/focus/visibilitychange (Phase 21) |
+| Live regions on dynamic counts | ✅ | Cart + wishlist count bubbles use `aria-live=polite` (Phase 21) |
 
 ### Code quality
 | Check | Status |
 |---|---|
 | `theme-check` passes | 🟡 run `theme-check .` locally |
+| `bash scripts/preflight.sh` passes (no hard failures) | ✅ |
 | No inline `<style>` beyond theme.liquid token block | ✅ |
 | No `<script>` with remote URLs | ✅ |
 | No deprecated `{% include %}` | ✅ all `{% render %}` |
@@ -75,7 +79,7 @@ npx lighthouse https://your-dev-store.myshopify.com/products/demo --view
 ## 2. Submission materials
 
 ### Theme listing copy
-Draft in [`DESCRIPTION.md`](./DESCRIPTION.md).
+Final copy in [`THEME-STORE-LISTING.md`](./THEME-STORE-LISTING.md). Draft history in [`DESCRIPTION.md`](./DESCRIPTION.md).
 
 ### Screenshots
 Shopify requires:
@@ -84,24 +88,12 @@ Shopify requires:
 - 5+ feature screenshots (**1440×900**, desktop)
 - Mobile screenshots (**375×812** or similar)
 
-Capture on a populated dev store. Suggested shot list:
-1. Electronics homepage (hero + stats)
-2. Fashion homepage (hero + grid)
-3. Furniture homepage (hero + stats)
-4. Product page with condition badge, warranty bar, DPP block, before/after slider
-5. Cart drawer open with 2 items
-6. Predictive search open with results
-7. Trade-in calculator in action
-8. Mobile product page
-9. Mobile cart drawer
+Full shot list, viewports, and page preconditions in [`SCREENSHOTS.md`](./SCREENSHOTS.md).
+Automated capture via `node scripts/screenshots.mjs` (Playwright) once the demo store is seeded.
 
 ### Demo store
-Shopify reviewers need a demo `.myshopify.com` URL with:
-- All templates populated with representative content
-- At least 15–20 products in 3+ collections
-- Metafields filled for ≥ 5 products (condition, CO₂, warranty, DPP, before/after)
-- At least 1 blog article
-- Privacy + refund + ToS pages
+Full seeding instructions, customer credentials, and reviewer walkthrough in
+[`DEMO-STORE.md`](./DEMO-STORE.md). Automated via `node seed/seed.mjs`.
 
 ## 3. Go-to-market after approval
 

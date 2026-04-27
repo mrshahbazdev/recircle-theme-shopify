@@ -2,7 +2,7 @@
 
 The first Shopify theme built specifically for **refurbished, pre-owned, and circular** commerce, with EU regulatory features baked in (Digital Product Passport, Right-to-Repair, Price Indication Directive, Accessibility Act).
 
-> **Status:** Phase 1 MVP — ready for a Shopify development store. Not yet published to the Shopify Theme Store.
+> **Status:** v1.0 — Theme Store submission candidate. 22 phases of work shipped on a public Shopify development store; preflight checks passing. See [`docs/SUBMISSION.md`](docs/SUBMISSION.md) for the readiness checklist and [`CHANGELOG.md`](CHANGELOG.md) for the phase-by-phase history.
 
 ---
 
