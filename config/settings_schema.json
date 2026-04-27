@@ -2,10 +2,65 @@
   {
     "name": "theme_info",
     "theme_name": "ReCircle",
-    "theme_version": "0.1.0",
+    "theme_version": "0.2.0",
     "theme_author": "mrshahbazdev",
     "theme_documentation_url": "https://github.com/mrshahbazdev/recircle-theme-shopify#readme",
     "theme_support_email": "support@recircle-theme.com"
+  },
+  {
+    "name": "Style presets",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Quick swap the entire look. Each preset overrides the individual colour and font settings below — clear the preset (\"None\") to fall back to the granular controls."
+      },
+      {
+        "type": "select",
+        "id": "palette_preset",
+        "label": "Colour palette",
+        "options": [
+          { "value": "cream",     "label": "Cream (default — warm off-white + deep forest)" },
+          { "value": "sand",      "label": "Sand (desert / muted ochre)" },
+          { "value": "forest",    "label": "Forest (rich green + cream)" },
+          { "value": "charcoal",  "label": "Charcoal (light text on charcoal cards)" },
+          { "value": "midnight",  "label": "Midnight (dark mode, blue-black surfaces)" },
+          { "value": "none",      "label": "None — use the granular colour controls below" }
+        ],
+        "default": "cream"
+      },
+      {
+        "type": "select",
+        "id": "font_preset",
+        "label": "Typography preset",
+        "options": [
+          { "value": "editorial", "label": "Editorial (Playfair Display + Inter — default)" },
+          { "value": "modern",    "label": "Modern (Manrope + Inter)" },
+          { "value": "classic",   "label": "Classic (Georgia + system sans)" },
+          { "value": "tech",      "label": "Tech (Space Grotesk + Inter)" },
+          { "value": "none",      "label": "None — use the typography settings below" }
+        ],
+        "default": "editorial"
+      },
+      {
+        "type": "select",
+        "id": "density_preset",
+        "label": "Layout density",
+        "info": "Compact = tighter padding & smaller hero on collection / PDP. Comfortable = default.",
+        "options": [
+          { "value": "compact",     "label": "Compact" },
+          { "value": "comfortable", "label": "Comfortable (default)" },
+          { "value": "spacious",    "label": "Spacious (editorial showcase)" }
+        ],
+        "default": "comfortable"
+      },
+      {
+        "type": "checkbox",
+        "id": "honour_dark_mode",
+        "label": "Honour visitor's OS dark-mode preference",
+        "info": "When enabled, the storefront automatically flips to a dark palette on devices with prefers-color-scheme: dark. Independent of the palette preset above.",
+        "default": true
+      }
+    ]
   },
   {
     "name": "t:settings_schema.colors.name",

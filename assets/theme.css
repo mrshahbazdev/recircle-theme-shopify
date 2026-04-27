@@ -3688,3 +3688,140 @@ select:focus-visible {
 }
 
 /* ===== Phase 15 — End ===== */
+
+/* ==========================================================================
+   Phase 16 — Style preset overrides
+   `body[data-palette="..."]` and `body[data-fonts="..."]` set by layout/theme.liquid.
+   When palette_preset !== "none", these win over the granular settings.
+   ========================================================================== */
+
+/* ----- Palette: Cream (default — already matches granular defaults) ----- */
+body[data-palette="cream"] {
+  --color-bg: #FBF8F3;
+  --color-bg-subtle: #F3EFE6;
+  --color-text: #0D211A;
+  --color-text-muted: #6B7461;
+  --color-border: #E4DED1;
+  --color-brand: #0E3B2C;
+  --color-brand-hover: #1B5B40;
+  --color-accent: #2E8659;
+  --color-amber: #C8661B;
+}
+
+/* ----- Palette: Sand (warm desert / muted ochre) ----- */
+body[data-palette="sand"] {
+  --color-bg: #F7F1E6;
+  --color-bg-subtle: #ECE2CD;
+  --color-text: #2A2218;
+  --color-text-muted: #7A6B57;
+  --color-border: #D9CDB3;
+  --color-brand: #8A4A1F;
+  --color-brand-hover: #A35E2D;
+  --color-accent: #B98648;
+  --color-amber: #D88B3A;
+}
+
+/* ----- Palette: Forest (rich green + cream — heritage outdoor) ----- */
+body[data-palette="forest"] {
+  --color-bg: #F4F1E8;
+  --color-bg-subtle: #E6E1D2;
+  --color-text: #112019;
+  --color-text-muted: #4F5C50;
+  --color-border: #D2D2C2;
+  --color-brand: #133D2C;
+  --color-brand-hover: #1F5C42;
+  --color-accent: #2F7A50;
+  --color-amber: #B85F1A;
+}
+
+/* ----- Palette: Charcoal (dark surfaces with warm text) ----- */
+body[data-palette="charcoal"] {
+  --color-bg: #14171A;
+  --color-bg-subtle: #1E2226;
+  --color-text: #F2EEE5;
+  --color-text-muted: #A6ACB1;
+  --color-border: #2A2F35;
+  --color-brand: #E9D9B7;
+  --color-brand-hover: #FBEEC7;
+  --color-accent: #66BB89;
+  --color-amber: #E5A155;
+}
+
+/* ----- Palette: Midnight (cool blue-black, indie tech) ----- */
+body[data-palette="midnight"] {
+  --color-bg: #0B1220;
+  --color-bg-subtle: #131C2E;
+  --color-text: #E5EAF5;
+  --color-text-muted: #95A0B5;
+  --color-border: #1E2A40;
+  --color-brand: #6FA8FF;
+  --color-brand-hover: #8FB9FF;
+  --color-accent: #58E1B0;
+  --color-amber: #FFC062;
+}
+
+/* ----- Honour OS dark-mode preference (only for "cream"/"sand"/"forest") ----- */
+@media (prefers-color-scheme: dark) {
+  body[data-palette="cream"][data-honour-dark="true"],
+  body[data-palette="sand"][data-honour-dark="true"],
+  body[data-palette="forest"][data-honour-dark="true"] {
+    --color-bg: #14171A;
+    --color-bg-subtle: #1E2226;
+    --color-text: #F2EEE5;
+    --color-text-muted: #A6ACB1;
+    --color-border: #2A2F35;
+    --color-brand: #E9D9B7;
+    --color-brand-hover: #FBEEC7;
+  }
+}
+
+/* ----- Typography presets ----- */
+body[data-fonts="editorial"] {
+  --font-display: "Playfair Display", "Georgia", "Times New Roman", serif;
+  --font-display-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+}
+body[data-fonts="modern"] {
+  --font-display: "Manrope", "Inter", system-ui, sans-serif;
+  --font-display-family: "Manrope", "Inter", system-ui, sans-serif;
+  --font-heading-family: "Manrope", "Inter", system-ui, sans-serif;
+}
+body[data-fonts="classic"] {
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-display-family: "Georgia", "Times New Roman", serif;
+  --font-heading-family: "Georgia", "Times New Roman", serif;
+  --font-body-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+body[data-fonts="tech"] {
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-display-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-heading-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+}
+
+/* ----- Density presets — adjust spacing tokens ----- */
+body[data-density="compact"] {
+  --section-spacing: 56px;
+  --card-padding: 16px;
+  --grid-gap: 16px;
+}
+body[data-density="comfortable"] {
+  --section-spacing: 80px;
+  --card-padding: 22px;
+  --grid-gap: 24px;
+}
+body[data-density="spacious"] {
+  --section-spacing: 120px;
+  --card-padding: 32px;
+  --grid-gap: 32px;
+}
+
+/* Apply density tokens where useful (additive — does not break Phase 9 layouts) */
+.section,
+section.shopify-section { padding-top: var(--section-spacing, 80px); padding-bottom: var(--section-spacing, 80px); }
+.product-card,
+.editorial-panel,
+.cart-summary,
+.faq__item { padding: var(--card-padding, 22px); }
+.product-grid,
+.collection-grid { gap: var(--grid-gap, 24px); }
+
+/* ===== Phase 16 — End ===== */
