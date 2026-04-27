@@ -69,9 +69,10 @@ async function openCart(page) {
 
 async function seedCompare(page) {
   await page.evaluate(() => {
-    localStorage.setItem('recircle:compare', JSON.stringify(['iphone-13-pro-refurbished','macbook-air-m1-refurbished','samsung-galaxy-s22-refurbished']));
+    localStorage.setItem('recircle:compare', JSON.stringify(['iphone-13-128gb-refurb','macbook-air-m1-2020-refurb','galaxy-s22-128gb-refurb']));
   });
-  await page.reload({ waitUntil: 'networkidle' });
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1200);
 }
 
 async function openSearch(page) {
@@ -90,24 +91,29 @@ async function prefillQuote(page) {
 async function unlockPassword(page) {
   if (!PWD) return;
   // Hit /password first, accept gate
-  await page.goto(`${ORIGIN}/password?${PV}`, { waitUntil: 'networkidle' });
+  await page.goto(`${ORIGIN}/password?${PV}`, { waitUntil: 'domcontentloaded' }).catch(() => {});
   const pwField = page.locator('input[type="password"]').first();
   if (await pwField.count()) {
     await pwField.fill(PWD);
     await page.locator('form[action*="password"] button[type="submit"]').click().catch(() => {});
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
   }
 }
 
 (async () => {
   const browser = await chromium.launch({ headless: true });
-  for (const s of SHOTS) {
+  // Optional comma-separated filter: SHOT=feature-06-compare,feature-07-account-credits node scripts/screenshots.mjs
+  const onlyShots = (process.env.SHOT || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const queue = onlyShots.length ? SHOTS.filter((s) => onlyShots.some((n) => s.f.startsWith(n))) : SHOTS;
+  for (const s of queue) {
     const ctx = await browser.newContext({ viewport: { width: s.w, height: s.h }, deviceScaleFactor: 2 });
     const page = await ctx.newPage();
     try {
       await unlockPassword(page);
       const sep = s.url.includes('?') ? '&' : '?';
-      await page.goto(`${ORIGIN}${s.url}${sep}${PV}`, { waitUntil: 'networkidle' });
+      await page.goto(`${ORIGIN}${s.url}${sep}${PV}`, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      // Settle async widgets (analytics, chat, predictive search) without blocking on networkidle
+      await page.waitForTimeout(900);
       if (s.after) await s.after(page);
       await page.waitForTimeout(350);
       await page.screenshot({ path: resolve(OUT, s.f), type: 'jpeg', quality: 88, fullPage: false });

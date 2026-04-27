@@ -1,8 +1,12 @@
 node_modules/
+package.json
+package-lock.json
+screenshots/
+.shopify/
+.env
 .DS_Store
 .shopifyignore.local
 dist/
 *.zip
 .idea/
 .vscode/
-

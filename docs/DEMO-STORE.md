@@ -100,9 +100,9 @@ covered by `seed.mjs` because they require email verification flows.
 
 ## 6. Reviewer instructions block (paste into Partner Dashboard)
 
-> **Demo store**: https://recircle-demo.myshopify.com/?preview_theme_id=189945053365
+> **Demo store**: https://prodevnns.myshopify.com/?preview_theme_id=189945053365
 >
-> **Storefront password (if active)**: `recircle2026`
+> **Storefront password (if active)**: ask the merchant for the current storefront password (Admin → Online Store → Preferences → Password page) — provided to the reviewer via the Partner Dashboard "Reviewer instructions" field.
 >
 > **Customer accounts**:
 > - Standard customer — `reviewer@recircle.demo` / `Refurb-Reviewer-2026`
